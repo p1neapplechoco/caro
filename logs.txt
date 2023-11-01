@@ -4,3 +4,14 @@ v1.0 (31/10/23)
 - fixed:
 	+ Console commands.
 	+ Window.
+
+v1.1 (1/11/23)
+- added a board (would be later revamped).
+- added the pixelColoring function (don't know if i would use it later).
+
+v1.5 (BIG UPDATE) (1/11/23 <- golden day)
+- added undo function.
+- rewrite some codes (input, drawBoard)
+- fixed:
+	+ cursor going out of bound.
+	+ overwriting the marks.
