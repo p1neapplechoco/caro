@@ -13,6 +13,18 @@ void bgColor() {
     }
 }
 
+void coloringPixel(int i, int a, int j, int b, COLORREF color) {
+    HWND hWnd = GetConsoleWindow();
+    HDC Dc = GetDC(hWnd);
+    for (;;) {
+        for (; i <= a; ++i) {
+            for (; j <= b; ++j) {
+                SetPixel(Dc, i, j, color);
+            }
+        }
+    }
+}
+
 void HideCursor()
 {
     HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
