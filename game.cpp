@@ -6,7 +6,7 @@
 #define BOARD_SIZE 15 //default size
 #define PLAYER1 'X' //player _xmark
 #define PLAYER2 'O' //player o
-#define EMPTY ' ' //when no one is marking the thing
+#define EMPTY ' ' //when no one has marked the thing
 
 using namespace std;
 
@@ -19,10 +19,11 @@ int _x = BOARD_SIZE / 2;
 int _xmark;
 int _ymark;
 int _y = BOARD_SIZE / 2;
+bool undo = false;
 
 void drawBoard() { //drawing the board and setting up the board
-	temp = board_states.back();
 	board = board_states.back();
+	temp = board_states.back();
 	for (int i = 0; i <= BOARD_SIZE; i++) {
 		for (int j = 0; j <= BOARD_SIZE; j++) {
 			gotoxy(3 + 4 * i, 1 + 2 * j);
@@ -74,12 +75,13 @@ void input() {
 
 		case '\r': //marking the spot
 			while (true) {
-				if (temp[_x][_y] == EMPTY) {
+				if (board[_x][_y] == EMPTY) {
 					temp[_x][_y] = turnCheck(turn);
 					board_states.push_back(temp);
 					_xmark = _x;
 					_ymark = _y;
 					turn++;
+					undo = false;
 					break;
 				}
 				else break;
@@ -90,7 +92,8 @@ void input() {
 			if (turn > 0) {
 				board_states.pop_back();
 				turn--;
-				break;
+				undo = true;
+				break;				
 			}
 			else break;
 
@@ -134,8 +137,8 @@ void input() {
 }
 
 void checkWin() {
-	if (_kbhit() == 32 || _kbhit() == '\r')
-	{//check ver
+	if (undo == false) {
+		//check ver
 		int count = 1;
 		for (int i = 1; i < 5; i++) {
 			if (_xmark + i >= BOARD_SIZE || _xmark + i < 0) {
@@ -251,8 +254,8 @@ void gomoku() {
 	while (win_state != true && checkDraw() != true) {
 		input();
 		drawBoard();
-		checkWin();
 		turnCheck(turn);
+		checkWin();
 	}
 	if (win_state == true) {
 		gotoxy(79, 32);
