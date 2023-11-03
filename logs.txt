@@ -23,3 +23,6 @@ v2.0 (3/11/23)
 fixed:
 	+ the bug when you undo the board and cannot mark the empty undo-ed board.
 	+ checking win not really working.
+
+v2.0.1 (3/11/23)
+- minor bugs fixed. (undo-ing counts win)

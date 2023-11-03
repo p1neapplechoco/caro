@@ -74,7 +74,7 @@ void input() {
 
 		case '\r': //marking the spot
 			while (true) {
-				if (board[_x][_y] == EMPTY) {
+				if (temp[_x][_y] == EMPTY) {
 					temp[_x][_y] = turnCheck(turn);
 					board_states.push_back(temp);
 					_xmark = _x;
@@ -94,7 +94,39 @@ void input() {
 			}
 			else break;
 
-		case 'r':
+		case 72:
+			_y--;
+			if (_y < 0) { _y++; }
+			break;
+
+		case 80:
+			_y++;
+			if (_y >= BOARD_SIZE) { _y--; }
+			break;
+
+		case 75:
+			_x--;
+			if (_x < 0) { _x++; }
+			break;
+
+		case 77:
+			_x++;
+			if (_x >= BOARD_SIZE) { _x--; }
+			break;
+
+		case 32:
+			while (true) {
+				if (board[_x][_y] == EMPTY) {
+					temp[_x][_y] = turnCheck(turn);
+					board_states.push_back(temp);
+					_xmark = _x;
+					_ymark = _y;
+					turn++;
+					break;
+				}
+				else break;
+			}
+			break;
 
 		default:
 			break;
@@ -102,107 +134,108 @@ void input() {
 }
 
 void checkWin() {
-	//ver
-	int count = 1;
-	for (int i = 1; i < 5; i++) {
-		if (_xmark + i >= BOARD_SIZE || _xmark + i < 0) {
-			break;	
+	if (_kbhit() == 32 || _kbhit() == '\r')
+	{//check ver
+		int count = 1;
+		for (int i = 1; i < 5; i++) {
+			if (_xmark + i >= BOARD_SIZE || _xmark + i < 0) {
+				break;
+			}
+			else if (board[_xmark + i][_ymark] != turnCheck(turn + 1)) {
+				break;
+			}
+			count++;
 		}
-		else if (board[_xmark + i][_ymark] != turnCheck(turn + 1)) {
-			break;
+		for (int i = -1; i > -5; i--) {
+			if (_xmark - 1 + i >= BOARD_SIZE || _xmark - 1 + i < 0) {
+				break;
+			}
+			else if (board[_xmark + i][_ymark] != turnCheck(turn + 1)) {
+				break;
+			}
+			count++;
 		}
-		count++;
+		if (count >= 5) {
+			win_state = true;
+			return;
+		}
+		//check hor
+		count = 1;
+		for (int i = 1; i < 5; i++) {
+			if (_ymark + i >= BOARD_SIZE || _ymark + i < 0) {
+				break;
+			}
+			else if (board[_xmark][_ymark + i] != turnCheck(turn + 1)) {
+				break;
+			}
+			count++;
+		}
+		for (int i = -1; i > -5; i--) {
+			if (_ymark + i >= BOARD_SIZE || _ymark + i < 0) {
+				break;
+			}
+			else if (board[_xmark][_ymark + i] != turnCheck(turn + 1)) {
+				break;
+			}
+			count++;
+		}
+		if (count >= 5) {
+			win_state = true;
+			return;
+		}
+		//check -45
+		count = 1;
+		for (int i = 1; i < 5; i++) {
+			if (_ymark + i >= BOARD_SIZE || _ymark + i < 0 || _xmark + i < 0 || _xmark + i >= BOARD_SIZE) {
+				break;
+			}
+			else if (board[_xmark + i][_ymark + i] != turnCheck(turn + 1)) {
+				break;
+			}
+			count++;
+		}
+		for (int i = -1; i > -5; i--) {
+			if (_ymark + i >= BOARD_SIZE || _ymark + i < 0 || _xmark + i < 0 || _xmark + i >= BOARD_SIZE) {
+				break;
+			}
+			else if (board[_xmark + i][_ymark + i] != turnCheck(turn + 1)) {
+				break;
+			}
+			count++;
+		}
+		if (count >= 5) {
+			win_state = true;
+			return;
+		}
+		//check 45
+		count = 1;
+		for (int i = 1; i < 5; i++) {
+			if (_ymark + i >= BOARD_SIZE || _ymark + i < 0 || _xmark - i < 0 || _xmark - i >= BOARD_SIZE) {
+				break;
+			}
+			else if (board[_xmark - i][_ymark + i] != turnCheck(turn + 1)) {
+				break;
+			}
+			count++;
+		}
+		for (int i = -1; i > -5; i--) {
+			if (_ymark + i >= BOARD_SIZE || _ymark + i < 0 || _xmark - i < 0 || _xmark - i >= BOARD_SIZE) {
+				break;
+			}
+			else if (board[_xmark - i][_ymark + i] != turnCheck(turn + 1)) {
+				break;
+			}
+			count++;
+		}
+		if (count >= 5) {
+			win_state = true;
+			return;
+		}
 	}
-	for (int i = -1; i > -5; i--) {
-		if (_xmark - 1 + i >= BOARD_SIZE || _xmark - 1 + i < 0) {
-			break;
-		}
-		else if (board[_xmark + i][_ymark] != turnCheck(turn + 1)) {
-			break;
-		}
-		count++;
-	}
-	if (count >= 5) {
-		win_state = true;
-		return;
-	}
-	//hor
-	count = 1;
-	for (int i = 1; i < 5; i++) {
-		if (_ymark + i >= BOARD_SIZE || _ymark + i < 0) {
-			break;
-		}
-		else if (board[_xmark][_ymark + i] != turnCheck(turn + 1)) {
-			break;
-		}
-		count++;
-	}
-	for (int i = -1; i > -5; i--) {
-		if (_ymark + i >= BOARD_SIZE || _ymark + i < 0) {
-			break;
-		}
-		else if (board[_xmark][_ymark + i] != turnCheck(turn + 1)) {
-			break;
-		}
-		count++;
-	}
-	if (count >= 5) {
-		win_state = true;
-		return;
-	}
-	//-45
-	count = 1;
-	for (int i = 1; i < 5; i++) {
-		if (_ymark + i >= BOARD_SIZE || _ymark + i < 0 || _xmark + i < 0 || _xmark + i >= BOARD_SIZE) {
-			break;
-		}
-		else if (board[_xmark + i][_ymark + i] != turnCheck(turn + 1)) {
-			break;
-		}
-		count++;
-	}
-	for (int i = -1; i > -5; i--) {
-		if (_ymark + i >= BOARD_SIZE || _ymark + i < 0 || _xmark + i < 0 || _xmark + i >= BOARD_SIZE) {
-			break;
-		}
-		else if (board[_xmark + i][_ymark + i] != turnCheck(turn + 1)) {
-			break;
-		}
-		count++;
-	}
-	if (count >= 5) {
-		win_state = true;
-		return;
-	}
-	//45
-	count = 1;
-	for (int i = 1; i < 5; i++) {
-		if (_ymark + i >= BOARD_SIZE || _ymark + i < 0 || _xmark - i < 0 || _xmark - i >= BOARD_SIZE) {
-			break;
-		}
-		else if (board[_xmark - i][_ymark + i] != turnCheck(turn + 1)) {
-			break;
-		}
-		count++;
-	}
-	for (int i = -1; i > -5; i--) {
-		if (_ymark + i >= BOARD_SIZE || _ymark + i < 0 || _xmark - i < 0 || _xmark - i >= BOARD_SIZE) {
-			break;
-		}
-		else if (board[_xmark - i][_ymark + i] != turnCheck(turn + 1)) {
-			break;
-		}
-		count++;
-	}
-	if (count >= 5) {
-		win_state = true;
-		return;
-	}
-
 }
 
 bool checkDraw() {
-	if (turn == 225) {
+	if (turn == 225 && win_state != true) {
 		return true;
 	}
 	return false;
