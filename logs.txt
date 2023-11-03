@@ -15,3 +15,11 @@ v1.5 (BIG UPDATE) (1/11/23 <- golden day)
 - fixed:
 	+ cursor going out of bound.
 	+ overwriting the marks.
+
+v2.0 (3/11/23)
+- added win/draw condition.
+- added a temporary winner screen.
+- rewrite the checkTurn() function.
+fixed:
+	+ the bug when you undo the board and cannot mark the empty undo-ed board.
+	+ checking win not really working.

@@ -4,24 +4,25 @@
 #include <vector>
 
 #define BOARD_SIZE 15 //default size
-#define PLAYER1 'X' //player x
+#define PLAYER1 'X' //player _xmark
 #define PLAYER2 'O' //player o
 #define EMPTY ' ' //when no one is marking the thing
 
 using namespace std;
 
-
 unsigned int turn = 0;
-bool EndGame = false;
+bool win_state;
 vector<vector<char>> temp(BOARD_SIZE, vector<char>(BOARD_SIZE, EMPTY)); //temporary for storing the board
 vector<vector<char>> board; //storing the main board
-vector<vector<vector<char>>> moves(turn + 1, vector<vector<char>>(BOARD_SIZE, vector<char>(BOARD_SIZE, EMPTY))); //storing each universe of the board -> making undo possible
+vector<vector<vector<char>>> board_states(turn + 1, vector<vector<char>>(BOARD_SIZE, vector<char>(BOARD_SIZE, EMPTY))); //storing each universe of the board
 int _x = BOARD_SIZE / 2;
+int _xmark;
+int _ymark;
 int _y = BOARD_SIZE / 2;
 
 void drawBoard() { //drawing the board and setting up the board
-	temp = moves.back();
-	board = moves.back();
+	temp = board_states.back();
+	board = board_states.back();
 	for (int i = 0; i <= BOARD_SIZE; i++) {
 		for (int j = 0; j <= BOARD_SIZE; j++) {
 			gotoxy(3 + 4 * i, 1 + 2 * j);
@@ -42,8 +43,9 @@ void drawBoard() { //drawing the board and setting up the board
 	}
 }
 
-bool turnCheck(){ //self explainatory
-	return (turn % 2 == 0);
+char turnCheck(unsigned int turn){ //self explainatory
+	if (turn % 2 == 0) return PLAYER1;
+	else return PLAYER2;
 } 
 
 void input() {
@@ -72,12 +74,11 @@ void input() {
 
 		case '\r': //marking the spot
 			while (true) {
-				if (temp[_x][_y] == EMPTY) {
-					if (turnCheck())
-						temp[_x][_y] = PLAYER1;
-					else
-						temp[_x][_y] = PLAYER2;
-					moves.push_back(temp);
+				if (board[_x][_y] == EMPTY) {
+					temp[_x][_y] = turnCheck(turn);
+					board_states.push_back(temp);
+					_xmark = _x;
+					_ymark = _y;
 					turn++;
 					break;
 				}
@@ -87,11 +88,13 @@ void input() {
 
 		case 'u': //undo button
 			if (turn > 0) {
-				moves.pop_back();
+				board_states.pop_back();
 				turn--;
 				break;
 			}
 			else break;
+
+		case 'r':
 
 		default:
 			break;
@@ -99,24 +102,132 @@ void input() {
 }
 
 void checkWin() {
+	//ver
+	int count = 1;
+	for (int i = 1; i < 5; i++) {
+		if (_xmark + i >= BOARD_SIZE || _xmark + i < 0) {
+			break;	
+		}
+		else if (board[_xmark + i][_ymark] != turnCheck(turn + 1)) {
+			break;
+		}
+		count++;
+	}
+	for (int i = -1; i > -5; i--) {
+		if (_xmark - 1 + i >= BOARD_SIZE || _xmark - 1 + i < 0) {
+			break;
+		}
+		else if (board[_xmark + i][_ymark] != turnCheck(turn + 1)) {
+			break;
+		}
+		count++;
+	}
+	if (count >= 5) {
+		win_state = true;
+		return;
+	}
+	//hor
+	count = 1;
+	for (int i = 1; i < 5; i++) {
+		if (_ymark + i >= BOARD_SIZE || _ymark + i < 0) {
+			break;
+		}
+		else if (board[_xmark][_ymark + i] != turnCheck(turn + 1)) {
+			break;
+		}
+		count++;
+	}
+	for (int i = -1; i > -5; i--) {
+		if (_ymark + i >= BOARD_SIZE || _ymark + i < 0) {
+			break;
+		}
+		else if (board[_xmark][_ymark + i] != turnCheck(turn + 1)) {
+			break;
+		}
+		count++;
+	}
+	if (count >= 5) {
+		win_state = true;
+		return;
+	}
+	//-45
+	count = 1;
+	for (int i = 1; i < 5; i++) {
+		if (_ymark + i >= BOARD_SIZE || _ymark + i < 0 || _xmark + i < 0 || _xmark + i >= BOARD_SIZE) {
+			break;
+		}
+		else if (board[_xmark + i][_ymark + i] != turnCheck(turn + 1)) {
+			break;
+		}
+		count++;
+	}
+	for (int i = -1; i > -5; i--) {
+		if (_ymark + i >= BOARD_SIZE || _ymark + i < 0 || _xmark + i < 0 || _xmark + i >= BOARD_SIZE) {
+			break;
+		}
+		else if (board[_xmark + i][_ymark + i] != turnCheck(turn + 1)) {
+			break;
+		}
+		count++;
+	}
+	if (count >= 5) {
+		win_state = true;
+		return;
+	}
+	//45
+	count = 1;
+	for (int i = 1; i < 5; i++) {
+		if (_ymark + i >= BOARD_SIZE || _ymark + i < 0 || _xmark - i < 0 || _xmark - i >= BOARD_SIZE) {
+			break;
+		}
+		else if (board[_xmark - i][_ymark + i] != turnCheck(turn + 1)) {
+			break;
+		}
+		count++;
+	}
+	for (int i = -1; i > -5; i--) {
+		if (_ymark + i >= BOARD_SIZE || _ymark + i < 0 || _xmark - i < 0 || _xmark - i >= BOARD_SIZE) {
+			break;
+		}
+		else if (board[_xmark - i][_ymark + i] != turnCheck(turn + 1)) {
+			break;
+		}
+		count++;
+	}
+	if (count >= 5) {
+		win_state = true;
+		return;
+	}
 
 }
 
-void checkDraw() {
-
+bool checkDraw() {
+	if (turn == 225) {
+		return true;
+	}
+	return false;
 }
 
-void twosideblocked() {
-
+void resetData() {
+	system("cls");
+	win_state = false;
 }
 
 void gomoku() {
-	system("cls");
-	EndGame = false;
-	while (EndGame != true) {
-		turnCheck();
+	resetData();
+	while (win_state != true && checkDraw() != true) {
 		input();
 		drawBoard();
+		checkWin();
+		turnCheck(turn);
+	}
+	if (win_state == true) {
+		gotoxy(79, 32);
+		cout << turnCheck(turn + 1);
+	}
+	else if (checkDraw() == true) {
+		gotoxy(79, 32);
+		cout << "Draw";
 	}
 	return;
 }
