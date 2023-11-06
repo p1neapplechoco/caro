@@ -130,6 +130,7 @@
     <ClCompile Include="console.cpp" />
     <ClCompile Include="cutscenes.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="graphic.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="menu.cpp" />
   </ItemGroup>
@@ -137,6 +138,7 @@
     <ClInclude Include="console.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="cutscenes.h" />
+    <ClInclude Include="graphic.h" />
     <ClInclude Include="menu.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

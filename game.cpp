@@ -2,6 +2,7 @@
 #include <conio.h>
 #include <iostream>
 #include <vector>
+#include "graphic.h"
 
 #define BOARD_SIZE 15 //default size
 #define PLAYER1 'X' //player _xmark
@@ -9,21 +10,29 @@
 #define EMPTY ' ' //when no one has marked the thing
 
 using namespace std;
-
 unsigned int turn = 0;
-bool win_state;
-vector<vector<char>> temp(BOARD_SIZE, vector<char>(BOARD_SIZE, EMPTY)); //temporary for storing the board
-vector<vector<char>> board; //storing the main board
-vector<vector<vector<char>>> board_states(turn + 1, vector<vector<char>>(BOARD_SIZE, vector<char>(BOARD_SIZE, EMPTY))); //storing each universe of the board
+bool win_state = false;
+int counter;
+
+vector<vector<char>> board(BOARD_SIZE, vector<char>(BOARD_SIZE, EMPTY)); //storing the board
+vector<vector<vector<char>>> board_states(1, vector<vector<char>>(BOARD_SIZE, vector<char>(BOARD_SIZE, EMPTY))); //storing each universe of the board
+
 int _x = BOARD_SIZE / 2;
 int _xmark;
 int _ymark;
 int _y = BOARD_SIZE / 2;
 bool undo = false;
 
-void drawBoard() { //drawing the board and setting up the board
+void timer() {
+	counter = 10;
+	Sleep(1000);
+	while (counter >= 1) {
+		counter--;
+	}
+}
+
+void drawBoard() {
 	board = board_states.back();
-	temp = board_states.back();
 	for (int i = 0; i <= BOARD_SIZE; i++) {
 		for (int j = 0; j <= BOARD_SIZE; j++) {
 			gotoxy(3 + 4 * i, 1 + 2 * j);
@@ -76,11 +85,12 @@ void input() {
 		case '\r': //marking the spot
 			while (true) {
 				if (board[_x][_y] == EMPTY) {
-					temp[_x][_y] = turnCheck(turn);
-					board_states.push_back(temp);
+					board[_x][_y] = turnCheck(turn);
+					board_states.push_back(board);
 					_xmark = _x;
 					_ymark = _y;
 					turn++;
+					counter = 10;
 					undo = false;
 					break;
 				}
@@ -120,11 +130,13 @@ void input() {
 		case 32:
 			while (true) {
 				if (board[_x][_y] == EMPTY) {
-					temp[_x][_y] = turnCheck(turn);
-					board_states.push_back(temp);
+					board[_x][_y] = turnCheck(turn);
+					board_states.push_back(board);
 					_xmark = _x;
 					_ymark = _y;
 					turn++;
+					counter = 10;
+					undo = false;
 					break;
 				}
 				else break;
@@ -246,7 +258,13 @@ bool checkDraw() {
 
 void resetData() {
 	system("cls");
+	turn = 0;
 	win_state = false;
+	vector<vector<char>> board(BOARD_SIZE, vector<char>(BOARD_SIZE, EMPTY));
+	vector<vector<vector<char>>> board_states(turn + 1, vector<vector<char>>(BOARD_SIZE, vector<char>(BOARD_SIZE, EMPTY)));
+	_x = BOARD_SIZE / 2;
+	_y = BOARD_SIZE / 2;
+	undo = false;
 }
 
 void gomoku() {
