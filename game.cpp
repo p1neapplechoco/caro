@@ -1,8 +1,5 @@
-#include "console.h"
-#include <conio.h>
-#include <iostream>
-#include <vector>
 #include "graphic.h"
+#include "game.h"
 
 #define BOARD_SIZE 15 //default size
 #define PLAYER1 'X' //player _xmark
@@ -10,6 +7,8 @@
 #define EMPTY ' ' //when no one has marked the thing
 
 using namespace std;
+
+bool cpu_player = false;
 unsigned int turn = 0;
 bool win_state = false;
 int counter;
@@ -29,6 +28,35 @@ void timer() {
 	while (counter >= 1) {
 		counter--;
 	}
+}
+
+void Save() {
+	string filename, name;
+	gotoxy(79, 32);
+	cout << "Nhap ten file de save: ";
+	cin >> filename;
+	gotoxy(79, 32);
+	cout << "                                                             ";
+	ofstream fileInput(filename + ".txt");
+	fileInput << _x << " " << _y << " " << turn << " " << endl;
+	for (int j = 0; j < BOARD_SIZE; j++) {
+		for (int k = 0; k < BOARD_SIZE; k++) {
+			fileInput << board[k][j] << " ";
+		}
+		fileInput << endl;
+	}
+	fileInput.close();
+}
+
+void Load() {
+	/*string filename, name;
+	cin >> filename;
+	ifstream infile;
+	infile.open(filename + ".txt");
+	while (!infile.eof()) {
+
+	}
+	*/
 }
 
 void drawBoard() {
@@ -127,7 +155,7 @@ void input() {
 			if (_x >= BOARD_SIZE) { _x--; }
 			break;
 
-		case 32:
+		case 32: //spacebar for marking
 			while (true) {
 				if (board[_x][_y] == EMPTY) {
 					board[_x][_y] = turnCheck(turn);
@@ -141,6 +169,14 @@ void input() {
 				}
 				else break;
 			}
+			break;
+
+		case 'p': //save button
+			Save();
+			break;
+
+		case 27: //escape quit
+			win_state = true;
 			break;
 
 		default:
@@ -258,17 +294,18 @@ bool checkDraw() {
 
 void resetData() {
 	system("cls");
+	while (board_states.size() > 1){
+		board_states.pop_back();
+	}
 	turn = 0;
 	win_state = false;
-	vector<vector<char>> board(BOARD_SIZE, vector<char>(BOARD_SIZE, EMPTY));
-	vector<vector<vector<char>>> board_states(turn + 1, vector<vector<char>>(BOARD_SIZE, vector<char>(BOARD_SIZE, EMPTY)));
 	_x = BOARD_SIZE / 2;
 	_y = BOARD_SIZE / 2;
 	undo = false;
 }
 
-void gomoku() {
-	resetData();
+void game() {
+gomoku:
 	while (win_state != true && checkDraw() != true) {
 		input();
 		drawBoard();
@@ -283,5 +320,35 @@ void gomoku() {
 		gotoxy(79, 32);
 		cout << "Draw";
 	}
-	return;
+	while (true) {
+		if (_kbhit()) {
+			if (_getch() == 'y') {
+				resetData();
+				goto gomoku;
+			}
+			else
+				resetData();
+				return;;
+		}
+	}
+}
+
+void gomoku() {
+	switch (GameMode()) {
+	case 1:
+		resetData();
+		game();
+		break;
+	case 2:
+		resetData();
+		cpu_player = true;
+		game();
+		break;
+	case 3:
+		resetData();
+		Load();
+		game();
+		break;
+	}
+	
 }

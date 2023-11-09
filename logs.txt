@@ -26,3 +26,8 @@ fixed:
 
 v2.0.1 (3/11/23)
 - minor bugs fixed. (undo-ing counts win)
+
+v2.1 (9/11/23)
+- added saving feature (doesn't have loading the game tho).
+- made header file actually useful.
+- removed resetData() error.

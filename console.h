@@ -1,4 +1,5 @@
 #include <Windows.h>
+#include <iostream>
 
 #ifndef _CONSOLE_H_
 void coloringPixel(int, int, int, int, COLORREF);
