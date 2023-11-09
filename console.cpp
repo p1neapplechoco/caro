@@ -35,8 +35,8 @@ void HideCursor()
 }
 
 void FixedConsoleWindow() {
-    HWND consoleWindow = GetConsoleWindow();
-    SetWindowLong(consoleWindow, GWL_STYLE, GetWindowLong(consoleWindow, GWL_STYLE) & ~WS_MAXIMIZEBOX & ~WS_SIZEBOX);
+     HWND consoleWindow = GetConsoleWindow();
+     SetWindowLong(consoleWindow, GWL_STYLE, GetWindowLong(consoleWindow, GWL_STYLE) & ~WS_MAXIMIZEBOX & ~WS_SIZEBOX);
 }
 
 void color(int color)
