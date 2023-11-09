@@ -21,7 +21,7 @@ v2.0 (3/11/23)
 - added a temporary winner screen.
 - rewrite the checkTurn() function.
 fixed:
-	+ the bug when you undo the board and cannot mark the empty undo-ed board.
+	+ the bug where you undo the board and cannot mark the empty undo-ed board.
 	+ checking win not really working.
 
 v2.0.1 (3/11/23)
@@ -30,4 +30,9 @@ v2.0.1 (3/11/23)
 v2.1 (9/11/23)
 - added saving feature (doesn't have loading the game tho).
 - made header file actually useful.
-- removed resetData() error.
+- fixed resetData() error where you cannot have a empty board when starting the game.
+
+v2.2 (10/11/23)
+- added loading feature.
+- minor fixes:
+	+ always uses 'X' as the starting marker.
