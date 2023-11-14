@@ -25,4 +25,13 @@ void EraseScore(int x, int y);
 int Pause();
 void drawGame(char);
 void Loading();
+int PlayMenu();
+void HighLight(int x, int y, int w, int h);
+void DrawPvP();
+void DrawPvC();
+void DrawBox(int x, int y, int w, int h);
+void DrawHcn(int x, int y);
+void MenuLogo(int x, int y);
+void animal(int x, int y);
+
 #endif

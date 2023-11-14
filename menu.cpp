@@ -20,7 +20,6 @@ int Menu()
         {
             
             gotoxy(67, 18);
-            
             cout << options[0];
            
             gotoxy(67, 23);
@@ -71,6 +70,7 @@ int Menu()
             {
                 Set[0] = 117;
                 select1();
+               
                 options[0] = "     >> PLAY <<      ";
             }
             if (counter == 2)

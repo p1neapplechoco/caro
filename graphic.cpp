@@ -208,33 +208,17 @@ void DrawListLoad(string loadName[]) {
     
     int CurrentMode = _setmode(_fileno(stdout), OldMode);
 
-    for (int i = 0; i < 82; i += 2) {
-        gotoxy(D2_X_SETTING + i, D2_Y_SETTING);
-        cout << D2_LOWER_FRAME << D2_LOWER_FRAME;
-        gotoxy(D2_X_SETTING + 80 - i, D2_Y_SETTING + 22);
-        cout << D2_UPPER_FRAME << D2_UPPER_FRAME;
 
-    }
-    for (int i = 1; i < 22; i += 2) {
-        gotoxy(D2_X_SETTING + 81, D2_Y_SETTING + i - 1);
-        cout << D2_VERTICAL_FRAME;
-        gotoxy(D2_X_SETTING + 81, D2_Y_SETTING + i);
-        cout << D2_VERTICAL_FRAME;
-        gotoxy(D2_X_SETTING, D2_Y_SETTING + 22 - i);
-        cout << D2_VERTICAL_FRAME;
-        gotoxy(D2_X_SETTING, D2_Y_SETTING + 22 - i - 1);
-        cout << D2_VERTICAL_FRAME;
-
-    }
-
+    DrawBox(D2_X_SETTING, D2_Y_SETTING, 82,22);
+   
     for (int i = 0; i < 5; i++) {
-        drawhcn(45, 16 + 4 * i);
+        DrawHcn(45, 16 + 4 * i);
         gotoxy(47, 17 + 4 * i);
         cout << loadName[i];
     }
     for (int i = 5; i < 10; i++) {
-        drawhcn(88, 16 + 4 * (i - 5));
-        gotoxy(88, 17 + 4 * (i - 5));
+        DrawHcn(88, 16 + 4 * (i - 5));
+        gotoxy(90, 17 + 4 * (i - 5));
         cout << loadName[i];
     }
 }
@@ -259,8 +243,38 @@ void DrawLogoFrame() {
         cout << Horizontal_Line;
         gotoxy(LLeft, LMax_j - i - 1);
         cout << Horizontal_Line;
+
+        int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
+        wstring Logo[5];
+        Logo[0] = (L" ▄ .▄ ▄▄· • ▌ ▄ ·. ▄• ▄▌.▄▄ ·		");
+        Logo[1] = (L"██▪▐█▐█ ▌▪·██ ▐███▪█▪██▌▐█ ▀.	    ");
+        Logo[2] = (L"██▀▀███ ▄▄▐█ ▌▐▌▐█·█▌▐█▌▄▀▀▀█▄ 	");
+        Logo[3] = (L"██▌▐▀▐███▌██ ██▌▐█▌▐█▄█▌▐█▄▪▐█	    ");
+        Logo[4] = (L"▀▀▀ ··▀▀▀ ▀▀  █▪▀▀▀ ▀▀▀  ▀▀▀▀		");
+
+        for (int i = 0; i < 5; i++)
+        {
+            gotoxy(LLeft + 28, LTop + 4 + i);
+            wcout << Logo[i];
+        }
+        int CurrentMode = _setmode(_fileno(stdout), OldMode);
        
     }
+
+    int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
+    gotoxy(10, 35); wcout << L"╔═════╗";
+    gotoxy(10, 36); wcout << L"║ Esc ║ : PAUSE";
+    gotoxy(10, 37); wcout << L"╚═════╝";
+
+
+    gotoxy(35, 35); wcout << L"╔═════╗";
+    gotoxy(35, 36); wcout << L"║  T  ║ : SAVE";
+    gotoxy(35, 37); wcout << L"╚═════╝";
+
+    gotoxy(60, 35); wcout << L"╔═════╗";
+    gotoxy(60, 36); wcout << L"║  U  ║ : UNDO";
+    gotoxy(60, 37); wcout << L"╚═════╝";
+    int CurrentMode = _setmode(_fileno(stdout), OldMode);
 
 }
 
@@ -284,10 +298,11 @@ void DrawInforFrame() {
         cout << Horizontal_Line;
         gotoxy(FLeft, FMax_j - i - 1);
         cout << Horizontal_Line;
+           
+
+       
         
     }
-    gotoxy(LLeft + 32, LTop + 11);
-    cout << "Press 'T' to Save Game";
 }
 
 
@@ -342,105 +357,73 @@ void Loading() {
 void DrawScore(int i, int x, int y)
 {
        
-    wstring Zero[6];
+    wstring Zero[3];
 
-    Zero[0] = L"┏━━━┓";
-    Zero[1] = L"┃┏━┓┃";
-    Zero[2] = L"┃┃ ┃┃";
-    Zero[3] = L"┃┃ ┃┃";
-    Zero[4] = L"┃┗━┛┃";
-    Zero[5] = L"┗━━━┛";
+    Zero[0] = L"█▀▀█";
+    Zero[1] = L"█▄▀█";
+    Zero[2] = L"█▄▄█";
        
-    wstring One[6];
-    One[0] = L" ┏┓ ";
-    One[1] = L"┏┛┃ ";
-    One[2] = L"┗┓┃ ";
-    One[3] = L" ┃┃ ";
-    One[4] = L"┏┛┗┓";
-    One[5] = L"┗━━┛";
+    wstring One[3];
+    One[0] = L"▄█ ";
+    One[1] = L" █ ";
+    One[2] = L"▄█▄";
 
-    wstring Two[6];
-
-
+    wstring Two[3];
+    Two[0] = L"█▀█";
+    Two[1] = L" ▄▀";
+    Two[2] = L"█▄▄";
 
 
-    Two[0] = L"██████╗ ";
-    Two[1] = L"╚════██╗";
-    Two[2] = L"█████╔╝ ";
-    Two[3] = L"██╔═══╝ ";
-    Two[4] = L"███████╗";
-    Two[5] = L"╚══════╝";
+    wstring Three[3];
 
-    wstring Three[6];
-
-    Three[0] = L"┏━━━┓";
-    Three[1] = L"┃┏━┓┃";
-    Three[2] = L"┗┛┏┛┃";
-    Three[3] = L"┏┓┗┓┃";
-    Three[4] = L"┃┗━┛┃";
-    Three[5] = L"┗━━━┛";
+    Three[0] = L"█▀▀█";
+    Three[1] = L"  ▀▄";
+    Three[2] = L"█▄▄█";
       
 
-    wstring Four[6];
+    wstring Four[3];
 
-    Four[0] = L"┏┓ ┏┓";
-    Four[1] = L"┃┃ ┃┃";
-    Four[2] = L"┃┗━┛┃"; 
-    Four[3] = L"┗━━┓┃";
-    Four[4] = L"   ┃┃";
-    Four[5] = L"   ┗┛";
+    Four[0] = L" █▀█";
+    Four[1] = L"█▄▄█▄";
+    Four[2] = L"   █";
+
        
-    wstring Five[6];
+    wstring Five[3];
 
-    Five[0] = L"┏━━━┓";
-    Five[1] = L"┃┏━━┛";
-    Five[2] = L"┃┗━━┓";
-    Five[3] = L"┗━━┓┃";
-    Five[4] = L"┏━━┛┃";
-    Five[5] = L"┗━━━┛";
+    Five[0] = L"█▀▀";
+    Five[1] = L"▀▀▄";
+    Five[2] = L"▄▄▀";
 
-    wstring Six[6];
 
-    Six[0] = L"┏━━━┓";
-    Six[1] = L"┃┏━━┛";
-    Six[2] = L"┃┗━━┓";
-    Six[3] = L"┃┏━┓┃";
-    Six[4] = L"┃┗━┛┃";
-    Six[5] = L"┗━━━┛";
+    wstring Six[3];
+    Six[0] = L"▄▀▀▄";
+    Six[1] = L"█▄▄ ";
+    Six[2] = L"▀▄▄▀";
       
-    wstring Seven[6];
+    wstring Seven[3];
+    Seven[0] = L"▀▀▀█";
+    Seven[1] = L"  █";
+    Seven[2] = L" ▐▌";
 
-    Seven[0] = L"┏━━━┓";
-    Seven[1] = L"┃┏━┓┃";
-    Seven[2] = L"┗┛┏┛┃";
-    Seven[3] = L"  ┃┏┛";
-    Seven[4] = L"  ┃┃ ";
-    Seven[5] = L"  ┗┛ ";
-      
 
-    wstring Eight[6];
+    wstring Eight[3];
 
-    Eight[0] = L"┏━━━┓";
-    Eight[1] = L"┃┏━┓┃";
-    Eight[2] = L"┃┗━┛┃";
-    Eight[3] = L"┃┏━┓┃";
-    Eight[4] = L"┃┗━┛┃";
-    Eight[5] = L"┗━━━┛";
+    Eight[0] = L"▄▀▀▄";
+    Eight[1] = L"▄▀▀▄";
+    Eight[2] = L"▀▄▄▀";
+
        
 
    
-    wstring Nine[6];
+    wstring Nine[3];
 
-    Nine[0] = L"┏━━━┓";
-    Nine[1] = L"┃┏━┓┃";
-    Nine[2] = L"┃┗━┛┃";
-    Nine[3] = L"┗━━┓┃";
-    Nine[4] = L"┏━━┛┃";
-    Nine[5] = L"┗━━━┛";
+    Nine[0] = L"▄▀▀▄";
+    Nine[1] = L"▀▄▄█";
+    Nine[2] = L" ▄▄▀";
       
 
     int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
-    for (int j = 0; j < 6; j++)
+    for (int j = 0; j < 3; j++)
     {
         gotoxy(x, y);
         if (i == 0)
@@ -538,15 +521,17 @@ void DrawWin(int n) {
 		}
       
 	}
-	
-	int CurrentMode = _setmode(_fileno(stdout), OldMode);
     gotoxy(82 + 25, 25 + 4);
     color(116);
-    cout << "Do you want to continue ? ";
-    gotoxy(82 + 25, 25 + 6);
-    cout << "  _ Press Y to continue";
-    gotoxy(82 + 25, 25 + 8);
-    cout << "  _ Press any key to go to Menu";
+    wcout << L"Do you want to continue ? ";
+    gotoxy(82+25, 31); wcout << L"╔═════╗";
+    gotoxy(82+25, 32); wcout << L"║  Y  ║ : CONTINUE";
+    gotoxy(82+25, 33); wcout << L"╚═════╝";
+    int CurrentMode = _setmode(_fileno(stdout), OldMode);
+
+   
+    gotoxy(82 + 20, 27 + 9);
+    cout << " Press any key to go to Menu";
 	
 }
 
@@ -596,13 +581,15 @@ void drawMenu() {
     drawhcn(66, 26);
     drawhcn(66, 31);
     drawhcn(66, 36);
+    MenuLogo(30, 18);
+    animal(100, 18);
 }
 void drawNewgame() {
     drawhcn(66, 16);
     drawhcn(66, 21);
     drawhcn(66, 26);
 }
-int GameMode()
+int PlayMenu()
 {
     system("cls");
     logo();
@@ -678,6 +665,82 @@ int GameMode()
     }
 }
 
+int GameMode()
+{
+    system("cls");
+    logo();
+    drawNewgame();
+    int Set[] = { 116,116,116,116,116 };
+    string options[] = { "    PvsCPU (EASY)    ", "    PvsCPU (HARD)    ", "        PvsP         " };
+    int counter = 1;
+    char key;
+
+    for (int i = 0;;)
+    {
+
+        gotoxy(67, 18);
+        cout << options[0];
+
+        gotoxy(67, 23);
+        cout << options[1];
+
+        gotoxy(67, 28);
+        cout << options[2];
+
+
+        key = _getch();
+
+        if (key == 72 && (counter >= 2 && counter <= 3))
+        {
+            select();
+            counter--;
+        }
+        if (key == 80 && (counter >= 1 && counter <= 2))
+        {
+            select();
+            counter++;
+        }
+        if (key == '\r')
+        {
+            select();
+            return counter;
+        }
+
+        if (key == 27)
+        {
+            return 4;
+        }
+
+
+        Set[0] = 116;
+        Set[1] = 116;
+        Set[2] = 116;
+
+        options[0] = "    PvsCPU (EASY)    ";
+        options[1] = "    PvsCPU (HARD)    ";
+        options[2] = "        PvsP         ";
+
+        if (counter == 1)
+        {
+            select1();
+            Set[0] = 117;
+            options[0] = " >> PvsCPU (EASY) << ";
+        }
+        if (counter == 2)
+        {
+            select1();
+            Set[1] = 117;
+            options[1] = " >> PvsCPU (HARD) << ";
+        }
+        if (counter == 3)
+        {
+            select1();
+            Set[2] = 117;
+            options[2] = "     >> PvsP <<      ";
+        }
+    }
+}
+
 void getcurrent() {
     ifstream inputFile("./save/list_of_names");
     string line;
@@ -692,15 +755,15 @@ void DrawSelection(int counter,string loadName[]) {
     if (counter < 5 && counter >= 0)
     {
         color(117);
-        drawhcn(45, 16 + 4 * counter);
+        DrawHcn(45, 16 + 4 * counter);
         gotoxy(47, 17 + 4 * counter);
         cout << loadName[counter];
     }
     else if (counter < 10 && counter >= 5)
     {
         color(117);
-        drawhcn(88, 16 + 4 * (counter - 5));
-        gotoxy(88, 17 + 4 * (counter - 5));
+        DrawHcn(88, 16 + 4 * (counter - 5));
+        gotoxy(90, 17 + 4 * (counter - 5));
         cout << loadName[counter];
     }
 }
@@ -827,4 +890,159 @@ void drawGame(char PLAYER) {
     DrawLogoFrame();
     DrawInforFrame();
     logo2();
+}
+
+void HighLight(int x, int y) {
+    color(118);
+    for (int i = x; i < x + 21; i++) {
+        for (int j = y; j < y + 3; j++) {
+            gotoxy(i, j);
+            cout << " ";
+        }
+       
+    }
+    color(112);
+}
+
+void DrawPvP() {
+
+    int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
+    wstring pvp[3];
+    pvp[0] = L" ░▒█▀▀█░░░▄░░░▄░█▀▀░░░▒█▀▀█";
+    pvp[1] = L" ░▒█▄▄█░░░░█▄█░░▀▀▄░░░▒█▄▄█";
+    pvp[2] = L" ░▒█░░░░░░░░▀░░░▀▀▀░░░▒█░░░";
+
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++)
+        {
+            gotoxy(25, j);
+            wcout << pvp[j];
+        }
+    }
+
+    int CurrentMode = _setmode(_fileno(stdout), OldMode);
+}
+
+void DrawPvC() {
+            int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
+        wstring pvc[3];
+        pvc[0] = L" ░▒█▀▀█░░░▄░░░▄░█▀▀░░░▒█▀▀▄░▒█▀▀█░▒█░▒█";
+        pvc[1] = L" ░▒█▄▄█░░░░█▄█░░▀▀▄░░░▒█░░░░▒█▄▄█░▒█░▒█";
+        pvc[2] = L" ░▒█░░░░░░░░▀░░░▀▀▀░░░▒█▄▄▀░▒█░░░░░▀▄▄▀";
+
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++)
+            {
+                gotoxy(10, j);
+                wcout << pvc[j];
+            }
+        }
+
+        int CurrentMode = _setmode(_fileno(stdout), OldMode);
+}
+
+
+
+void DrawBox(int x, int y, int w, int h) {
+    gotoxy(x, y);
+    cout << char(201); //Góc trái trên
+    gotoxy(x, y + h);
+    cout << char(200); //Góc phải trên
+    for (int i = 1; i < w; i++) //vẽ 2 cạnh bên
+    {
+        gotoxy(x + i, y);
+        cout << char(205);
+        gotoxy(x + i, y + h);
+        cout << char(205);
+    }
+    gotoxy(x + w, y); //Góc trái dưới
+    cout << char(187);
+    gotoxy(x + w, y + h); //Góc phải dưới
+    cout << char(188);
+    for (int j = 1; j < h; j++) //Vẽ 2 cạnh trên dưới {
+    {
+        gotoxy(x, y + j);
+        cout << char(186);
+        gotoxy(x + w, y + j);
+        cout << char(186);
+    }
+}
+
+void DrawHcn(int x, int y) {
+    DrawBox(x, y, 21, 3);
+}
+
+void MenuLogo(int x, int y)
+{
+    int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
+    gotoxy(x, y);
+    wcout << D1_MENULOGO_1;
+    gotoxy(x, y + 1);
+    wcout << D1_MENULOGO_2;
+    gotoxy(x, y + 2);
+    wcout << D1_MENULOGO_3;
+    gotoxy(x, y + 3);
+    wcout << D1_MENULOGO_4;
+    gotoxy(x, y + 4);
+    wcout << D1_MENULOGO_5;
+    gotoxy(x, y + 5);
+    wcout << D1_MENULOGO_6;
+    gotoxy(x, y + 6);
+    wcout << D1_MENULOGO_7;
+    gotoxy(x, y + 7);
+    wcout << D1_MENULOGO_8;
+    gotoxy(x, y + 8);
+    wcout << D1_MENULOGO_9;
+    gotoxy(x, y + 9);
+    wcout << D1_MENULOGO_10;
+    gotoxy(x, y + 10);
+    wcout << D1_MENULOGO_11;
+    gotoxy(x, y + 11);
+    wcout << D1_MENULOGO_12;
+    gotoxy(x, y + 12);
+    wcout << D1_MENULOGO_13;
+    gotoxy(x, y + 13);
+    wcout << D1_MENULOGO_14;
+    int CurrentMode = _setmode(_fileno(stdout), OldMode);
+}
+
+
+void animal(int x, int y) {
+    int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
+    gotoxy(x, y);
+    wcout << D2_BEAR_1;
+    gotoxy(x, y + 1);
+    wcout << D2_BEAR_2;
+    gotoxy(x, y + 2);
+    wcout << D2_BEAR_3;
+    gotoxy(x, y + 3);
+    wcout << D2_BEAR_4;
+    gotoxy(x, y + 4);
+    wcout << D2_BEAR_5;
+
+    gotoxy(x, y);
+    wcout << D2_CAT_1;
+    gotoxy(x, y + 7);
+    wcout << D2_CAT_2;
+    gotoxy(x, y + 8);
+    wcout << D2_CAT_3;
+    gotoxy(x, y + 9);
+    wcout << D2_CAT_4;
+    gotoxy(x, y + 10);
+    wcout << D2_CAT_5;
+
+
+
+    gotoxy(x, y+13);
+    wcout << D2_WHALE_1;
+    gotoxy(x, y + 14);
+    wcout << D2_WHALE_2;
+    gotoxy(x, y + 15);
+    wcout << D2_WHALE_3;
+    gotoxy(x, y + 16);
+    wcout << D2_WHALE_4;
+    gotoxy(x, y + 17);
+    wcout << D2_WHALE_5;
+
+    int CurrentMode = _setmode(_fileno(stdout), OldMode);
 }

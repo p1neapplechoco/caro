@@ -40,7 +40,7 @@ int Setting() {
 		gotoxy(_pos_x + int(D2_SETTINGS_1.size()) - i - 2, D2_Y_SETTING - 5);
 		wcout << D2_SETTINGS_6[D2_SETTINGS_1.size() - 2 - i] << D2_SETTINGS_6[D2_SETTINGS_1.size() - 1 - i];
 
-		
+		Sleep(10);
 	}
 
 	int CurrentMode = _setmode(_fileno(stdout), OldMode);
@@ -52,7 +52,7 @@ int Setting() {
 		cout << D2_LOWER_FRAME << D2_LOWER_FRAME;
 		gotoxy(D2_X_SETTING + 80 - i, D2_Y_SETTING + 19);
 		cout << D2_UPPER_FRAME << D2_UPPER_FRAME;
-		
+		Sleep(10);
 	}
 
 	for (int i = 1; i < 19; i += 2) {
@@ -64,7 +64,7 @@ int Setting() {
 		cout << D2_VERTICAL_FRAME;
 		gotoxy(D2_X_SETTING, D2_Y_SETTING + 19 - i - 1);
 		cout << D2_VERTICAL_FRAME;
-		
+		Sleep(10);
 	}
 
 	gotoxy(D2_X_SETTING + 18, D2_Y_SETTING + 5); //D2 X Setting = 46, D2y=15
@@ -127,7 +127,6 @@ int Setting() {
 		}
 
 		if (key == 27) {
-			Loading();
 			return counter;
 		}
 

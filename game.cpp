@@ -11,8 +11,8 @@
 
 using namespace std;
 
-bool drew;
-bool cpu_player = false;
+bool drew = false;
+int cpu_player = false;
 unsigned int turn = 0;
 bool win_state = false;
 bool isExit = false;
@@ -53,7 +53,7 @@ save:
 	string filename;
 	gotoxy(85, 32);
 	cout << "Nhap ten file de save: ";
-	cin >> filename;
+	getline(cin, filename);
 	gotoxy(85, 32);
 	cout << "                                                             ";
 
@@ -69,7 +69,7 @@ save:
 		case 'Y':
 			file.close();
 			fileInput.open("./save/" + filename + ".txt", ios::out);
-			fileInput << _x << " " << _y << " " << turnx << " " << turno << " " << turnCheck(turn) << " " << turnCheck(turn + 1);
+			fileInput << cpu_player << " " << _x << " " << _y << " " << turnx << " " << turno << " " << turnCheck(turn) << " " << turnCheck(turn + 1);
 			for (int j = 0; j < BOARD_SIZE; j++) {
 				for (int k = 0; k < BOARD_SIZE; k++) {
 					fileInput << board[k][j];
@@ -88,7 +88,7 @@ save:
 	else {
 		file.close();
 		fileInput.open("./save/" + filename + ".txt", ios::out);
-		fileInput << _x << " " << _y << " " << turnx << " " << turno << " " << turnCheck(turn) << " " << turnCheck(turn + 1) << " " << xscore << " " << oscore << " ";
+		fileInput << cpu_player << " " << _x << " " << _y << " " << turnx << " " << turno << " " << turnCheck(turn) << " " << turnCheck(turn + 1) << " " << xscore << " " << oscore << " ";
 		for (int j = 0; j < BOARD_SIZE; j++) {
 			for (int k = 0; k < BOARD_SIZE; k++) {
 				fileInput << board[k][j];
@@ -106,7 +106,7 @@ void getLoad() {
 	ifstream file;
 	file.open("./save/list_of_names");
 	for (int i = 0; i < MAX_CAP; i++)
-		file >> loadName[i];
+		getline(file, loadName[i]);
 	file.close();
 }
 
@@ -117,7 +117,7 @@ void Load() { //loading
 	if (isLoad == true) {
 		ifstream file;
 		file.open("./save/" + filename + ".txt");
-		file >> _x >> _y >> turnx >> turno >> PLAYER1 >> PLAYER2 >> xscore >> oscore;
+		file >> cpu_player >> _x >> _y >> turnx >> turno >> PLAYER1 >> PLAYER2 >> xscore >> oscore;
 		for (int i = 0; i < BOARD_SIZE; i++) {
 			for (int j = 0; j < BOARD_SIZE; j++) {
 				file >> noskipws >> board[j][i];
@@ -337,6 +337,7 @@ void checkWin() {
 		}
 		if (count >= 5) {
 			win_state = true;
+
 			return;
 		}
 	}
@@ -416,14 +417,32 @@ void resetData() {
 
 void game() {
 gomoku:
+	cpu_player = 0;
 	drawGame(turnCheck(turn + +1));
 	DrawTurn((int)(turnCheck(turn) == PLAYER1));
+	gotoxy(FLeft + 13, FTop + 11);
+	cout << "PLAYER 1";
+	gotoxy(FLeft + 65, FTop + 11);
+	cout << "PLAYER 2";
 	DrawScore(xscore, FLeft + 30, FTop + 13);
 	DrawScore(oscore, FLeft + 50, FTop + 13);
 	wstring Line = L"▀▀▀";
 	int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
-	gotoxy(96 + 27, 18);
+	gotoxy(96 + 27, 16);
 	wcout << Line;
+	wstring pvp[3];
+	pvp[0] = L" ░▒█▀▀█░░░▄░░░▄░█▀▀░░░▒█▀▀█";
+	pvp[1] = L" ░▒█▄▄█░░░░█▄█░░▀▀▄░░░▒█▄▄█";
+	pvp[2] = L" ░▒█░░░░░░░░▀░░░▀▀▀░░░▒█░░░";
+
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 3; j++)
+		{
+			gotoxy(25, j);
+			wcout << pvp[j];
+		}
+	}
+
 	int CurrentMode = _setmode(_fileno(stdout), OldMode);
 	drew = true;
 	while (win_state != true && checkDraw() != true && isExit != true) {
@@ -463,8 +482,721 @@ gomoku:
 	else if (isExit == true) {
 		return;
 	}
-	Sleep(4000);
+
+	while (!isExit) {
+		if (_kbhit()) {
+			if (_getch() == 'y') {
+				resetData();
+				goto gomoku;
+			}
+			else
+				resetData();
+			return;;
+		}
+	}
+}
+
+
+// Phan choi che do hard
+int AttackArr[10] = { 0, 3, 24, 192, 1536, 12288, 98304, 531441, 4782969, 500000000 };
+int DefendArr[10] = { 0, 2, 18, 140, 800, 8000, 70569, 350000, 30000000, 300000000 };
+
+bool ischan(int x, int y) {
+	return ((x < 0) || (x > BOARD_SIZE - 1) || (y < 0) || (y > BOARD_SIZE - 1));
+}
+
+int AttackPoint(int x, int y) {
+
+	int tX[8] = { 1,0,1,1,-1,0,-1,-1 };
+	int tY[8] = { 0,1,1,-1,0,-1,-1,1 };
+	int Ally[4]{}, Enemy[4]{}, Block[4]{};
+	for (int k = 0; k < 8; k++) {
+		for (int i = 1; i < 6; i++) {
+
+			if (ischan(x + i * tX[k], y + i * tY[k])) {
+				Block[k % 4]++;
+				break;
+			}
+
+			if (board[x + i * tX[k]][y + i * tY[k]] == EMPTY) break;
+
+			if (board[x + i * tX[k]][y + i * tY[k]] == 'O') {
+				Ally[k % 4]++;
+			}
+
+			if (board[x + i * tX[k]][y + i * tY[k]] == 'X') {
+				Enemy[k % 4]++;
+				break;
+			}
+		}
+	}
+
+	int SumPoint = 0;
+	for (int i = 0; i < 4; i++) {
+		int Point = AttackArr[Ally[i]];
+
+		//Mình có 4 con, ưu tiên đánh
+		if (Ally[i] == 4) Point = AttackArr[9];
+		else Point = AttackArr[Ally[i] * 2];
+		//Bị chặn thì giảm điểm
+		if (Enemy[i] == 1 || Block[i] == 1) Point /= 2;
+
+		//Bị chặn hai đầu thì không đánh
+		if (
+			Enemy[i] == 1 &&
+			Ally[i] < 4 &&
+			Block[i] == 1
+			) Point = 0;
+		if (Enemy[i] == 2) Point = 0;
+		SumPoint += Point;
+	}
+
+	return SumPoint;
+}
+
+int DefendPoint(int x, int y) {
+	int tX[8] = { 1,0,1,1,-1,0,-1,-1 };
+	int tY[8] = { 0,1,1,-1,0,-1,-1,1 };
+	int Ally[4]{}, Enemy[4]{}, Block[4]{};
+
+	for (int k = 0; k < 8; k++) {
+		for (int i = 1; i < 6; i++) {
+			if (ischan(x + i * tX[k], y + i * tY[k])) {
+				Block[k % 4]++;
+				break;
+			}
+
+			if (board[x + i * tX[k]][y + i * tY[k]] == EMPTY) break;
+
+			if (board[x + i * tX[k]][y + i * tY[k]] == 'X') {
+				Enemy[k % 4]++;
+			}
+
+			if (board[x + i * tX[k]][y + i * tY[k]] == 'O') {
+				Ally[k % 4]++;
+				break;
+			}
+		}
+	}
+
+	int SumPoint = 0;
+	for (int i = 0; i < 4; i++) {
+		int Point = DefendArr[Enemy[i]];
+
+		//Địch có 4 con, ưu tiên chặn
+		if (Enemy[i] == 4) Point = DefendArr[9];
+		else Point = DefendArr[Enemy[i] * 2];
+		//Bị chặn thì giảm điểm
+		if ((Ally[i] == 1) || (Block[i] == 1)) Point /= 2;
+
+		//Bị chặn hai đầu thì điểm bằng 0
+		if (
+			Ally[i] == 1 &&
+			Enemy[i] < 4 &&
+			Block[i] == 1
+			) Point = 0;
+		if (Ally[i] == 2) Point = 0;
+		SumPoint += Point;
+	}
+
+	return SumPoint;
+}
+
+_POINT computer_Turn() {
+
+	_POINT result;
+
+	result = { 0,0, EMPTY };
+	int thisMakeCPNotStupid = 0;
+	int MaxPoint = -DefendArr[9];
+	for (int i = 0; i < BOARD_SIZE; i++) {
+		for (int j = 0; j < BOARD_SIZE; j++) {
+			if (board[i][j] == EMPTY)
+			{
+				thisMakeCPNotStupid++;
+				//Chọn r ngẫu nhiên, tăng tính ngẫu nhiên
+				int r = rand() % 2;
+				int Point = AttackPoint(i, j) + DefendPoint(i, j);
+
+				//Lấy tổng điểm lớn nhất (MaxPoint), đánh vào đó
+				if (
+					MaxPoint < Point ||
+					(
+						MaxPoint == Point &&
+						r == 0
+						)
+					) {
+					MaxPoint = Point;
+					result.x = i;
+					result.y = j;
+					result.c = 'O';
+				}
+			}
+		}
+	}
+	if (thisMakeCPNotStupid == BOARD_SIZE * BOARD_SIZE) {
+		result.x = 5;
+		result.y = 6;
+		result.c = 'O';
+	}
+	return result;
+}
+struct cpu {
+	int x;
+	int y;
+};
+cpu maydanhhard()
+{
+	_POINT id = computer_Turn();
+	return { id.x, id.y };
+
+}
+void computer_mark() {
+	if (board[_x][_y] == EMPTY) {
+		if (turnCheck(turn) == PLAYER1)
+		{
+			board[_x][_y] = 'X';
+			board_states.push_back(board);
+			_xmark = _x;
+			_ymark = _y;
+			if (turn % 2 == 0) {
+				turnx++;
+			}
+			else {
+				turno++;
+			}
+			turn++;
+
+			counter = 10;
+			undo = false;
+			drawMarks();
+			turnCheck(turn);
+			checkWin();
+			if (win_state == true) 
+			{
+				board[_x][_y] = 'X';
+					xscore++;
+					EraseScore(FLeft + 30, FTop + 13);
+					DrawScore(xscore, FLeft + 30, FTop + 13);
+					DrawScore(oscore, FLeft + 50, FTop + 13);
+					winsound();
+					color(113);
+					DrawWin(-1);
+					return;
+
+			}
+			else if (checkDraw() == true) {
+				winsound();
+				DrawWin(0);
+				return;
+			}
+			else if (isExit == true) {
+				return;
+			}
+			cpu toado = maydanhhard();
+			_x = toado.x;
+			_y = toado.y;
+			board[_x][_y] = turnCheck(turn);
+			board_states.push_back(board);
+			_xmark = _x;
+			_ymark = _y;
+			if (turn % 2 == 0) {
+				turnx++;
+			}
+			else {
+				turno++;
+			}
+			turn++;
+			counter = 10;
+			undo = false;
+			drawMarks();
+			turnCheck(turn);
+			checkWin();
+			if (win_state == true) 
+			{
+					oscore++;
+					winsound();
+					EraseScore(FLeft + 50, FTop + 13);
+					DrawScore(xscore, FLeft + 30, FTop + 13);
+					DrawScore(oscore, FLeft + 50, FTop + 13);
+					color(114);
+					DrawWin(1);
+					return;
+			}
+			else if (checkDraw() == true) {
+				winsound();
+				DrawWin(0);
+				return;
+			}
+			else if (isExit == true) {
+				return;
+			}
+		}
+	}
+}
+void computer_input() {
+	if (_kbhit())
+		switch (toupper(_getch())) { //keyboard input
+
+		case 'W': case 72: //up
+			goXO();
+			_y--;
+			if (_y < 0) { _y++; }
+			break;
+
+		case 'S': case 80: //down
+			goXO();
+			_y++;
+			if (_y >= BOARD_SIZE) { _y--; }
+			break;
+
+		case 'A': case 75: //left
+			goXO();
+			_x--;
+			if (_x < 0) { _x++; }
+			break;
+
+		case 'D':case 77: //right
+			goXO();
+			_x++;
+			if (_x >= BOARD_SIZE) { _x--; }
+			break;
+
+		case '\r':case 32: //marking the spot
+			enterXO();
+			computer_mark();
+			break;
+
+		case 'U': //undo button
+			Undo();
+			break;
+
+		case 27: //escape quit
+			switch (Pause()) {
+			case 1:
+				drawGame(turnCheck(turn + +1));
+				DrawTurn((int)(turnCheck(turn) == PLAYER1));
+				DrawScore(xscore, FLeft + 30, FTop + 13);
+				DrawScore(oscore, FLeft + 50, FTop + 13);
+				break;
+			case 2:
+				Setting();
+				drawGame(turnCheck(turn + +1));
+				DrawTurn((int)(turnCheck(turn) == PLAYER1));
+				DrawScore(xscore, FLeft + 30, FTop + 13);
+				DrawScore(oscore, FLeft + 50, FTop + 13);
+				break;
+			case 3:
+				Save();
+				isExit = true;
+				break;
+			case 4:
+				isExit = true;
+				break;
+			case 5:
+				drawGame(turnCheck(turn + +1));
+				DrawTurn((int)(turnCheck(turn) == PLAYER1));
+				DrawScore(xscore, FLeft + 30, FTop + 13);
+				DrawScore(oscore, FLeft + 50, FTop + 13);
+				break;
+			}
+			break;
+
+		default:
+			break;
+		}
+}
+void hard() {
+gomoku:
+	cpu_player = 1;
+	drawGame(turnCheck(turn + +1));
+	DrawTurn((int)(turnCheck(turn) == PLAYER1));
+	gotoxy(FLeft + 13, FTop + 11);
+	cout << "PLAYER";
+	gotoxy(FLeft + 65, FTop + 11);
+	cout << "COMPUTER";
+	DrawScore(xscore, FLeft + 30, FTop + 13);
+	DrawScore(oscore, FLeft + 50, FTop + 13);
+	wstring Line = L"▀▀▀";
+	int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
+	gotoxy(96 + 27, 16);
+	wcout << Line;
+	wstring pvc[3];
+	pvc[0] = L" ░▒█▀▀█░░░▄░░░▄░█▀▀░░░▒█▀▀▄░▒█▀▀█░▒█░▒█";
+	pvc[1] = L" ░▒█▄▄█░░░░█▄█░░▀▀▄░░░▒█░░░░▒█▄▄█░▒█░▒█";
+	pvc[2] = L" ░▒█░░░░░░░░▀░░░▀▀▀░░░▒█▄▄▀░▒█░░░░░▀▄▄▀";
+
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 3; j++)
+		{
+			gotoxy(15, j);
+			wcout << pvc[j];
+		}
+	}
+	int CurrentMode = _setmode(_fileno(stdout), OldMode);
+	drew = true;
+	while (win_state != true && checkDraw() != true && isExit != true) {
+		if (drew == false) goto gomoku;
+		computer_input();
+		drawMarks();
+		turnCheck(turn);
+	}
+	
+
 	while (true) {
+		if (_kbhit()) {
+			if (_getch() == 'y') {
+				resetData();
+				goto gomoku;
+			}
+			else
+				resetData();
+			return;;
+		}
+	}
+}
+// Phan choi che do easy
+int AttackArr2[10] = { 0, 3, 5, 75, 479, 7500, 50, 1011, 10069, 20000 };
+int DefendArr2[10] = { 0, 2, 18, 100, 500, 800, 350, 1000, 20000, 1000 };
+
+int AttackPoint2(int x, int y) {
+
+	int tX[8] = { 1,0,1,1,-1,0,-1,-1 };
+	int tY[8] = { 0,1,1,-1,0,-1,-1,1 };
+	int Ally[4]{}, Enemy[4]{}, Block[4]{};
+	for (int k = 0; k < 8; k++) {
+		for (int i = 1; i < 6; i++) {
+
+			if (ischan(x + i * tX[k], y + i * tY[k])) {
+				Block[k % 4]++;
+				break;
+			}
+
+			if (board[x + i * tX[k]][y + i * tY[k]] == EMPTY) break;
+
+			if (board[x + i * tX[k]][y + i * tY[k]] == 'O') {
+				Ally[k % 4]++;
+			}
+
+			if (board[x + i * tX[k]][y + i * tY[k]] == 'X') {
+				Enemy[k % 4]++;
+				break;
+			}
+		}
+	}
+
+	int SumPoint = 0;
+	for (int i = 0; i < 4; i++) {
+		int Point = AttackArr2[Ally[i]];
+
+		//Mình có 4 con, ưu tiên đánh
+		if (Ally[i] == 4) Point = AttackArr2[9];
+		else Point = AttackArr2[Ally[i] * 2];
+		//Bị chặn thì giảm điểm
+		if (Enemy[i] == 1 || Block[i] == 1) Point /= 2;
+
+		//Bị chặn hai đầu thì không đánh
+		if (
+			Enemy[i] == 1 &&
+			Ally[i] < 4 &&
+			Block[i] == 1
+			) Point = 0;
+		if (Enemy[i] == 2) Point = 0;
+		SumPoint += Point;
+	}
+
+	return SumPoint;
+}
+
+int DefendPoint2(int x, int y) {
+	int tX[8] = { 1,0,1,1,-1,0,-1,-1 };
+	int tY[8] = { 0,1,1,-1,0,-1,-1,1 };
+	int Ally[4]{}, Enemy[4]{}, Block[4]{};
+
+	for (int k = 0; k < 8; k++) {
+		for (int i = 1; i < 6; i++) {
+			if (ischan(x + i * tX[k], y + i * tY[k])) {
+				Block[k % 4]++;
+				break;
+			}
+
+			if (board[x + i * tX[k]][y + i * tY[k]] == EMPTY) break;
+
+			if (board[x + i * tX[k]][y + i * tY[k]] == 'X') {
+				Enemy[k % 4]++;
+			}
+
+			if (board[x + i * tX[k]][y + i * tY[k]] == 'O') {
+				Ally[k % 4]++;
+				break;
+			}
+		}
+	}
+
+	int SumPoint = 0;
+	for (int i = 0; i < 4; i++) {
+		int Point = DefendArr2[Enemy[i]];
+
+		//Địch có 4 con, ưu tiên chặn
+		if (Enemy[i] == 4) Point = DefendArr2[9];
+		else Point = DefendArr2[Enemy[i] * 2];
+		//Bị chặn thì giảm điểm
+		if ((Ally[i] == 1) || (Block[i] == 1)) Point /= 2;
+
+		//Bị chặn hai đầu thì điểm bằng 0
+		if (
+			Ally[i] == 1 &&
+			Enemy[i] < 4 &&
+			Block[i] == 1
+			) Point = 0;
+		if (Ally[i] == 2) Point = 0;
+		SumPoint += Point;
+	}
+
+	return SumPoint;
+}
+
+_POINT computer_Turn2() {
+
+	_POINT result;
+
+	result = { 0,0, EMPTY };
+	int thisMakeCPNotStupid = 0;
+	int MaxPoint = -DefendArr2[9];
+	for (int i = 0; i < BOARD_SIZE; i++) {
+		for (int j = 0; j < BOARD_SIZE; j++) {
+			if (board[i][j] == EMPTY)
+			{
+				thisMakeCPNotStupid++;
+				//Chọn r ngẫu nhiên, tăng tính ngẫu nhiên
+				int r = rand() % 2;
+				int Point = AttackPoint2(i, j) + DefendPoint2(i, j);
+
+				//Lấy tổng điểm lớn nhất (MaxPoint), đánh vào đó
+				if (
+					MaxPoint < Point ||
+					(
+						MaxPoint == Point &&
+						r == 0
+						)
+					) {
+					MaxPoint = Point;
+					result.x = i;
+					result.y = j;
+					result.c = 'O';
+				}
+			}
+		}
+	}
+	if (thisMakeCPNotStupid == BOARD_SIZE * BOARD_SIZE) {
+		result.x = 5;
+		result.y = 6;
+		result.c = 'O';
+	}
+	return result;
+}
+cpu maydanheasy()
+{
+	_POINT id = computer_Turn2();
+	return { id.x, id.y };
+
+}
+void computer_mark2() {
+	if (board[_x][_y] == EMPTY) {
+		if (turnCheck(turn) == PLAYER1)
+		{
+			board[_x][_y] = 'X';
+			board_states.push_back(board);
+			_xmark = _x;
+			_ymark = _y;
+			if (turn % 2 == 0) {
+				turnx++;
+			}
+			else {
+				turno++;
+			}
+			turn++;
+
+			counter = 10;
+			undo = false;
+			drawMarks();
+			turnCheck(turn);
+			checkWin();
+			if (win_state == true)
+			{
+				board[_x][_y] = 'X';
+				xscore++;
+				EraseScore(FLeft + 30, FTop + 13);
+				DrawScore(xscore, FLeft + 30, FTop + 13);
+				DrawScore(oscore, FLeft + 50, FTop + 13);
+				winsound();
+				color(113);
+				DrawWin(-1);
+				return;
+
+			}
+			else if (checkDraw() == true) {
+				winsound();
+				DrawWin(0);
+				return;
+			}
+			else if (isExit == true) {
+				return;
+			}
+			cpu toado = maydanheasy();
+			_x = toado.x;
+			_y = toado.y;
+			board[_x][_y] = turnCheck(turn);
+			board_states.push_back(board);
+			_xmark = _x;
+			_ymark = _y;
+			if (turn % 2 == 0) {
+				turnx++;
+			}
+			else {
+				turno++;
+			}
+			turn++;
+			counter = 10;
+			undo = false;
+			drawMarks();
+			turnCheck(turn);
+			checkWin();
+			if (win_state == true)
+			{
+				oscore++;
+				winsound();
+				EraseScore(FLeft + 50, FTop + 13);
+				DrawScore(xscore, FLeft + 30, FTop + 13);
+				DrawScore(oscore, FLeft + 50, FTop + 13);
+				color(114);
+				DrawWin(1);
+				return;
+			}
+			else if (checkDraw() == true) {
+				winsound();
+				DrawWin(0);
+				return;
+			}
+			else if (isExit == true) {
+				return;
+			}
+		}
+	}
+}
+void computer_input2() {
+	if (_kbhit())
+		switch (toupper(_getch())) { //keyboard input
+
+		case 'W': case 72: //up
+			goXO();
+			_y--;
+			if (_y < 0) { _y++; }
+			break;
+
+		case 'S': case 80: //down
+			goXO();
+			_y++;
+			if (_y >= BOARD_SIZE) { _y--; }
+			break;
+
+		case 'A': case 75: //left
+			goXO();
+			_x--;
+			if (_x < 0) { _x++; }
+			break;
+
+		case 'D':case 77: //right
+			goXO();
+			_x++;
+			if (_x >= BOARD_SIZE) { _x--; }
+			break;
+
+		case '\r':case 32: //marking the spot
+			enterXO();
+			computer_mark2();
+			break;
+
+		case 'U': //undo button
+			Undo();
+			break;
+
+		case 27: //escape quit
+			switch (Pause()) {
+			case 1:
+				drawGame(turnCheck(turn + +1));
+				DrawTurn((int)(turnCheck(turn) == PLAYER1));
+				DrawScore(xscore, FLeft + 30, FTop + 13);
+				DrawScore(oscore, FLeft + 50, FTop + 13);
+				break;
+			case 2:
+				Setting();
+				drawGame(turnCheck(turn + +1));
+				DrawTurn((int)(turnCheck(turn) == PLAYER1));
+				DrawScore(xscore, FLeft + 30, FTop + 13);
+				DrawScore(oscore, FLeft + 50, FTop + 13);
+				break;
+			case 3:
+				Save();
+				isExit = true;
+				break;
+			case 4:
+				isExit = true;
+				break;
+			case 5:
+				drawGame(turnCheck(turn + +1));
+				DrawTurn((int)(turnCheck(turn) == PLAYER1));
+				DrawScore(xscore, FLeft + 30, FTop + 13);
+				DrawScore(oscore, FLeft + 50, FTop + 13);
+				break;
+			}
+			break;
+
+		default:
+			break;
+		}
+}
+void easy() {
+gomoku:
+	cpu_player = -1;
+	drawGame(turnCheck(turn + +1));
+	gotoxy(FLeft + 13, FTop + 11);
+	cout << "PLAYER";
+	gotoxy(FLeft + 65, FTop + 11);
+	cout << "COMPUTER";
+	DrawTurn((int)(turnCheck(turn) == PLAYER1));
+	DrawScore(xscore, FLeft + 30, FTop + 13);
+	DrawScore(oscore, FLeft + 50, FTop + 13);
+	wstring Line = L"▀▀▀";
+	int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
+	gotoxy(96 + 27, 16);
+	wcout << Line;
+
+
+	wstring pvc[3];
+	pvc[0] = L" ░▒█▀▀█░░░▄░░░▄░█▀▀░░░▒█▀▀▄░▒█▀▀█░▒█░▒█";
+	pvc[1] = L" ░▒█▄▄█░░░░█▄█░░▀▀▄░░░▒█░░░░▒█▄▄█░▒█░▒█";
+	pvc[2] = L" ░▒█░░░░░░░░▀░░░▀▀▀░░░▒█▄▄▀░▒█░░░░░▀▄▄▀";
+
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 3; j++)
+		{
+			gotoxy(15, j);
+			wcout << pvc[j];
+		}
+	}
+
+	int CurrentMode = _setmode(_fileno(stdout), OldMode);
+	drew = true;
+	while (win_state != true && checkDraw() != true && isExit != true) {
+		if (drew == false) goto gomoku;
+		computer_input2();
+		drawMarks();
+		turnCheck(turn);
+	}
+
+
+	while (!isExit) {
 		if (_kbhit()) {
 			if (_getch() == 'y') {
 				resetData();
@@ -480,21 +1212,36 @@ gomoku:
 void gomoku() {
 GameMode:
 	system("cls");
-	switch (GameMode()) {
+	switch (PlayMenu()) {
 	case 1:
 		resetData();
 		xscore = 0;
 		oscore = 0;
-		game();
+		switch (GameMode()) {
+		case 1:
+			easy();
+			break;
+		case 2:
+			hard();
+			break;
+		case 3:
+			game();
+			break;
+		default:
+			break;
+		}
 		break;
 	case 2:
 		resetData();
 		Load();
 		if (isLoad == false) goto GameMode;
-		else {
+		if (cpu_player == 1) hard();
+		else if (cpu_player == -1) easy();
+		else
+		{
 			game();
-			break;
 		}
+		break;
 	case 3:
 		return;
 		break;

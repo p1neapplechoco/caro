@@ -129,12 +129,18 @@ const wstring D2_CAROCHESS_8 = L"▀▀█••••••••••••�
 const wstring D2_CAROCHESS_9 = L"  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀		";
 
 
-const wstring D2_HCMUS_1 = L" ▄ .▄ ▄▄· • ▌ ▄ ·. ▄• ▄▌.▄▄ ·	";
-const wstring D2_HCMUS_2 = L"██▪▐█▐█ ▌▪·██ ▐███▪█▪██▌▐█ ▀.	";
-const wstring D2_HCMUS_3 = L"██▀▀███ ▄▄▐█ ▌▐▌▐█·█▌▐█▌▄▀▀▀█▄	";
-const wstring D2_HCMUS_4 = L"██▌▐▀▐███▌██ ██▌▐█▌▐█▄█▌▐█▄▪▐█	";
-const wstring D2_HCMUS_5 = L"▀▀▀ ··▀▀▀ ▀▀  █▪▀▀▀ ▀▀▀  ▀▀▀▀	";
+ 
+    
+   
+   
 
+
+const wstring D2_HCMUS_1 = L" ██████╗ ██████╗  ██████╗ ██╗   ██╗██████╗      ██████╗  █████╗    ";
+const wstring D2_HCMUS_2 = L"██╔════╝ ██╔══██╗██╔═══██╗██║   ██║██╔══██╗    ██╔═████╗██╔══██╗   ";
+const wstring D2_HCMUS_3 = L"██║  ███╗██████╔╝██║   ██║██║   ██║██████╔╝    ██║██╔██║╚██████║ 	";
+const wstring D2_HCMUS_4 = L"██║   ██║██╔══██╗██║   ██║██║   ██║██╔═══╝     ████╔╝██║ ╚═══██║   ";
+const wstring D2_HCMUS_5 = L"╚██████╔╝██║  ██║╚██████╔╝╚██████╔╝██║         ╚██████╔╝ █████╔╝   ";
+const wstring D2_HCMUS_6 = L"╚═════╝  ╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚═╝          ╚═════╝  ╚════╝    ";
 //D2_CHARACTER = 0
 const wstring D2_COMPUTER_1 = L"▐▓█▀▀▀▀▀▀▀▀▀█▓▌░▄▄▄▄▄░";
 const wstring D2_COMPUTER_2 = L"▐▓█░░▀░░▀▄░░█▓▌░█▄▄▄█░";
