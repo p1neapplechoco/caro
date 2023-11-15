@@ -2,8 +2,6 @@
 #include "game.h"
 
 #define BOARD_SIZE 15 //default size
-#define PLAYER1 'X' //player _xmark
-#define PLAYER2 'O' //player o
 #define EMPTY ' ' //when no one has marked the thing
 
 using namespace std;
@@ -16,47 +14,85 @@ int counter;
 vector<vector<char>> board(BOARD_SIZE, vector<char>(BOARD_SIZE, EMPTY)); //storing the board
 vector<vector<vector<char>>> board_states(1, vector<vector<char>>(BOARD_SIZE, vector<char>(BOARD_SIZE, EMPTY))); //storing each universe of the board
 
+char PLAYER1 = 'X'; //player x
+char PLAYER2 = 'O'; //player o
 int _x = BOARD_SIZE / 2;
+int _y = BOARD_SIZE / 2;
 int _xmark;
 int _ymark;
-int _y = BOARD_SIZE / 2;
+int turnx = 0;
+int turny = 0;
+
 bool undo = false;
 
-void timer() {
-	counter = 10;
-	Sleep(1000);
-	while (counter >= 1) {
-		counter--;
-	}
+char turnCheck(unsigned int turn) { //self explainatory
+	if (turn % 2 == 0) { return PLAYER1; }
+	else return PLAYER2;
 }
 
 void Save() {
-	string filename, name;
+save:
+	
+	string filename;
 	gotoxy(79, 32);
 	cout << "Nhap ten file de save: ";
 	cin >> filename;
 	gotoxy(79, 32);
 	cout << "                                                             ";
-	ofstream fileInput(filename + ".txt");
-	fileInput << _x << " " << _y << " " << turn << " " << endl;
-	for (int j = 0; j < BOARD_SIZE; j++) {
-		for (int k = 0; k < BOARD_SIZE; k++) {
-			fileInput << board[k][j] << " ";
+	ifstream file;
+	ofstream fileInput;
+	file.open(filename + ".txt");
+	if (file) {
+		system("cls");
+		gotoxy(79, 32);
+		cout << "File da ton tai, co muon xoa file cu ko? Y/N ";
+		switch (_getch()) {
+		case 'y':
+			file.close();
+			fileInput.open(filename + ".txt");
+			fileInput << _x << " " << _y << " " << turnx << " " << turny << " " << turnCheck(turn) << " " << turnCheck(turn + 1);
+			for (int j = 0; j < BOARD_SIZE; j++) {
+				for (int k = 0; k < BOARD_SIZE; k++) {
+					fileInput << board[k][j];
+				}
+			}
+			fileInput.close();
+			break;
+		case 'n':
+			goto save;
 		}
-		fileInput << endl;
 	}
-	fileInput.close();
 }
 
 void Load() {
-	/*string filename, name;
+	string filename;
+	gotoxy(79, 32);
+	cout << "Nhap ten de load: ";
 	cin >> filename;
-	ifstream infile;
-	infile.open(filename + ".txt");
-	while (!infile.eof()) {
+	ifstream file;
+	file.open(filename + ".txt");
 
+	while (true) {
+		if (!file) {
+			system("cls");
+			gotoxy(79, 32);
+			cout << "File khong ton tai, vui long nhap lai:";
+			cin >> filename;
+			file.open(filename + ".txt");
+		}
+		else
+		{
+			file >> _x >> _y >> turnx >> turny >> PLAYER1 >> PLAYER2;
+			for (int i = 0; i < BOARD_SIZE; i++) {
+				for (int j = 0; j < BOARD_SIZE; j++) {
+					file >> noskipws >> board[j][i];
+				}
+			}
+			board_states.push_back(board);
+			break;
+		}
 	}
-	*/
+	system("cls");
 }
 
 void drawBoard() {
@@ -80,11 +116,6 @@ void drawBoard() {
 		}
 	}
 }
-
-char turnCheck(unsigned int turn){ //self explainatory
-	if (turn % 2 == 0) return PLAYER1;
-	else return PLAYER2;
-} 
 
 void input() {
 	if (_kbhit())
@@ -297,6 +328,8 @@ void resetData() {
 	while (board_states.size() > 1){
 		board_states.pop_back();
 	}
+	PLAYER1 = 'X';
+	PLAYER2 = 'O';
 	turn = 0;
 	win_state = false;
 	_x = BOARD_SIZE / 2;
@@ -334,6 +367,7 @@ gomoku:
 }
 
 void gomoku() {
+	system("cls");
 	switch (GameMode()) {
 	case 1:
 		resetData();
@@ -352,3 +386,5 @@ void gomoku() {
 	}
 	
 }
+
+/*<< " " << turnCheck(turn + 1) << " " << turnCheck(turn)*/

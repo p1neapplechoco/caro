@@ -1,3 +1,6 @@
 #ignore all folders
 x64
 .vs
+
+#ignore all save files
+*.txt
