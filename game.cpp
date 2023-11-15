@@ -31,20 +31,37 @@ char turnCheck(unsigned int turn) { //self explainatory
 }
 
 void Save() {
+save:
+	
 	string filename;
 	gotoxy(79, 32);
 	cout << "Nhap ten file de save: ";
 	cin >> filename;
 	gotoxy(79, 32);
 	cout << "                                                             ";
-	ofstream fileInput(filename + ".txt");
-	fileInput << _x << " " << _y << " " << turnx << " " << turny << " " << turnCheck(turn) << " " << turnCheck(turn + 1);
-	for (int j = 0; j < BOARD_SIZE; j++) {
-		for (int k = 0; k < BOARD_SIZE; k++) {
-			fileInput << board[k][j];
+	ifstream file;
+	ofstream fileInput;
+	file.open(filename + ".txt");
+	if (file) {
+		system("cls");
+		gotoxy(79, 32);
+		cout << "File da ton tai, co muon xoa file cu ko? Y/N ";
+		switch (_getch()) {
+		case 'y':
+			file.close();
+			fileInput.open(filename + ".txt");
+			fileInput << _x << " " << _y << " " << turnx << " " << turny << " " << turnCheck(turn) << " " << turnCheck(turn + 1);
+			for (int j = 0; j < BOARD_SIZE; j++) {
+				for (int k = 0; k < BOARD_SIZE; k++) {
+					fileInput << board[k][j];
+				}
+			}
+			fileInput.close();
+			break;
+		case 'n':
+			goto save;
 		}
 	}
-	fileInput.close();
 }
 
 void Load() {
@@ -52,14 +69,29 @@ void Load() {
 	gotoxy(79, 32);
 	cout << "Nhap ten de load: ";
 	cin >> filename;
-	ifstream file(filename + ".txt");
-	file >> _x >> _y >> turnx >> turny>> PLAYER1 >> PLAYER2;
-	for (int i = 0; i < BOARD_SIZE; i++) {
-		for (int j = 0; j < BOARD_SIZE; j++) {
-			file >> noskipws >> board[j][i];
+	ifstream file;
+	file.open(filename + ".txt");
+
+	while (true) {
+		if (!file) {
+			system("cls");
+			gotoxy(79, 32);
+			cout << "File khong ton tai, vui long nhap lai:";
+			cin >> filename;
+			file.open(filename + ".txt");
+		}
+		else
+		{
+			file >> _x >> _y >> turnx >> turny >> PLAYER1 >> PLAYER2;
+			for (int i = 0; i < BOARD_SIZE; i++) {
+				for (int j = 0; j < BOARD_SIZE; j++) {
+					file >> noskipws >> board[j][i];
+				}
+			}
+			board_states.push_back(board);
+			break;
 		}
 	}
-	board_states.push_back(board);
 	system("cls");
 }
 
