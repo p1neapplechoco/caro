@@ -32,7 +32,7 @@ int About() {
 		gotoxy(_pos_x + int(D2_ABOUT_1.size()) - i - 2, D2_Y_ABOUT - 2);
 		wcout << D2_ABOUT_6[D2_ABOUT_1.size() - 2 - i] << D2_ABOUT_6[D2_ABOUT_1.size() - 1 - i];
 
-		Sleep(10);
+	
 	}
 
 	int CurrentMode = _setmode(_fileno(stdout), OldMode);
@@ -42,7 +42,7 @@ int About() {
 		cout << D2_LOWER_FRAME << D2_LOWER_FRAME;
 		gotoxy(D2_X_ABOUT + 80 - i, D2_Y_ABOUT + 31);
 		cout << D2_UPPER_FRAME << D2_UPPER_FRAME;
-		Sleep(10);
+		
 	}
 
 	for (int i = 1; i < 31; i += 2) {
@@ -54,7 +54,7 @@ int About() {
 		cout << D2_VERTICAL_FRAME;
 		gotoxy(D2_X_ABOUT, D2_Y_ABOUT + 31 - i - 1);
 		cout << D2_VERTICAL_FRAME;
-		Sleep(10);
+		
 	}
 
 	OldMode = _setmode(_fileno(stdout), _O_WTEXT);
