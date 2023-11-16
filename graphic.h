@@ -23,7 +23,16 @@ string getLoadName(string loadName[], bool &isLoad);
 void DrawScore(int i, int x, int y);
 void EraseScore(int x, int y);
 int Pause();
-void drawGame(char);
+void drawGame(char, int);
 void Loading();
 int PlayMenu();
+void SetColor(int backgound_color, int text_color);
+void HighLight(int x, int y, int w, int h, int Color);
+void DrawPvP();
+void DrawPvC();
+void DrawBox(int x, int y, int w, int h);
+void DrawHcn(int x, int y);
+void MenuLogo(int x, int y);
+void animal(int x, int y);
+
 #endif

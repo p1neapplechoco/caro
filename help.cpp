@@ -178,26 +178,15 @@ void DrawKey() {
 void DrawEnter()
 {
 	int x = (D3_Help_Box_Left + D3_Help_Max_i) / 2 + D3_Help_Max_i / 4 - 7, y = D3_Help_Max_j - 7;
-	gotoxy(x - 2, y - 1);
-	cout << LEFT_TOP;
-	cout << D3_Help_Double_Vertical_Line << D3_Help_Double_Vertical_Line << D3_Help_Double_Vertical_Line << D3_Help_Double_Vertical_Line << D3_Help_Double_Vertical_Line << D3_Help_Double_Vertical_Line << D3_Help_Double_Vertical_Line;
-	gotoxy(x - 2, y);
-	cout << D3_Help_Double_Horizontal_Line;
-	gotoxy(x + 6, y - 1);
-	cout << RIGHT_TOP;
-	gotoxy(x - 2, y + 1);
-	cout << LEFT_BOTTOM;
-	cout << D3_Help_Double_Vertical_Line << D3_Help_Double_Vertical_Line << D3_Help_Double_Vertical_Line << D3_Help_Double_Vertical_Line << D3_Help_Double_Vertical_Line << D3_Help_Double_Vertical_Line << D3_Help_Double_Vertical_Line;
-	gotoxy(x + 6, y + 1);
-	cout << RIGHT_BOTTOM;
-	gotoxy(x + 6, y);
-	cout << D3_Help_Double_Horizontal_Line;
+	int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
 
-	gotoxy(x, y);
-	cout << "Enter";
-
-	gotoxy(x + 8, y);
-	cout << ": Go / Select";
+	gotoxy(x - 2, y - 1); wcout << L"╔═════════════════╗";
+	gotoxy(x - 2, y);     wcout << L"║  SPACE / ENTER  ║ : Go / Select";
+	gotoxy(x - 2, y + 1); wcout << L"╚═════════════════╝";
+	
+	int CurrentMode = _setmode(_fileno(stdout), OldMode);
+	
+	
 }
 
 //Help Menu
@@ -232,7 +221,7 @@ int Help()
 		wcout << D2_HELP_5[D2_HELP_1.size() - 2 - i] << D2_HELP_5[D2_HELP_1.size() - 1 - i];
 		gotoxy(D3_Help_Box_Left + 27 + int(D2_HELP_1.size()) - i - 2, 8);
 		wcout << D2_HELP_6[D2_HELP_1.size() - 2 - i] << D2_HELP_6[D2_HELP_1.size() - 1 - i];
-
+		Sleep(10);
 		
 	}
 	int CurrentMode = _setmode(_fileno(stdout), OldMode);
@@ -242,6 +231,7 @@ int Help()
 		cout << Lower_Vertical << Lower_Vertical;
 		gotoxy(D3_Help_Max_i + D3_Help_Box_Left - i, D3_Help_Max_j);
 		cout << Upper_Vertical << Upper_Vertical;
+		Sleep(5);
 	
 	}
 
@@ -254,6 +244,7 @@ int Help()
 		cout << Horizontal_Line;
 		gotoxy(D3_Help_Box_Left, D3_Help_Max_j - i - 1);
 		cout << Horizontal_Line;
+		Sleep(5);
 	
 	}
 	gotoxy(68, D3_Help_Max_j - 2);

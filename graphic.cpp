@@ -3,6 +3,7 @@
 #include "game.h"
 #include "data.h"
 #include "settings.h"
+#include "help.h"
 
 int current_num_files = 0;
 
@@ -56,7 +57,7 @@ void logo2() {
 
 void drawBoard(char PLAYER) {
     DrawTurn((int)(PLAYER));
-    color(115);
+    color(116);
     int Max_i = BOARD_SIZE * 2;
     int Max_j = BOARD_SIZE * 4;
     //Effect
@@ -79,6 +80,7 @@ void drawBoard(char PLAYER) {
 
 
     }
+    color(112);
     //Draw board
     for (int i = 0; i <= Max_i; i++) {
         gotoxy(LEFT, TOP + i);
@@ -107,6 +109,7 @@ void drawBoard(char PLAYER) {
             }
         }
     }
+    color(116);
 }
 
 void DrawTurn(int n) {
@@ -164,7 +167,6 @@ void DrawTurn(int n) {
 
 
 void DrawPause() {
-    color(116);
 
     drawhcn(66, 16);
     drawhcn(66, 21);
@@ -190,6 +192,7 @@ void DrawPause() {
 }
 
 void DrawListLoad(string loadName[]) {
+    color(116);
     int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
     wstring list[6];
     list[0] = L"    ███████╗ █████╗ ██╗   ██╗███████╗██████╗     ███████╗██╗██╗     ███████╗███████╗ ";
@@ -201,7 +204,6 @@ void DrawListLoad(string loadName[]) {
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 6; j++)
         {
-            color(116 + i);
             gotoxy(10 + 25, 5 + j);
             wcout << list[j];
         }
@@ -209,33 +211,17 @@ void DrawListLoad(string loadName[]) {
     
     int CurrentMode = _setmode(_fileno(stdout), OldMode);
 
-    for (int i = 0; i < 82; i += 2) {
-        gotoxy(D2_X_SETTING + i, D2_Y_SETTING);
-        cout << D2_LOWER_FRAME << D2_LOWER_FRAME;
-        gotoxy(D2_X_SETTING + 80 - i, D2_Y_SETTING + 22);
-        cout << D2_UPPER_FRAME << D2_UPPER_FRAME;
 
-    }
-    for (int i = 1; i < 22; i += 2) {
-        gotoxy(D2_X_SETTING + 81, D2_Y_SETTING + i - 1);
-        cout << D2_VERTICAL_FRAME;
-        gotoxy(D2_X_SETTING + 81, D2_Y_SETTING + i);
-        cout << D2_VERTICAL_FRAME;
-        gotoxy(D2_X_SETTING, D2_Y_SETTING + 22 - i);
-        cout << D2_VERTICAL_FRAME;
-        gotoxy(D2_X_SETTING, D2_Y_SETTING + 22 - i - 1);
-        cout << D2_VERTICAL_FRAME;
-
-    }
-
+    DrawBox(D2_X_SETTING, D2_Y_SETTING, 82,22);
+   
     for (int i = 0; i < 5; i++) {
-        drawhcn(45, 16 + 4 * i);
+        DrawHcn(45, 16 + 4 * i);
         gotoxy(47, 17 + 4 * i);
         cout << loadName[i];
     }
     for (int i = 5; i < 10; i++) {
-        drawhcn(88, 16 + 4 * (i - 5));
-        gotoxy(88, 17 + 4 * (i - 5));
+        DrawHcn(88, 16 + 4 * (i - 5));
+        gotoxy(90, 17 + 4 * (i - 5));
         cout << loadName[i];
     }
 }
@@ -260,8 +246,147 @@ void DrawLogoFrame() {
         cout << Horizontal_Line;
         gotoxy(LLeft, LMax_j - i - 1);
         cout << Horizontal_Line;
-       
+
+
+        int x = LLeft+15 , y = LTop + 3;
+        gotoxy(x - 2, y - 1);
+        cout << LEFT_TOP;
+        cout << D3_Help_Double_Vertical_Line << D3_Help_Double_Vertical_Line << D3_Help_Double_Vertical_Line;
+        gotoxy(x - 2, y);
+        cout << D3_Help_Double_Horizontal_Line;
+
+        gotoxy(x + 2, y - 1);
+        cout << RIGHT_TOP;
+        gotoxy(x - 2, y + 1);
+        cout << CROSS;
+        cout << D3_Help_Double_Vertical_Line << D3_Help_Double_Vertical_Line << D3_Help_Double_Vertical_Line;
+        gotoxy(x - 2, y + 2);
+        cout << D3_Help_Double_Horizontal_Line;
+        gotoxy(x + 2, y);
+        cout << D3_Help_Double_Horizontal_Line;
+        gotoxy(x + 2, y + 1);
+        cout << CROSS;
+        cout << D3_Help_Double_Vertical_Line << D3_Help_Double_Vertical_Line << D3_Help_Double_Vertical_Line;
+        gotoxy(x + 2, y + 2);
+        cout << D3_Help_Double_Horizontal_Line;
+
+
+        gotoxy(x - 2, y + 3);
+        cout << T_SHAPE_UP;
+        cout << D3_Help_Double_Vertical_Line << D3_Help_Double_Vertical_Line << D3_Help_Double_Vertical_Line;
+        gotoxy(x + 2, y + 3);
+        cout << T_SHAPE_UP;
+        cout << D3_Help_Double_Vertical_Line << D3_Help_Double_Vertical_Line << D3_Help_Double_Vertical_Line;
+
+        gotoxy(x - 6, y + 1);
+        cout << LEFT_TOP;
+        cout << D3_Help_Double_Vertical_Line << D3_Help_Double_Vertical_Line << D3_Help_Double_Vertical_Line;
+        gotoxy(x - 6, y + 2);
+        cout << D3_Help_Double_Horizontal_Line;
+        gotoxy(x - 6, y + 3);
+        cout << LEFT_BOTTOM;
+        cout << D3_Help_Double_Vertical_Line << D3_Help_Double_Vertical_Line << D3_Help_Double_Vertical_Line;
+
+        gotoxy(x + 6, y + 1);
+        cout << RIGHT_TOP;
+        gotoxy(x + 6, y + 3);
+        cout << RIGHT_BOTTOM;
+        gotoxy(x + 6, y + 2);
+        cout << D3_Help_Double_Horizontal_Line;
+
+        gotoxy(x, y);
+        cout << "W";
+        gotoxy(x, y + 2);
+        cout << "S";
+        gotoxy(x - 4, y + 2);
+        cout << "A";
+        gotoxy(x + 4, y + 2);
+        cout << "D";
+
+        int g = 25;
+        gotoxy(x  - 2+g, y - 1);
+        cout << LEFT_TOP;
+        cout << D3_Help_Double_Vertical_Line << D3_Help_Double_Vertical_Line << D3_Help_Double_Vertical_Line;
+        gotoxy(x - 2+g, y);
+        cout << D3_Help_Double_Horizontal_Line;
+
+        gotoxy(x + 2+g, y - 1);
+        cout << RIGHT_TOP;
+        gotoxy(x - 2+g, y + 1);
+        cout << CROSS;
+        cout << D3_Help_Double_Vertical_Line << D3_Help_Double_Vertical_Line << D3_Help_Double_Vertical_Line;
+        gotoxy(x - 2 +g, y + 2);
+        cout << D3_Help_Double_Horizontal_Line;
+        gotoxy(x + 2+g, y);
+        cout << D3_Help_Double_Horizontal_Line;
+        gotoxy(x + 2+g, y + 1);
+        cout << CROSS;
+        cout << D3_Help_Double_Vertical_Line << D3_Help_Double_Vertical_Line << D3_Help_Double_Vertical_Line;
+        gotoxy(x + 2+g, y + 2);
+        cout << D3_Help_Double_Horizontal_Line;
+
+
+        gotoxy(x - 2 +g, y + 3);
+        cout << T_SHAPE_UP;
+        cout << D3_Help_Double_Vertical_Line << D3_Help_Double_Vertical_Line << D3_Help_Double_Vertical_Line;
+        gotoxy(x + 2 +g, y + 3);
+        cout << T_SHAPE_UP;
+        cout << D3_Help_Double_Vertical_Line << D3_Help_Double_Vertical_Line << D3_Help_Double_Vertical_Line;
+
+        gotoxy(x - 6+g, y + 1);
+        cout << LEFT_TOP;
+        cout << D3_Help_Double_Vertical_Line << D3_Help_Double_Vertical_Line << D3_Help_Double_Vertical_Line;
+        gotoxy(x - 6+g, y + 2);
+        cout << D3_Help_Double_Horizontal_Line;
+        gotoxy(x - 6+g, y + 3);
+        cout << LEFT_BOTTOM;
+        cout << D3_Help_Double_Vertical_Line << D3_Help_Double_Vertical_Line << D3_Help_Double_Vertical_Line;
+
+        gotoxy(x + 6 + g, y + 1);
+        cout << RIGHT_TOP;
+        gotoxy(x + 6+g, y + 3);
+        cout << RIGHT_BOTTOM;
+        gotoxy(x + 6+g, y + 2);
+        cout << D3_Help_Double_Horizontal_Line;
+
+        gotoxy(x +g, y);
+        cout << D3_Up_Arrow;
+        gotoxy(x +g, y + 2);
+        cout << D3_Down_Arrow;
+        gotoxy(x - 4 +g, y + 2);
+        cout << D3_Left_Arrow;
+        gotoxy(x + 4 +g, y + 2);
+        cout << D3_Right_Arrow;
+
+        gotoxy(x + 12, y + 2);
+        cout << "OR";
+        gotoxy(x + 4 + g + 9, y + 2);
+        cout << " : TO GO";
+        gotoxy(x - 12, y + 5);
+        cout << "The winner is the first player to form a horizontal, vertical, or diagonal line"; 
+        gotoxy(x - 12, y + 6);
+        cout << "of five game pieces in a row.";
+        gotoxy(x + 40, y + 8);
+        cout << "GOOD LUCK PLAYERS !";
+            
     }
+
+    int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
+   
+    gotoxy(10, 37); wcout << L"╔═════╗";
+    gotoxy(10, 38); wcout << L"║ Esc ║ : PAUSE";
+    gotoxy(10, 39); wcout << L"╚═════╝";
+
+
+
+    gotoxy(30, 37); wcout << L"╔═════╗";
+    gotoxy(30, 38); wcout << L"║  U  ║ : UNDO";
+    gotoxy(30, 39); wcout << L"╚═════╝";
+
+    gotoxy(50, 37); wcout << L"╔═════════════════╗";
+    gotoxy(50, 38); wcout << L"║  SPACE / ENTER  ║ : MARK";
+    gotoxy(50, 39); wcout << L"╚═════════════════╝";
+    int CurrentMode = _setmode(_fileno(stdout), OldMode);
 
 }
 
@@ -285,6 +410,9 @@ void DrawInforFrame() {
         cout << Horizontal_Line;
         gotoxy(FLeft, FMax_j - i - 1);
         cout << Horizontal_Line;
+           
+
+       
         
     }
 }
@@ -341,105 +469,73 @@ void Loading() {
 void DrawScore(int i, int x, int y)
 {
        
-    wstring Zero[6];
+    wstring Zero[3];
 
-    Zero[0] = L"┏━━━┓";
-    Zero[1] = L"┃┏━┓┃";
-    Zero[2] = L"┃┃ ┃┃";
-    Zero[3] = L"┃┃ ┃┃";
-    Zero[4] = L"┃┗━┛┃";
-    Zero[5] = L"┗━━━┛";
+    Zero[0] = L"█▀▀█";
+    Zero[1] = L"█▄▀█";
+    Zero[2] = L"█▄▄█";
        
-    wstring One[6];
-    One[0] = L" ┏┓ ";
-    One[1] = L"┏┛┃ ";
-    One[2] = L"┗┓┃ ";
-    One[3] = L" ┃┃ ";
-    One[4] = L"┏┛┗┓";
-    One[5] = L"┗━━┛";
+    wstring One[3];
+    One[0] = L"▄█ ";
+    One[1] = L" █ ";
+    One[2] = L"▄█▄";
 
-    wstring Two[6];
-
-
+    wstring Two[3];
+    Two[0] = L"█▀█";
+    Two[1] = L" ▄▀";
+    Two[2] = L"█▄▄";
 
 
-    Two[0] = L"██████╗ ";
-    Two[1] = L"╚════██╗";
-    Two[2] = L"█████╔╝ ";
-    Two[3] = L"██╔═══╝ ";
-    Two[4] = L"███████╗";
-    Two[5] = L"╚══════╝";
+    wstring Three[3];
 
-    wstring Three[6];
-
-    Three[0] = L"┏━━━┓";
-    Three[1] = L"┃┏━┓┃";
-    Three[2] = L"┗┛┏┛┃";
-    Three[3] = L"┏┓┗┓┃";
-    Three[4] = L"┃┗━┛┃";
-    Three[5] = L"┗━━━┛";
+    Three[0] = L"█▀▀█";
+    Three[1] = L"  ▀▄";
+    Three[2] = L"█▄▄█";
       
 
-    wstring Four[6];
+    wstring Four[3];
 
-    Four[0] = L"┏┓ ┏┓";
-    Four[1] = L"┃┃ ┃┃";
-    Four[2] = L"┃┗━┛┃"; 
-    Four[3] = L"┗━━┓┃";
-    Four[4] = L"   ┃┃";
-    Four[5] = L"   ┗┛";
+    Four[0] = L" █▀█";
+    Four[1] = L"█▄▄█▄";
+    Four[2] = L"   █";
+
        
-    wstring Five[6];
+    wstring Five[3];
 
-    Five[0] = L"┏━━━┓";
-    Five[1] = L"┃┏━━┛";
-    Five[2] = L"┃┗━━┓";
-    Five[3] = L"┗━━┓┃";
-    Five[4] = L"┏━━┛┃";
-    Five[5] = L"┗━━━┛";
+    Five[0] = L"█▀▀";
+    Five[1] = L"▀▀▄";
+    Five[2] = L"▄▄▀";
 
-    wstring Six[6];
 
-    Six[0] = L"┏━━━┓";
-    Six[1] = L"┃┏━━┛";
-    Six[2] = L"┃┗━━┓";
-    Six[3] = L"┃┏━┓┃";
-    Six[4] = L"┃┗━┛┃";
-    Six[5] = L"┗━━━┛";
+    wstring Six[3];
+    Six[0] = L"▄▀▀▄";
+    Six[1] = L"█▄▄ ";
+    Six[2] = L"▀▄▄▀";
       
-    wstring Seven[6];
+    wstring Seven[3];
+    Seven[0] = L"▀▀▀█";
+    Seven[1] = L"  █";
+    Seven[2] = L" ▐▌";
 
-    Seven[0] = L"┏━━━┓";
-    Seven[1] = L"┃┏━┓┃";
-    Seven[2] = L"┗┛┏┛┃";
-    Seven[3] = L"  ┃┏┛";
-    Seven[4] = L"  ┃┃ ";
-    Seven[5] = L"  ┗┛ ";
-      
 
-    wstring Eight[6];
+    wstring Eight[3];
 
-    Eight[0] = L"┏━━━┓";
-    Eight[1] = L"┃┏━┓┃";
-    Eight[2] = L"┃┗━┛┃";
-    Eight[3] = L"┃┏━┓┃";
-    Eight[4] = L"┃┗━┛┃";
-    Eight[5] = L"┗━━━┛";
+    Eight[0] = L"▄▀▀▄";
+    Eight[1] = L"▄▀▀▄";
+    Eight[2] = L"▀▄▄▀";
+
        
 
    
-    wstring Nine[6];
+    wstring Nine[3];
 
-    Nine[0] = L"┏━━━┓";
-    Nine[1] = L"┃┏━┓┃";
-    Nine[2] = L"┃┗━┛┃";
-    Nine[3] = L"┗━━┓┃";
-    Nine[4] = L"┏━━┛┃";
-    Nine[5] = L"┗━━━┛";
+    Nine[0] = L"▄▀▀▄";
+    Nine[1] = L"▀▄▄█";
+    Nine[2] = L" ▄▄▀";
       
 
     int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
-    for (int j = 0; j < 6; j++)
+    for (int j = 0; j < 3; j++)
     {
         gotoxy(x, y);
         if (i == 0)
@@ -537,15 +633,17 @@ void DrawWin(int n) {
 		}
       
 	}
-	
-	int CurrentMode = _setmode(_fileno(stdout), OldMode);
     gotoxy(82 + 25, 25 + 4);
     color(116);
-    cout << "Do you want to continue ? ";
-    gotoxy(82 + 25, 25 + 6);
-    cout << "  _ Press Y to continue";
-    gotoxy(82 + 25, 25 + 8);
-    cout << "  _ Press any key to go to Menu";
+    wcout << L"Do you want to continue ? ";
+    gotoxy(82+25, 31); wcout << L"╔═════╗";
+    gotoxy(82+25, 32); wcout << L"║  Y  ║ : CONTINUE";
+    gotoxy(82+25, 33); wcout << L"╚═════╝";
+    int CurrentMode = _setmode(_fileno(stdout), OldMode);
+
+   
+    gotoxy(82 + 20, 27 + 9);
+    cout << " Press any key to go to Menu";
 	
 }
 
@@ -595,6 +693,8 @@ void drawMenu() {
     drawhcn(66, 26);
     drawhcn(66, 31);
     drawhcn(66, 36);
+    MenuLogo(30, 18);
+    animal(100, 18);
 }
 void drawNewgame() {
     drawhcn(66, 16);
@@ -767,15 +867,15 @@ void DrawSelection(int counter,string loadName[]) {
     if (counter < 5 && counter >= 0)
     {
         color(117);
-        drawhcn(45, 16 + 4 * counter);
+        DrawHcn(45, 16 + 4 * counter);
         gotoxy(47, 17 + 4 * counter);
         cout << loadName[counter];
     }
     else if (counter < 10 && counter >= 5)
     {
         color(117);
-        drawhcn(88, 16 + 4 * (counter - 5));
-        gotoxy(88, 17 + 4 * (counter - 5));
+        DrawHcn(88, 16 + 4 * (counter - 5));
+        gotoxy(90, 17 + 4 * (counter - 5));
         cout << loadName[counter];
     }
 }
@@ -823,10 +923,9 @@ string getLoadName(string loadName[], bool &isLoad) {
 
 int Pause()
 {
-    color(115);
+    color(116);
     system("cls");
     DrawPause();
-    color(116);
     string options[] = { "       RESUME        ", "      SETTINGS       ", "    SAVE AND EXIT    ", "     EXIT TO MENU    "};
     int counter = 1;
     char key;
@@ -897,10 +996,180 @@ int Pause()
     }
 }
 
-void drawGame(char PLAYER) {
+void DrawPvP() {
+
+    int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
+    wstring pvp[3];
+    pvp[0] = L" ░▒█▀▀█░░░▄░░░▄░█▀▀░░░▒█▀▀█";
+    pvp[1] = L" ░▒█▄▄█░░░░█▄█░░▀▀▄░░░▒█▄▄█";
+    pvp[2] = L" ░▒█░░░░░░░░▀░░░▀▀▀░░░▒█░░░";
+
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++)
+        {
+            gotoxy(25, j);
+            wcout << pvp[j];
+        }
+    }
+
+    int CurrentMode = _setmode(_fileno(stdout), OldMode);
+}
+
+void DrawPvC() {
+    wstring Line = L"▀▀▀";
+    int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
+    gotoxy(96 + 27, 16);
+    wcout << Line;
+
+               
+                                                                     
+
+    wstring pvc[3];
+    pvc[0] = L" ░▒█▀▀█░░░▄░░░▄░█▀▀░░░▒█▀▀▄░▒█▀▀█░▒█░▒█";
+    pvc[1] = L" ░▒█▄▄█░░░░█▄█░░▀▀▄░░░▒█░░░░▒█▄▄█░▒█░▒█";
+    pvc[2] = L" ░▒█░░░░░░░░▀░░░▀▀▀░░░▒█▄▄▀░▒█░░░░░▀▄▄▀";
+
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++)
+        {
+            gotoxy(20, 3 + j);
+            wcout << pvc[j];
+        }
+    }
+    int CurrentMode = _setmode(_fileno(stdout), OldMode);
+}
+
+void drawGame(char PLAYER, int cpu_player) {
     system("cls");
     drawBoard(PLAYER);
+    if (cpu_player != 0) DrawPvC();
+    else DrawPvP();
     DrawLogoFrame();
     DrawInforFrame();
     logo2();
 }
+
+
+
+void SetColor(int backgound_color, int text_color) {
+    HANDLE hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
+    int color_code = backgound_color * 16 + text_color;
+    SetConsoleTextAttribute(hStdout, color_code);
+}
+
+void HighLight(int x, int y, int w, int h, int Color) {
+    SetColor(Color, Color);
+    for (int i = x; i < x + w; i++) {
+        for (int j = y; j < y + h; j++) {
+            gotoxy(i, j);
+            cout << " ";
+        }
+    }
+    SetColor(128, 113);
+}
+
+
+void DrawBox(int x, int y, int w, int h) {
+    gotoxy(x, y);
+    cout << char(201); //Góc trái trên
+    gotoxy(x, y + h);
+    cout << char(200); //Góc phải trên
+    for (int i = 1; i < w; i++) //vẽ 2 cạnh bên
+    {
+        gotoxy(x + i, y);
+        cout << char(205);
+        gotoxy(x + i, y + h);
+        cout << char(205);
+    }
+    gotoxy(x + w, y); //Góc trái dưới
+    cout << char(187);
+    gotoxy(x + w, y + h); //Góc phải dưới
+    cout << char(188);
+    for (int j = 1; j < h; j++) //Vẽ 2 cạnh trên dưới {
+    {
+        gotoxy(x, y + j);
+        cout << char(186);
+        gotoxy(x + w, y + j);
+        cout << char(186);
+    }
+}
+
+void DrawHcn(int x, int y) {
+    DrawBox(x, y, 21, 3);
+}
+
+void MenuLogo(int x, int y)
+{
+    int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
+    gotoxy(x, y);
+    wcout << D1_MENULOGO_1;
+    gotoxy(x, y + 1);
+    wcout << D1_MENULOGO_2;
+    gotoxy(x, y + 2);
+    wcout << D1_MENULOGO_3;
+    gotoxy(x, y + 3);
+    wcout << D1_MENULOGO_4;
+    gotoxy(x, y + 4);
+    wcout << D1_MENULOGO_5;
+    gotoxy(x, y + 5);
+    wcout << D1_MENULOGO_6;
+    gotoxy(x, y + 6);
+    wcout << D1_MENULOGO_7;
+    gotoxy(x, y + 7);
+    wcout << D1_MENULOGO_8;
+    gotoxy(x, y + 8);
+    wcout << D1_MENULOGO_9;
+    gotoxy(x, y + 9);
+    wcout << D1_MENULOGO_10;
+    gotoxy(x, y + 10);
+    wcout << D1_MENULOGO_11;
+    gotoxy(x, y + 11);
+    wcout << D1_MENULOGO_12;
+    gotoxy(x, y + 12);
+    wcout << D1_MENULOGO_13;
+    gotoxy(x, y + 13);
+    wcout << D1_MENULOGO_14;
+    int CurrentMode = _setmode(_fileno(stdout), OldMode);
+}
+
+
+void animal(int x, int y) {
+    int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
+    gotoxy(x, y);
+    wcout << D2_BEAR_1;
+    gotoxy(x, y + 1);
+    wcout << D2_BEAR_2;
+    gotoxy(x, y + 2);
+    wcout << D2_BEAR_3;
+    gotoxy(x, y + 3);
+    wcout << D2_BEAR_4;
+    gotoxy(x, y + 4);
+    wcout << D2_BEAR_5;
+
+    gotoxy(x, y);
+    wcout << D2_CAT_1;
+    gotoxy(x, y + 7);
+    wcout << D2_CAT_2;
+    gotoxy(x, y + 8);
+    wcout << D2_CAT_3;
+    gotoxy(x, y + 9);
+    wcout << D2_CAT_4;
+    gotoxy(x, y + 10);
+    wcout << D2_CAT_5;
+
+
+
+    gotoxy(x, y+13);
+    wcout << D2_WHALE_1;
+    gotoxy(x, y + 14);
+    wcout << D2_WHALE_2;
+    gotoxy(x, y + 15);
+    wcout << D2_WHALE_3;
+    gotoxy(x, y + 16);
+    wcout << D2_WHALE_4;
+    gotoxy(x, y + 17);
+    wcout << D2_WHALE_5;
+
+    int CurrentMode = _setmode(_fileno(stdout), OldMode);
+}
+

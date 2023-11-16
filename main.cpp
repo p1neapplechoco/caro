@@ -19,26 +19,23 @@ Menu:
 		goto Menu;
 	case 2:
 		select();
-		Loading();
 		Setting();
 		goto Menu;
 	case 3:
 		select();
-		Loading();
 		Help();
 		while (1) {
 			if (_getch() == 13) {
-				Loading();
+				
 				goto Menu;
 			}
 		}
 	case 4:
 		select();
-		Loading();
 		About();
 		while (1) {
 			if (_getch() == 13) {
-				Loading();
+				
 				goto Menu;
 			}
 		}

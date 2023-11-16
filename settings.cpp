@@ -40,8 +40,10 @@ int Setting() {
 		gotoxy(_pos_x + int(D2_SETTINGS_1.size()) - i - 2, D2_Y_SETTING - 5);
 		wcout << D2_SETTINGS_6[D2_SETTINGS_1.size() - 2 - i] << D2_SETTINGS_6[D2_SETTINGS_1.size() - 1 - i];
 
-		
+		Sleep(10);
 	}
+
+	
 
 	int CurrentMode = _setmode(_fileno(stdout), OldMode);
 	gotoxy(D2_X_SETTING + 24, D2_Y_SETTING + 17);
@@ -52,7 +54,7 @@ int Setting() {
 		cout << D2_LOWER_FRAME << D2_LOWER_FRAME;
 		gotoxy(D2_X_SETTING + 80 - i, D2_Y_SETTING + 19);
 		cout << D2_UPPER_FRAME << D2_UPPER_FRAME;
-		
+		Sleep(10);
 	}
 
 	for (int i = 1; i < 19; i += 2) {
@@ -64,8 +66,13 @@ int Setting() {
 		cout << D2_VERTICAL_FRAME;
 		gotoxy(D2_X_SETTING, D2_Y_SETTING + 19 - i - 1);
 		cout << D2_VERTICAL_FRAME;
-		
+		Sleep(10);
 	}
+
+	DrawBox(75, 17, 20, 2);
+	DrawBox(75, 21, 20, 2);
+	DrawBox(75, 25, 20, 2);
+	DrawBox(75, 29, 20, 2);
 
 	gotoxy(D2_X_SETTING + 18, D2_Y_SETTING + 5); //D2 X Setting = 46, D2y=15
 	printf("Music:");
@@ -78,17 +85,17 @@ int Setting() {
 	for (int i = 0;;)
 	{
 
-		gotoxy(76, 19);
+		gotoxy(76, 18);
 
 		cout << options[0];
 
-		gotoxy(76, 21);
+		gotoxy(76, 22);
 		cout << options[1];
 
-		gotoxy(76, 27);
+		gotoxy(76, 26);
 		cout << options[2];
 
-		gotoxy(76, 29);
+		gotoxy(76, 30);
 		cout << options[3];
 
 
@@ -127,7 +134,6 @@ int Setting() {
 		}
 
 		if (key == 27) {
-			Loading();
 			return counter;
 		}
 
@@ -167,6 +173,8 @@ int Setting() {
 		}
 	}
 }
+
+
 
 void select() {
 	(sound) ? PlaySound(TEXT("Sounds//select.wav"), NULL, SND_FILENAME | SND_ASYNC) : PlaySound(TEXT("Sounds//silent.wav"), NULL, SND_FILENAME | SND_ASYNC);

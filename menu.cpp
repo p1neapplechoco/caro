@@ -20,7 +20,6 @@ int Menu()
         {
             
             gotoxy(67, 18);
-            
             cout << options[0];
            
             gotoxy(67, 23);
