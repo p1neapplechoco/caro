@@ -172,6 +172,11 @@ void DrawPause() {
     drawhcn(66, 21);
     drawhcn(66, 26);
     drawhcn(66, 31);
+    _draw_BALL(40, 13); 
+
+    _draw_shape_littleface(43, 24);
+
+
 
     int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
     wstring pause[6];
@@ -1262,4 +1267,521 @@ void animal5(int x, int y) {
 }
 
 
+void _draw_shape_volume(SHORT _x, SHORT _y) {
+    gotoxy(_x + 6, _y + 4); cout << (char)219;
+    gotoxy(_x + 6, _y + 5); cout << (char)219;
+    gotoxy(_x + 6, _y + 6); cout << (char)219;
+    gotoxy(_x + 6, _y + 7); cout << (char)219;
+    gotoxy(_x + 6, _y + 8); cout << (char)219;
+    gotoxy(_x + 7, _y + 4); cout << (char)219;
+    gotoxy(_x + 7, _y + 5); cout << (char)219;
+    gotoxy(_x + 7, _y + 6); cout << (char)219;
+    gotoxy(_x + 7, _y + 7); cout << (char)219;
+    gotoxy(_x + 7, _y + 8); cout << (char)219;
+    gotoxy(_x + 8, _y + 4); cout << (char)223;
+    gotoxy(_x + 8, _y + 5); cout << (char)219;
+    gotoxy(_x + 8, _y + 6); cout << (char)219;
+    gotoxy(_x + 8, _y + 7); cout << (char)219;
+    gotoxy(_x + 8, _y + 8); cout << (char)219;
+    gotoxy(_x + 9, _y + 4); cout << (char)223;
+    gotoxy(_x + 9, _y + 5); cout << (char)219;
+    gotoxy(_x + 9, _y + 6); cout << (char)219;
+    gotoxy(_x + 9, _y + 7); cout << (char)219;
+    gotoxy(_x + 9, _y + 8); cout << (char)219;
+    gotoxy(_x + 10, _y + 4); cout << (char)223;
+    gotoxy(_x + 10, _y + 5); cout << (char)219;
+    gotoxy(_x + 10, _y + 6); cout << (char)219;
+    gotoxy(_x + 10, _y + 7); cout << (char)219;
+    gotoxy(_x + 10, _y + 8); cout << (char)219;
+    gotoxy(_x + 11, _y + 4); cout << (char)223;
+    gotoxy(_x + 11, _y + 5); cout << (char)219;
+    gotoxy(_x + 11, _y + 6); cout << (char)219;
+    gotoxy(_x + 11, _y + 7); cout << (char)219;
+    gotoxy(_x + 11, _y + 8); cout << (char)219;
+    gotoxy(_x + 12, _y + 3); cout << (char)220;
+    gotoxy(_x + 12, _y + 4); cout << (char)223;
+    gotoxy(_x + 12, _y + 5); cout << (char)219;
+    gotoxy(_x + 12, _y + 6); cout << (char)219;
+    gotoxy(_x + 12, _y + 7); cout << (char)219;
+    gotoxy(_x + 12, _y + 8); cout << (char)219;
+    gotoxy(_x + 12, _y + 9); cout << (char)223;
+    gotoxy(_x + 13, _y + 3); cout << (char)219;
+    gotoxy(_x + 13, _y + 4); cout << (char)220;
+    gotoxy(_x + 13, _y + 5); cout << (char)219;
+    gotoxy(_x + 13, _y + 6); cout << (char)219;
+    gotoxy(_x + 13, _y + 7); cout << (char)219;
+    gotoxy(_x + 13, _y + 8); cout << (char)219;
+    gotoxy(_x + 13, _y + 9); cout << (char)219;
+    gotoxy(_x + 14, _y + 2); cout << (char)220;
+    gotoxy(_x + 14, _y + 3); cout << (char)223;
+    gotoxy(_x + 14, _y + 4); cout << (char)219;
+    gotoxy(_x + 14, _y + 5); cout << (char)219;
+    gotoxy(_x + 14, _y + 6); cout << (char)219;
+    gotoxy(_x + 14, _y + 7); cout << (char)219;
+    gotoxy(_x + 14, _y + 8); cout << (char)219;
+    gotoxy(_x + 14, _y + 9); cout << (char)219;
+    gotoxy(_x + 14, _y + 10); cout << (char)223;
+    gotoxy(_x + 15, _y + 2); cout << (char)219;
+    gotoxy(_x + 15, _y + 3); cout << (char)219;
+    gotoxy(_x + 15, _y + 4); cout << (char)219;
+    gotoxy(_x + 15, _y + 5); cout << (char)219;
+    gotoxy(_x + 15, _y + 6); cout << (char)219;
+    gotoxy(_x + 15, _y + 7); cout << (char)219;
+    gotoxy(_x + 15, _y + 8); cout << (char)219;
+    gotoxy(_x + 15, _y + 9); cout << (char)219;
+    gotoxy(_x + 15, _y + 10); cout << (char)219;
 
+
+
+    gotoxy(_x + 18, _y + 4); cout << (char)220;
+    gotoxy(_x + 18, _y + 8); cout << (char)223;
+    gotoxy(_x + 19, _y + 4); cout << (char)220;
+    gotoxy(_x + 19, _y + 8); cout << (char)223;
+    gotoxy(_x + 20, _y + 5); cout << (char)219;
+    gotoxy(_x + 20, _y + 6); cout << (char)219;
+    gotoxy(_x + 20, _y + 7); cout << (char)219;
+
+    gotoxy(_x + 22, _y + 3); cout << (char)220;
+    gotoxy(_x + 22, _y + 9); cout << (char)223;
+    gotoxy(_x + 23, _y + 4); cout << (char)223;
+    gotoxy(_x + 23, _y + 8); cout << (char)220;
+
+    gotoxy(_x + 24, _y + 4); cout << (char)220;
+    gotoxy(_x + 24, _y + 5); cout << (char)219;
+    gotoxy(_x + 24, _y + 6); cout << (char)219;
+    gotoxy(_x + 24, _y + 7); cout << (char)219;
+    gotoxy(_x + 24, _y + 8); cout << (char)223;
+    gotoxy(_x + 25, _y + 2); cout << (char)220;
+    gotoxy(_x + 25, _y + 10); cout << (char)223;
+    gotoxy(_x + 26, _y + 3); cout << (char)219;
+    gotoxy(_x + 26, _y + 9); cout << (char)219;
+    gotoxy(_x + 27, _y + 4); cout << (char)219;
+    gotoxy(_x + 27, _y + 5); cout << (char)219;
+    gotoxy(_x + 27, _y + 6); cout << (char)219;
+    gotoxy(_x + 27, _y + 7); cout << (char)219;
+    gotoxy(_x + 27, _y + 8); cout << (char)219;
+
+}
+
+void _draw_shape_volume_dis(SHORT _x, SHORT _y) {
+    gotoxy(_x + 6, _y + 4); cout << (char)219;
+    gotoxy(_x + 6, _y + 5); cout << (char)219;
+    gotoxy(_x + 6, _y + 6); cout << (char)219;
+    gotoxy(_x + 6, _y + 7); cout << (char)219;
+    gotoxy(_x + 6, _y + 8); cout << (char)219;
+    gotoxy(_x + 7, _y + 4); cout << (char)219;
+    gotoxy(_x + 7, _y + 5); cout << (char)219;
+    gotoxy(_x + 7, _y + 6); cout << (char)219;
+    gotoxy(_x + 7, _y + 7); cout << (char)219;
+    gotoxy(_x + 7, _y + 8); cout << (char)219;
+    gotoxy(_x + 8, _y + 4); cout << (char)223;
+    gotoxy(_x + 8, _y + 5); cout << (char)219;
+    gotoxy(_x + 8, _y + 6); cout << (char)219;
+    gotoxy(_x + 8, _y + 7); cout << (char)219;
+    gotoxy(_x + 8, _y + 8); cout << (char)219;
+    gotoxy(_x + 9, _y + 4); cout << (char)223;
+    gotoxy(_x + 9, _y + 5); cout << (char)219;
+    gotoxy(_x + 9, _y + 6); cout << (char)219;
+    gotoxy(_x + 9, _y + 7); cout << (char)219;
+    gotoxy(_x + 9, _y + 8); cout << (char)219;
+    gotoxy(_x + 10, _y + 4); cout << (char)223;
+    gotoxy(_x + 10, _y + 5); cout << (char)219;
+    gotoxy(_x + 10, _y + 6); cout << (char)219;
+    gotoxy(_x + 10, _y + 7); cout << (char)219;
+    gotoxy(_x + 10, _y + 8); cout << (char)219;
+    gotoxy(_x + 11, _y + 4); cout << (char)223;
+    gotoxy(_x + 11, _y + 5); cout << (char)219;
+    gotoxy(_x + 11, _y + 6); cout << (char)219;
+    gotoxy(_x + 11, _y + 7); cout << (char)219;
+    gotoxy(_x + 11, _y + 8); cout << (char)219;
+    gotoxy(_x + 12, _y + 3); cout << (char)220;
+    gotoxy(_x + 12, _y + 4); cout << (char)223;
+    gotoxy(_x + 12, _y + 5); cout << (char)219;
+    gotoxy(_x + 12, _y + 6); cout << (char)219;
+    gotoxy(_x + 12, _y + 7); cout << (char)219;
+    gotoxy(_x + 12, _y + 8); cout << (char)219;
+    gotoxy(_x + 12, _y + 9); cout << (char)223;
+    gotoxy(_x + 13, _y + 3); cout << (char)219;
+    gotoxy(_x + 13, _y + 4); cout << (char)220;
+    gotoxy(_x + 13, _y + 5); cout << (char)219;
+    gotoxy(_x + 13, _y + 6); cout << (char)219;
+    gotoxy(_x + 13, _y + 7); cout << (char)219;
+    gotoxy(_x + 13, _y + 8); cout << (char)219;
+    gotoxy(_x + 13, _y + 9); cout << (char)219;
+    gotoxy(_x + 14, _y + 2); cout << (char)220;
+    gotoxy(_x + 14, _y + 3); cout << (char)223;
+    gotoxy(_x + 14, _y + 4); cout << (char)219;
+    gotoxy(_x + 14, _y + 5); cout << (char)219;
+    gotoxy(_x + 14, _y + 6); cout << (char)219;
+    gotoxy(_x + 14, _y + 7); cout << (char)219;
+    gotoxy(_x + 14, _y + 8); cout << (char)219;
+    gotoxy(_x + 14, _y + 9); cout << (char)219;
+    gotoxy(_x + 14, _y + 10); cout << (char)223;
+    gotoxy(_x + 15, _y + 2); cout << (char)219;
+    gotoxy(_x + 15, _y + 3); cout << (char)219;
+    gotoxy(_x + 15, _y + 4); cout << (char)219;
+    gotoxy(_x + 15, _y + 5); cout << (char)219;
+    gotoxy(_x + 15, _y + 6); cout << (char)219;
+    gotoxy(_x + 15, _y + 7); cout << (char)219;
+    gotoxy(_x + 15, _y + 8); cout << (char)219;
+    gotoxy(_x + 15, _y + 9); cout << (char)219;
+    gotoxy(_x + 15, _y + 10); cout << (char)219;
+    gotoxy(_x + 18, _y + 4); cout << (char)223;
+    gotoxy(_x + 18, _y + 9); cout << (char)223;
+    gotoxy(_x + 19, _y + 4); cout << (char)220;
+    gotoxy(_x + 19, _y + 8); cout << (char)220;
+    gotoxy(_x + 20, _y + 5); cout << (char)223;
+    gotoxy(_x + 20, _y + 8); cout << (char)223;
+    gotoxy(_x + 21, _y + 5); cout << (char)220;
+    gotoxy(_x + 21, _y + 7); cout << (char)220;
+    gotoxy(_x + 22, _y + 6); cout << (char)223;
+    gotoxy(_x + 22, _y + 7); cout << (char)223;
+    gotoxy(_x + 23, _y + 6); cout << (char)220;
+    gotoxy(_x + 24, _y + 6); cout << (char)223;
+    gotoxy(_x + 24, _y + 7); cout << (char)223;
+    gotoxy(_x + 25, _y + 5); cout << (char)220;
+    gotoxy(_x + 25, _y + 7); cout << (char)220;
+    gotoxy(_x + 26, _y + 5); cout << (char)223;
+    gotoxy(_x + 26, _y + 8); cout << (char)223;
+    gotoxy(_x + 27, _y + 4); cout << (char)220;
+    gotoxy(_x + 27, _y + 8); cout << (char)220;
+    gotoxy(_x + 28, _y + 4); cout << (char)223;
+    gotoxy(_x + 28, _y + 9); cout << (char)223;
+}
+
+void erasevol(int x, int y) {
+    for (int i = 0; i < 13; i++) {
+        gotoxy(x, y + i);
+            cout << "                  ";
+        }
+    }
+
+
+void _draw_shape_volume2(SHORT _x, SHORT _y) {
+    gotoxy(_x + 6, _y + 4); cout << (char)219;
+    gotoxy(_x + 6, _y + 5); cout << (char)219;
+    gotoxy(_x + 6, _y + 6); cout << (char)219;
+    gotoxy(_x + 6, _y + 7); cout << (char)219;
+    gotoxy(_x + 6, _y + 8); cout << (char)219;
+    gotoxy(_x + 7, _y + 4); cout << (char)219;
+    gotoxy(_x + 7, _y + 5); cout << (char)219;
+    gotoxy(_x + 7, _y + 6); cout << (char)219;
+    gotoxy(_x + 7, _y + 7); cout << (char)219;
+    gotoxy(_x + 7, _y + 8); cout << (char)219;
+    gotoxy(_x + 8, _y + 4); cout << (char)223;
+    gotoxy(_x + 8, _y + 5); cout << (char)219;
+    gotoxy(_x + 8, _y + 6); cout << (char)219;
+    gotoxy(_x + 8, _y + 7); cout << (char)219;
+    gotoxy(_x + 8, _y + 8); cout << (char)219;
+    gotoxy(_x + 9, _y + 4); cout << (char)223;
+    gotoxy(_x + 9, _y + 5); cout << (char)219;
+    gotoxy(_x + 9, _y + 6); cout << (char)219;
+    gotoxy(_x + 9, _y + 7); cout << (char)219;
+    gotoxy(_x + 9, _y + 8); cout << (char)219;
+    gotoxy(_x + 10, _y + 4); cout << (char)223;
+    gotoxy(_x + 10, _y + 5); cout << (char)219;
+    gotoxy(_x + 10, _y + 6); cout << (char)219;
+    gotoxy(_x + 10, _y + 7); cout << (char)219;
+    gotoxy(_x + 10, _y + 8); cout << (char)219;
+    gotoxy(_x + 11, _y + 4); cout << (char)223;
+    gotoxy(_x + 11, _y + 5); cout << (char)219;
+    gotoxy(_x + 11, _y + 6); cout << (char)219;
+    gotoxy(_x + 11, _y + 7); cout << (char)219;
+    gotoxy(_x + 11, _y + 8); cout << (char)219;
+    gotoxy(_x + 12, _y + 3); cout << (char)220;
+    gotoxy(_x + 12, _y + 4); cout << (char)223;
+    gotoxy(_x + 12, _y + 5); cout << (char)219;
+    gotoxy(_x + 12, _y + 6); cout << (char)219;
+    gotoxy(_x + 12, _y + 7); cout << (char)219;
+    gotoxy(_x + 12, _y + 8); cout << (char)219;
+    gotoxy(_x + 12, _y + 9); cout << (char)223;
+    gotoxy(_x + 13, _y + 3); cout << (char)219;
+    gotoxy(_x + 13, _y + 4); cout << (char)220;
+    gotoxy(_x + 13, _y + 5); cout << (char)219;
+    gotoxy(_x + 13, _y + 6); cout << (char)219;
+    gotoxy(_x + 13, _y + 7); cout << (char)219;
+    gotoxy(_x + 13, _y + 8); cout << (char)219;
+    gotoxy(_x + 13, _y + 9); cout << (char)219;
+    gotoxy(_x + 14, _y + 2); cout << (char)220;
+    gotoxy(_x + 14, _y + 3); cout << (char)223;
+    gotoxy(_x + 14, _y + 4); cout << (char)219;
+    gotoxy(_x + 14, _y + 5); cout << (char)219;
+    gotoxy(_x + 14, _y + 6); cout << (char)219;
+    gotoxy(_x + 14, _y + 7); cout << (char)219;
+    gotoxy(_x + 14, _y + 8); cout << (char)219;
+    gotoxy(_x + 14, _y + 9); cout << (char)219;
+    gotoxy(_x + 14, _y + 10); cout << (char)223;
+    gotoxy(_x + 15, _y + 2); cout << (char)219;
+    gotoxy(_x + 15, _y + 3); cout << (char)219;
+    gotoxy(_x + 15, _y + 4); cout << (char)219;
+    gotoxy(_x + 15, _y + 5); cout << (char)219;
+    gotoxy(_x + 15, _y + 6); cout << (char)219;
+    gotoxy(_x + 15, _y + 7); cout << (char)219;
+    gotoxy(_x + 15, _y + 8); cout << (char)219;
+    gotoxy(_x + 15, _y + 9); cout << (char)219;
+    gotoxy(_x + 15, _y + 10); cout << (char)219;
+
+
+
+    gotoxy(_x + 18, _y + 4); cout << (char)220;
+    gotoxy(_x + 18, _y + 8); cout << (char)223;
+    gotoxy(_x + 19, _y + 4); cout << (char)220;
+    gotoxy(_x + 19, _y + 8); cout << (char)223;
+    gotoxy(_x + 20, _y + 5); cout << (char)219;
+    gotoxy(_x + 20, _y + 6); cout << (char)219;
+    gotoxy(_x + 20, _y + 7); cout << (char)219;
+
+    gotoxy(_x + 22, _y + 3); cout << (char)220;
+    gotoxy(_x + 22, _y + 9); cout << (char)223;
+    gotoxy(_x + 23, _y + 4); cout << (char)223;
+    gotoxy(_x + 23, _y + 8); cout << (char)220;
+
+    gotoxy(_x + 24, _y + 4); cout << (char)220;
+    gotoxy(_x + 24, _y + 5); cout << (char)219;
+    gotoxy(_x + 24, _y + 6); cout << (char)219;
+    gotoxy(_x + 24, _y + 7); cout << (char)219;
+    gotoxy(_x + 24, _y + 8); cout << (char)223;
+    gotoxy(_x + 25, _y + 2); cout << (char)220;
+    gotoxy(_x + 25, _y + 10); cout << (char)223;
+    gotoxy(_x + 26, _y + 3); cout << (char)219;
+    gotoxy(_x + 26, _y + 9); cout << (char)219;
+    gotoxy(_x + 27, _y + 4); cout << (char)219;
+    gotoxy(_x + 27, _y + 5); cout << (char)219;
+    gotoxy(_x + 27, _y + 6); cout << (char)219;
+    gotoxy(_x + 27, _y + 7); cout << (char)219;
+    gotoxy(_x + 27, _y + 8); cout << (char)219;
+
+}
+
+void _draw_shape_volume_dis2(SHORT _x, SHORT _y) {
+    gotoxy(_x + 6, _y + 4); cout << (char)219;
+    gotoxy(_x + 6, _y + 5); cout << (char)219;
+    gotoxy(_x + 6, _y + 6); cout << (char)219;
+    gotoxy(_x + 6, _y + 7); cout << (char)219;
+    gotoxy(_x + 6, _y + 8); cout << (char)219;
+    gotoxy(_x + 7, _y + 4); cout << (char)219;
+    gotoxy(_x + 7, _y + 5); cout << (char)219;
+    gotoxy(_x + 7, _y + 6); cout << (char)219;
+    gotoxy(_x + 7, _y + 7); cout << (char)219;
+    gotoxy(_x + 7, _y + 8); cout << (char)219;
+    gotoxy(_x + 8, _y + 4); cout << (char)223;
+    gotoxy(_x + 8, _y + 5); cout << (char)219;
+    gotoxy(_x + 8, _y + 6); cout << (char)219;
+    gotoxy(_x + 8, _y + 7); cout << (char)219;
+    gotoxy(_x + 8, _y + 8); cout << (char)219;
+    gotoxy(_x + 9, _y + 4); cout << (char)223;
+    gotoxy(_x + 9, _y + 5); cout << (char)219;
+    gotoxy(_x + 9, _y + 6); cout << (char)219;
+    gotoxy(_x + 9, _y + 7); cout << (char)219;
+    gotoxy(_x + 9, _y + 8); cout << (char)219;
+    gotoxy(_x + 10, _y + 4); cout << (char)223;
+    gotoxy(_x + 10, _y + 5); cout << (char)219;
+    gotoxy(_x + 10, _y + 6); cout << (char)219;
+    gotoxy(_x + 10, _y + 7); cout << (char)219;
+    gotoxy(_x + 10, _y + 8); cout << (char)219;
+    gotoxy(_x + 11, _y + 4); cout << (char)223;
+    gotoxy(_x + 11, _y + 5); cout << (char)219;
+    gotoxy(_x + 11, _y + 6); cout << (char)219;
+    gotoxy(_x + 11, _y + 7); cout << (char)219;
+    gotoxy(_x + 11, _y + 8); cout << (char)219;
+    gotoxy(_x + 12, _y + 3); cout << (char)220;
+    gotoxy(_x + 12, _y + 4); cout << (char)223;
+    gotoxy(_x + 12, _y + 5); cout << (char)219;
+    gotoxy(_x + 12, _y + 6); cout << (char)219;
+    gotoxy(_x + 12, _y + 7); cout << (char)219;
+    gotoxy(_x + 12, _y + 8); cout << (char)219;
+    gotoxy(_x + 12, _y + 9); cout << (char)223;
+    gotoxy(_x + 13, _y + 3); cout << (char)219;
+    gotoxy(_x + 13, _y + 4); cout << (char)220;
+    gotoxy(_x + 13, _y + 5); cout << (char)219;
+    gotoxy(_x + 13, _y + 6); cout << (char)219;
+    gotoxy(_x + 13, _y + 7); cout << (char)219;
+    gotoxy(_x + 13, _y + 8); cout << (char)219;
+    gotoxy(_x + 13, _y + 9); cout << (char)219;
+    gotoxy(_x + 14, _y + 2); cout << (char)220;
+    gotoxy(_x + 14, _y + 3); cout << (char)223;
+    gotoxy(_x + 14, _y + 4); cout << (char)219;
+    gotoxy(_x + 14, _y + 5); cout << (char)219;
+    gotoxy(_x + 14, _y + 6); cout << (char)219;
+    gotoxy(_x + 14, _y + 7); cout << (char)219;
+    gotoxy(_x + 14, _y + 8); cout << (char)219;
+    gotoxy(_x + 14, _y + 9); cout << (char)219;
+    gotoxy(_x + 14, _y + 10); cout << (char)223;
+    gotoxy(_x + 15, _y + 2); cout << (char)219;
+    gotoxy(_x + 15, _y + 3); cout << (char)219;
+    gotoxy(_x + 15, _y + 4); cout << (char)219;
+    gotoxy(_x + 15, _y + 5); cout << (char)219;
+    gotoxy(_x + 15, _y + 6); cout << (char)219;
+    gotoxy(_x + 15, _y + 7); cout << (char)219;
+    gotoxy(_x + 15, _y + 8); cout << (char)219;
+    gotoxy(_x + 15, _y + 9); cout << (char)219;
+    gotoxy(_x + 15, _y + 10); cout << (char)219;
+    gotoxy(_x + 18, _y + 4); cout << (char)223;
+    gotoxy(_x + 18, _y + 9); cout << (char)223;
+    gotoxy(_x + 19, _y + 4); cout << (char)220;
+    gotoxy(_x + 19, _y + 8); cout << (char)220;
+    gotoxy(_x + 20, _y + 5); cout << (char)223;
+    gotoxy(_x + 20, _y + 8); cout << (char)223;
+    gotoxy(_x + 21, _y + 5); cout << (char)220;
+    gotoxy(_x + 21, _y + 7); cout << (char)220;
+    gotoxy(_x + 22, _y + 6); cout << (char)223;
+    gotoxy(_x + 22, _y + 7); cout << (char)223;
+    gotoxy(_x + 23, _y + 6); cout << (char)220;
+    gotoxy(_x + 24, _y + 6); cout << (char)223;
+    gotoxy(_x + 24, _y + 7); cout << (char)223;
+    gotoxy(_x + 25, _y + 5); cout << (char)220;
+    gotoxy(_x + 25, _y + 7); cout << (char)220;
+    gotoxy(_x + 26, _y + 5); cout << (char)223;
+    gotoxy(_x + 26, _y + 8); cout << (char)223;
+    gotoxy(_x + 27, _y + 4); cout << (char)220;
+    gotoxy(_x + 27, _y + 8); cout << (char)220;
+    gotoxy(_x + 28, _y + 4); cout << (char)223;
+    gotoxy(_x + 28, _y + 9); cout << (char)223;
+}
+
+void erasevol2(int x, int y) {
+    for (int i = 0; i < 13; i++) {
+        gotoxy(x, y + i);
+        cout << "                  ";
+    }
+}
+
+void _draw_BALL(SHORT _x, SHORT _y) {
+    gotoxy(_x + 7, _y + 4); cout << (char)219;
+    gotoxy(_x + 7, _y + 5); cout << (char)219;
+    gotoxy(_x + 8, _y + 3); cout << (char)220;
+    gotoxy(_x + 8, _y + 4); cout << (char)219;
+    gotoxy(_x + 8, _y + 5); cout << (char)219;
+    gotoxy(_x + 8, _y + 6); cout << (char)223;
+    gotoxy(_x + 9, _y + 3); cout << (char)219;
+   
+   
+    gotoxy(_x + 9, _y + 6); cout << (char)219;
+    gotoxy(_x + 10, _y + 3); cout << (char)219;
+    gotoxy(_x + 10, _y + 4); cout << (char)219;
+    gotoxy(_x + 10, _y + 5); cout << (char)219;
+    gotoxy(_x + 10, _y + 6); cout << (char)219;
+    gotoxy(_x + 11, _y + 3); cout << (char)219;
+    gotoxy(_x + 11, _y + 4); cout << (char)219;
+    gotoxy(_x + 11, _y + 5); cout << (char)219;
+    gotoxy(_x + 11, _y + 6); cout << (char)219;
+    gotoxy(_x + 12, _y + 3); cout << (char)219;
+   
+
+    gotoxy(_x + 12, _y + 6); cout << (char)219;
+    gotoxy(_x + 13, _y + 3); cout << (char)220;
+    gotoxy(_x + 13, _y + 4); cout << (char)219;
+    gotoxy(_x + 13, _y + 5); cout << (char)219;
+    gotoxy(_x + 13, _y + 6); cout << (char)223;
+    gotoxy(_x + 14, _y + 4); cout << (char)219;
+    gotoxy(_x + 14, _y + 5); cout << (char)219;
+}
+
+
+void _draw_shape_htp(SHORT _x, SHORT _y) {
+    gotoxy(_x + 1, _y + 1); cout << (char)219;
+    gotoxy(_x + 1, _y + 2); cout << (char)219;
+    gotoxy(_x + 1, _y + 3); cout << (char)223;
+    gotoxy(_x + 2, _y + 2); cout << (char)223;
+    gotoxy(_x + 3, _y + 1); cout << (char)219;
+    gotoxy(_x + 3, _y + 2); cout << (char)219;
+    gotoxy(_x + 3, _y + 3); cout << (char)223;
+    gotoxy(_x + 5, _y + 1); cout << (char)220;
+    gotoxy(_x + 5, _y + 2); cout << (char)219;
+    gotoxy(_x + 6, _y + 1); cout << (char)223;
+    gotoxy(_x + 6, _y + 3); cout << (char)223;
+    gotoxy(_x + 7, _y + 1); cout << (char)223;
+    gotoxy(_x + 7, _y + 3); cout << (char)223;
+    gotoxy(_x + 8, _y + 1); cout << (char)220;
+    gotoxy(_x + 8, _y + 2); cout << (char)219;
+    gotoxy(_x + 10, _y + 1); cout << (char)219;
+    gotoxy(_x + 10, _y + 2); cout << (char)219;
+    gotoxy(_x + 11, _y + 3); cout << (char)223;
+    gotoxy(_x + 12, _y + 2); cout << (char)219;
+    gotoxy(_x + 13, _y + 3); cout << (char)223;
+    gotoxy(_x + 14, _y + 1); cout << (char)219;
+    gotoxy(_x + 14, _y + 2); cout << (char)219;
+
+    gotoxy(_x + 25, _y + 1); cout << (char)223;
+    gotoxy(_x + 26, _y + 1); cout << (char)219;
+    gotoxy(_x + 26, _y + 2); cout << (char)219;
+    gotoxy(_x + 26, _y + 3); cout << (char)223;
+    gotoxy(_x + 27, _y + 1); cout << (char)223;
+
+    gotoxy(_x + 29, _y + 1); cout << (char)220;
+    gotoxy(_x + 29, _y + 2); cout << (char)219;
+    gotoxy(_x + 30, _y + 1); cout << (char)223;
+    gotoxy(_x + 30, _y + 3); cout << (char)223;
+    gotoxy(_x + 31, _y + 1); cout << (char)223;
+    gotoxy(_x + 31, _y + 3); cout << (char)223;
+    gotoxy(_x + 32, _y + 1); cout << (char)220;
+    gotoxy(_x + 32, _y + 2); cout << (char)219;
+    gotoxy(_x + 44, _y + 1); cout << (char)219;
+    gotoxy(_x + 44, _y + 2); cout << (char)219;
+    gotoxy(_x + 44, _y + 3); cout << (char)223;
+    gotoxy(_x + 45, _y + 1); cout << (char)223;
+    gotoxy(_x + 45, _y + 2); cout << (char)223;
+    gotoxy(_x + 46, _y + 1); cout << (char)223;
+    gotoxy(_x + 46, _y + 2); cout << (char)223;
+    gotoxy(_x + 47, _y + 1); cout << (char)220;
+    gotoxy(_x + 49, _y + 1); cout << (char)219;
+    gotoxy(_x + 49, _y + 2); cout << (char)219;
+    gotoxy(_x + 49, _y + 3); cout << (char)223;
+    gotoxy(_x + 50, _y + 3); cout << (char)223;
+    gotoxy(_x + 51, _y + 3); cout << (char)223;
+    gotoxy(_x + 53, _y + 1); cout << (char)220;
+    gotoxy(_x + 53, _y + 2); cout << (char)219;
+    gotoxy(_x + 53, _y + 3); cout << (char)223;
+    gotoxy(_x + 54, _y + 1); cout << (char)223;
+    gotoxy(_x + 54, _y + 2); cout << (char)223;
+    gotoxy(_x + 55, _y + 1); cout << (char)223;
+    gotoxy(_x + 55, _y + 2); cout << (char)223;
+    gotoxy(_x + 56, _y + 1); cout << (char)220;
+    gotoxy(_x + 56, _y + 2); cout << (char)219;
+    gotoxy(_x + 56, _y + 3); cout << (char)223;
+    gotoxy(_x + 58, _y + 1); cout << (char)223;
+    gotoxy(_x + 59, _y + 1); cout << (char)220;
+    gotoxy(_x + 60, _y + 2); cout << (char)219;
+    gotoxy(_x + 60, _y + 3); cout << (char)223;
+    gotoxy(_x + 61, _y + 1); cout << (char)220;
+    gotoxy(_x + 62, _y + 1); cout << (char)223;
+
+}
+
+
+void _draw_shape_littleface(SHORT _x, SHORT _y) {
+    gotoxy(_x + 3, _y + 1); cout << (char)220;
+    gotoxy(_x + 3, _y + 2); cout << (char)219;
+    gotoxy(_x + 4, _y + 1); cout << (char)223;
+    gotoxy(_x + 4, _y + 3); cout << (char)223;
+    gotoxy(_x + 4, _y + 4); cout << (char)223;
+    gotoxy(_x + 5, _y + 1); cout << (char)223;
+    gotoxy(_x + 5, _y + 2); cout << (char)223;
+    gotoxy(_x + 5, _y + 3); cout << (char)223;
+    gotoxy(_x + 5, _y + 4); cout << (char)220;
+    gotoxy(_x + 6, _y + 1); cout << (char)223;
+    gotoxy(_x + 6, _y + 3); cout << (char)223;
+    gotoxy(_x + 6, _y + 4); cout << (char)220;
+    gotoxy(_x + 7, _y + 1); cout << (char)220;
+    gotoxy(_x + 7, _y + 2); cout << (char)219;
+    gotoxy(_x + 7, _y + 4); cout << (char)220;
+    gotoxy(_x + 8, _y + 4); cout << (char)220;
+    gotoxy(_x + 9, _y + 4); cout << (char)223;
+    gotoxy(_x + 10, _y + 4); cout << (char)220;
+    gotoxy(_x + 11, _y + 1); cout << (char)220;
+    gotoxy(_x + 11, _y + 2); cout << (char)219;
+    gotoxy(_x + 11, _y + 4); cout << (char)220;
+    gotoxy(_x + 12, _y + 1); cout << (char)223;
+    gotoxy(_x + 12, _y + 3); cout << (char)223;
+    gotoxy(_x + 12, _y + 4); cout << (char)220;
+    gotoxy(_x + 13, _y + 1); cout << (char)223;
+    gotoxy(_x + 13, _y + 2); cout << (char)223;
+    gotoxy(_x + 13, _y + 3); cout << (char)223;
+    gotoxy(_x + 13, _y + 4); cout << (char)220;
+    gotoxy(_x + 14, _y + 1); cout << (char)223;
+    gotoxy(_x + 14, _y + 3); cout << (char)223;
+    gotoxy(_x + 14, _y + 4); cout << (char)223;
+    gotoxy(_x + 15, _y + 1); cout << (char)220;
+    gotoxy(_x + 15, _y + 2); cout << (char)219;
+
+}

@@ -11,6 +11,9 @@ bool sound = true;
 
 int Setting() {
 	system("cls");
+	_draw_shape_volume(5, 17);
+	_draw_shape_volume2(100+18, 23);
+
 	int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
 	int _pos_x = D2_X_SETTING + 9;
 	for (int i = 0; i < D2_SETTINGS_1.size() - 1 - i; i += 2) {
@@ -117,16 +120,26 @@ int Setting() {
 			switch (counter) {
 			case 1:
 				music = true;
+				erasevol(17, 17);
+
+				_draw_shape_volume(5, 17);
+
 				backgroundmusic();
 				break;
 			case 2:
 				music = false;
+				erasevol(17, 17);
+				_draw_shape_volume_dis(5, 17);
 				backgroundmusic();
 				break;
 			case 3:
+				erasevol2(112+18, 23);
+				_draw_shape_volume2(100+18, 23);
 				sound = true;
 				break;
 			case 4:
+				erasevol2(112+18, 23);
+				_draw_shape_volume_dis2(100+18, 23);
 				sound = false;
 			default:
 				break;

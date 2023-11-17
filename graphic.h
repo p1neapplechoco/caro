@@ -39,6 +39,18 @@ void animal2(int x, int y);
 void animal3(int x, int y);
 void animal4(int x, int y);
 void animal5(int x, int y);
+void _draw_shape_volume(SHORT _x, SHORT _y);
+void _draw_shape_volume_dis(SHORT _x, SHORT _y);
+void erasevol(int x, int y);
+void _draw_shape_volume2(SHORT _x, SHORT _y);
+void _draw_shape_volume_dis2(SHORT _x, SHORT _y);
+void erasevol2(int x, int y);
+
+void _draw_BALL(SHORT _x, SHORT _y);
+void _draw_shape_htp(SHORT _x, SHORT _y);
+void _draw_shape_littleface(SHORT _x, SHORT _y);
+
+
 
 
 
