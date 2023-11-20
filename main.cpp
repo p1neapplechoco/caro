@@ -23,12 +23,7 @@ Menu:
 		select();
 		Loading();
 		Setting();
-		while (1) {
-			if (_getch() == 27) {
-				Loading();
-				goto Menu;
-			}
-		}
+		goto Menu;
 	case 3:
 		select();
 		Loading();
