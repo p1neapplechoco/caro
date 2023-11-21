@@ -32,7 +32,7 @@ char turnCheck(unsigned int turn) { //self explainatory
 
 void Save() {
 save:
-	
+	system("cls");
 	string filename;
 	gotoxy(79, 32);
 	cout << "Nhap ten file de save: ";
@@ -49,7 +49,7 @@ save:
 		switch (_getch()) {
 		case 'y':
 			file.close();
-			fileInput.open(filename + ".txt");
+			fileInput.open(filename + ".txt",ios::out);
 			fileInput << _x << " " << _y << " " << turnx << " " << turny << " " << turnCheck(turn) << " " << turnCheck(turn + 1);
 			for (int j = 0; j < BOARD_SIZE; j++) {
 				for (int k = 0; k < BOARD_SIZE; k++) {
@@ -61,6 +61,19 @@ save:
 		case 'n':
 			goto save;
 		}
+		return;
+	}
+	else {
+		file.close();
+		fileInput.open(filename + ".txt", ios::out);
+		fileInput << _x << " " << _y << " " << turnx << " " << turny << " " << turnCheck(turn) << " " << turnCheck(turn + 1);
+		for (int j = 0; j < BOARD_SIZE; j++) {
+			for (int k = 0; k < BOARD_SIZE; k++) {
+				fileInput << board[k][j];
+			}
+		}
+		fileInput.close();
+		return;
 	}
 }
 
@@ -384,7 +397,4 @@ void gomoku() {
 		game();
 		break;
 	}
-	
 }
-
-/*<< " " << turnCheck(turn + 1) << " " << turnCheck(turn)*/
