@@ -3,6 +3,7 @@
 #include "console.h"
 #include "data.h"
 
+
 #define BOARD_SIZE 15 //default size
 #define EMPTY ' ' //when no one has marked the thing
 
@@ -30,28 +31,28 @@ bool undo = false;
 
 char turnCheck(unsigned int turn) { //self explainatory
 	if (turn % 2 == 0) {
+		DrawTurn(0);
 		return PLAYER1;
 	}
 	else { 
+		DrawTurn(1);
 		return PLAYER2;
 	}
 }
 
 void Save() { //saving
 save:
-	system("cls");
 	string filename;
-	gotoxy(79, 32);
+	gotoxy(85, 32);
 	cout << "Nhap ten file de save: ";
 	cin >> filename;
-	gotoxy(79, 32);
+	gotoxy(85, 32);
 	cout << "                                                             ";
 	ifstream file;
 	ofstream fileInput;
 	file.open("./save/" + filename + ".txt");
 	if (file) {
-		system("cls");
-		gotoxy(79, 32);
+		gotoxy(85, 34);
 		cout << "File da ton tai, co muon xoa file cu ko? Y/N ";
 		switch (_getch()) {
 		case 'y':
@@ -64,8 +65,12 @@ save:
 				}
 			}
 			fileInput.close();
+			gotoxy(85, 34);
+			cout << "                                                     ";
 			break;
 		case 'n':
+			gotoxy(85, 34);
+			cout << "                                                     ";
 			goto save;
 		}
 		return;
@@ -460,8 +465,11 @@ void resetData() {
 }
 void game() {
 gomoku:
-	system("cls");
+	
 	drawBoard();
+	DrawLogoFrame();
+	DrawInforFrame();
+	logo2();
 	drew = true;
 	while (win_state != true && checkDraw() != true) {
 		if (drew == false) goto gomoku;
