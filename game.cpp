@@ -45,6 +45,8 @@ char turnCheck(unsigned int turn) { //self explainatory
 
 void Save() { //saving
 save:
+	gotoxy(LLeft + 32, LTop + 11);
+	cout << "                                                              ";
 	string filename;
 	gotoxy(85, 32);
 	cout << "Nhap ten file de save: ";
@@ -106,14 +108,15 @@ void getLoad() {
 }
 
 void Load() { //loading
-	gotoxy(LEFT + 10, TOP + 10);
+	DrawListLoad();
+	gotoxy(45, 17);
 	cout << "List of save files: ";
 	for (int i = 0; i < MAX_CAP; i++) {
-		gotoxy(LEFT + 10, TOP + 11 + i);
+		gotoxy(45, 18 + i);
 		cout << loadName[i];
 	}
 	string filename;
-	gotoxy(79, 32);
+	gotoxy(45, 32);
 	cout << "Nhap ten de load: ";
 	cin >> filename;
 	ifstream file;
@@ -121,9 +124,11 @@ void Load() { //loading
 
 	while (true) {
 		if (!file) {
-			system("cls");
-			gotoxy(79, 32);
+			gotoxy(45, 32);
 			cout << "File khong ton tai, vui long nhap lai:";
+			gotoxy(85, 32);
+			cout << "                           ";
+			gotoxy(85, 32);
 			cin >> filename;
 			file.open("./save/" + filename + ".txt");
 		}

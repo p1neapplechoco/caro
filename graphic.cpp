@@ -106,6 +106,50 @@ void DrawTurn(int n) {
 
 }
 
+void DrawListLoad() {
+    int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
+    wstring list[6];
+    list[0] = L"    ███████╗ █████╗ ██╗   ██╗███████╗██████╗     ███████╗██╗██╗     ███████╗███████╗ ";
+    list[1] = L"    ██╔════╝██╔══██╗██║   ██║██╔════╝██╔══██╗    ██╔════╝██║██║     ██╔════╝██╔════╝ ";
+    list[2] = L"    ███████╗███████║██║   ██║█████╗  ██║  ██║    █████╗  ██║██║     █████╗  ███████╗ ";
+    list[3] = L"    ╚════██║██╔══██║╚██╗ ██╔╝██╔══╝  ██║  ██║    ██╔══╝  ██║██║     ██╔══╝  ╚════██║ ";
+    list[4] = L"    ███████║██║  ██║ ╚████╔╝ ███████╗██████╔╝    ██║     ██║███████╗███████╗███████║ ";
+    list[5] = L"    ╚══════╝╚═╝  ╚═╝  ╚═══╝  ╚══════╝╚═════╝     ╚═╝     ╚═╝╚══════╝╚══════╝╚══════╝ ";
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 6; j++)
+        {
+            gotoxy(10 + 25, 5 + j);
+            wcout << list[j];
+        }
+    }
+
+    
+
+    
+    int CurrentMode = _setmode(_fileno(stdout), OldMode);
+
+    for (int i = 0; i < 82; i += 2) {
+        gotoxy(D2_X_SETTING + i, D2_Y_SETTING);
+        cout << D2_LOWER_FRAME << D2_LOWER_FRAME;
+        gotoxy(D2_X_SETTING + 80 - i, D2_Y_SETTING + 19);
+        cout << D2_UPPER_FRAME << D2_UPPER_FRAME;
+
+    }
+
+    for (int i = 1; i < 19; i += 2) {
+        gotoxy(D2_X_SETTING + 81, D2_Y_SETTING + i);
+        cout << D2_VERTICAL_FRAME;
+        gotoxy(D2_X_SETTING + 81, D2_Y_SETTING + i + 1);
+        cout << D2_VERTICAL_FRAME;
+        gotoxy(D2_X_SETTING, D2_Y_SETTING + 19 - i);
+        cout << D2_VERTICAL_FRAME;
+        gotoxy(D2_X_SETTING, D2_Y_SETTING + 19 - i - 1);
+        cout << D2_VERTICAL_FRAME;
+
+    }
+
+}
+
 
 void DrawLogoFrame() {
 
@@ -154,7 +198,7 @@ void DrawInforFrame() {
         
     }
     gotoxy(LLeft + 32, LTop + 11);
-    cout << "Press 'p' to Save Game";
+    cout << "Press 'T' to Save Game";
 }
 
 
@@ -179,7 +223,140 @@ void drawmenu() {
     }
 }
 
+void DrawScore(int i, int x, int y)
+{
+       
+    wstring Zero[6];
+
+    Zero[0] = L"┏━━━┓";
+    Zero[1] = L"┃┏━┓┃";
+    Zero[2] = L"┃┃ ┃┃";
+    Zero[3] = L"┃┃ ┃┃";
+    Zero[4] = L"┃┗━┛┃";
+    Zero[5] = L"┗━━━┛";
+       
+    wstring One[6];
+    One[0] = L" ┏┓ ";
+    One[1] = L"┏┛┃ ";
+    One[2] = L"┗┓┃ ";
+    One[3] = L" ┃┃ ";
+    One[4] = L"┏┛┗┓";
+    One[5] = L"┗━━┛";
+
+    wstring Two[6];
+
+
+
+
+    Two[0] = L"██████╗ ";
+    Two[1] = L"╚════██╗";
+    Two[2] = L"█████╔╝ ";
+    Two[3] = L"██╔═══╝ ";
+    Two[4] = L"███████╗";
+    Two[5] = L"╚══════╝";
+
+    wstring Three[6];
+
+    Three[0] = L"┏━━━┓";
+    Three[1] = L"┃┏━┓┃";
+    Three[2] = L"┗┛┏┛┃";
+    Three[3] = L"┏┓┗┓┃";
+    Three[4] = L"┃┗━┛┃";
+    Three[5] = L"┗━━━┛";
+      
+
+    wstring Four[6];
+
+    Four[0] = L"┏┓ ┏┓";
+    Four[1] = L"┃┃ ┃┃";
+    Four[2] = L"┃┗━┛┃"; 
+    Four[3] = L"┗━━┓┃";
+    Four[4] = L"   ┃┃";
+    Four[5] = L"   ┗┛";
+       
+    wstring Five[6];
+
+    Five[0] = L"┏━━━┓";
+    Five[1] = L"┃┏━━┛";
+    Five[2] = L"┃┗━━┓";
+    Five[3] = L"┗━━┓┃";
+    Five[4] = L"┏━━┛┃";
+    Five[5] = L"┗━━━┛";
+
+    wstring Six[6];
+
+    Six[0] = L"┏━━━┓";
+    Six[1] = L"┃┏━━┛";
+    Six[2] = L"┃┗━━┓";
+    Six[3] = L"┃┏━┓┃";
+    Six[4] = L"┃┗━┛┃";
+    Six[5] = L"┗━━━┛";
+      
+    wstring Seven[6];
+
+    Seven[0] = L"┏━━━┓";
+    Seven[1] = L"┃┏━┓┃";
+    Seven[2] = L"┗┛┏┛┃";
+    Seven[3] = L"  ┃┏┛";
+    Seven[4] = L"  ┃┃ ";
+    Seven[5] = L"  ┗┛ ";
+      
+
+    wstring Eight[6];
+
+    Eight[0] = L"┏━━━┓";
+    Eight[1] = L"┃┏━┓┃";
+    Eight[2] = L"┃┗━┛┃";
+    Eight[3] = L"┃┏━┓┃";
+    Eight[4] = L"┃┗━┛┃";
+    Eight[5] = L"┗━━━┛";
+       
+
+   
+    wstring Nine[6];
+
+    Nine[0] = L"┏━━━┓";
+    Nine[1] = L"┃┏━┓┃";
+    Nine[2] = L"┃┗━┛┃";
+    Nine[3] = L"┗━━┓┃";
+    Nine[4] = L"┏━━┛┃";
+    Nine[5] = L"┗━━━┛";
+      
+
+    int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
+    for (int j = 0; j < 6; j++)
+    {
+        gotoxy(x, y);
+        if (i == 0)
+            wcout << Zero[j];
+        if (i == 1)
+            wcout << One[j];
+        if (i == 2)
+            wcout << Two[j];
+        if (i == 3)
+            wcout << Three[j];
+        if (i == 4)
+            wcout << Four[j];
+        if (i == 5)
+            wcout << Five[j];
+        if (i == 6)
+            wcout << Six[j];
+        if (i == 7)
+            wcout << Seven[j];
+        if (i == 8)
+            wcout << Eight[j];
+        if (i == 9)
+            wcout << Nine[j];
+        y++;
+    }
+    int CurrentMode = _setmode(_fileno(stdout), OldMode);
+}
+
+
 void DrawWin(int n) {
+
+    gotoxy(LLeft + 32, LTop + 11);
+    cout << "                                         ";
 	
 	int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
 	
@@ -208,7 +385,7 @@ void DrawWin(int n) {
 	OWin[5] = L" ╚═════╝      ╚══╝╚══╝ ╚═╝╚═╝  ╚═══╝";
 
 	
-	
+   
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 6; j++)
 		{
@@ -228,10 +405,17 @@ void DrawWin(int n) {
 			Sleep(100);
 
 		}
+      
 	}
 	
 	int CurrentMode = _setmode(_fileno(stdout), OldMode);
-	
+    gotoxy(82 + 25, 25 + 4);
+    color(116);
+    cout << "Do you want to continue ? ";
+    gotoxy(82 + 25, 25 + 6);
+    cout << "  _ Press Y to continue";
+    gotoxy(82 + 25, 25 + 8);
+    cout << "  _ Press any key to go to Menu";
 	
 }
 
