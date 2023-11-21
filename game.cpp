@@ -32,7 +32,6 @@ char turnCheck(unsigned int turn) { //self explainatory
 
 void Save() {
 save:
-	
 	string filename;
 	gotoxy(79, 32);
 	cout << "Nhap ten file de save: ";
@@ -384,7 +383,4 @@ void gomoku() {
 		game();
 		break;
 	}
-	
 }
-
-/*<< " " << turnCheck(turn + 1) << " " << turnCheck(turn)*/

@@ -94,6 +94,7 @@ int About() {
 
 	
 
+	CurrentMode = _setmode(_fileno(stdout), OldMode);
 	
 
 	GotoXY(D2_X_ABOUT + 24, D2_Y_ABOUT + 28);

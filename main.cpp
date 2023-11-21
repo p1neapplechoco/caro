@@ -2,7 +2,7 @@
 #include "menu.h"
 #include "game.h"
 #include "about.h"
-#include<conio.h>
+#include <conio.h>
 #include "help.h"
 
 using namespace std;
