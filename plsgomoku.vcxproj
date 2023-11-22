@@ -128,7 +128,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="about.cpp" />
-    <ClCompile Include="caroframe.cpp" />
     <ClCompile Include="console.cpp" />
     <ClCompile Include="cutscenes.cpp" />
     <ClCompile Include="game.cpp" />
@@ -136,11 +135,9 @@
     <ClCompile Include="help.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="menu.cpp" />
-    <ClCompile Include="view.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="about.h" />
-    <ClInclude Include="caroframe.h" />
     <ClInclude Include="console.h" />
     <ClInclude Include="d2data.h" />
     <ClInclude Include="data.h" />
@@ -149,7 +146,6 @@
     <ClInclude Include="graphic.h" />
     <ClInclude Include="help.h" />
     <ClInclude Include="menu.h" />
-    <ClInclude Include="view.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

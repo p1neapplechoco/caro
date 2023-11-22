@@ -9,7 +9,6 @@ int Menu()
         system("cls");
         logo();
         drawmenu();
-   
         int Set[] = { 116,116,116,116,116 };
         string options[] = { "        PLAY         ", "       OPTION        ", "        HELP         ", "       CREDIT        ", "        EXIT         " };
         int counter = 1;

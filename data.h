@@ -21,11 +21,8 @@
 using namespace std;
 
 //Game Data
-#define BOARD_SIZE 18
-#define LEFT 5
-#define TOP 2
-#define FIRST_CELL_X LEFT + 2
-#define FIRST_CELL_Y TOP + 1
+#define LEFT 7
+#define TOP 3
 
 //Console size
 #define HEIGHT 720
@@ -91,12 +88,6 @@ struct _POINT {
 //ASCII Code For Selected Part Of The Menu
 #define SELECTED_LEFT char(175)
 #define SELECTED_RIGHT char(174)
-
-//Global Variables
-extern _POINT _A[BOARD_SIZE][BOARD_SIZE];
-extern bool _TURN;
-extern int _COMMAND;
-extern int _X, _Y;
 
 struct D1_POINT
 {
