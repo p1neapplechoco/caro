@@ -6,7 +6,7 @@
 
 #include "Data.h"
 
-#include "View.h"
+#include "console.h"
 
 
 //ASCII CODE

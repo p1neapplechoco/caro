@@ -36,3 +36,10 @@ v2.2 (10/11/23)
 - added loading feature.
 - minor fixes:
 	+ always uses 'X' as the starting marker.
+
+v2.3
+- fixed saving.
+
+v2.4 (22/11/23)
+- optimized code.
+- fixed board drawing flickering.

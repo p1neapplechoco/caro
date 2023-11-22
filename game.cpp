@@ -1,11 +1,14 @@
 #include "graphic.h"
 #include "game.h"
+#include "console.h"
+#include "data.h"
 
 #define BOARD_SIZE 15 //default size
 #define EMPTY ' ' //when no one has marked the thing
 
 using namespace std;
 
+bool drew;
 bool cpu_player = false;
 unsigned int turn = 0;
 bool win_state = false;
@@ -108,28 +111,6 @@ void Load() {
 	system("cls");
 }
 
-void drawBoard() {
-	board = board_states.back();
-	for (int i = 0; i <= BOARD_SIZE; i++) {
-		for (int j = 0; j <= BOARD_SIZE; j++) {
-			gotoxy(3 + 4 * i, 1 + 2 * j);
-			cout << ".";
-		}
-	}
-	for (int i = 0; i < BOARD_SIZE; i++) {
-		for (int j = 0; j < BOARD_SIZE; j++) {
-			if (i == _x && j == _y) {
-				gotoxy(4 + 4 * i, 2 + 2 * j);
-				cout << "(" << board[i][j] << ")";
-			}
-			else {
-				gotoxy(4 + 4 * i, 2 + 2 * j);
-				cout << " " << board[i][j] << " ";
-			}
-		}
-	}
-}
-
 void input() {
 	if (_kbhit())
 		switch (_getch()) { //keyboard input
@@ -217,6 +198,7 @@ void input() {
 
 		case 'p': //save button
 			Save();
+			drew = false;
 			break;
 
 		case 27: //escape quit
@@ -329,6 +311,86 @@ void checkWin() {
 	}
 }
 
+void drawBoard() {
+	color(116);
+	int Max_i = BOARD_SIZE * 2;
+	int Max_j = BOARD_SIZE * 4;
+	//Effect
+	gotoxy(LEFT, TOP);
+	cout << LEFT_TOP << HORIZONTAL_LINE;
+	gotoxy(LEFT + Max_j, TOP + Max_i);
+	cout << RIGHT_BOTTOM;
+	int j = 1;
+	for (int i = 1; j < Max_j / 2; i++, j++) {
+
+		gotoxy(LEFT + 2 * j, TOP);
+		cout << HORIZONTAL_LINE << HORIZONTAL_LINE;
+		gotoxy(LEFT, TOP + i);
+		cout << VERTICAL_LINE;
+
+		gotoxy(LEFT + Max_j - 2 * j, TOP + Max_i);
+		cout << HORIZONTAL_LINE << HORIZONTAL_LINE;
+		gotoxy(LEFT + Max_j, TOP + Max_i - i);
+		cout << VERTICAL_LINE;
+
+		Sleep(25);
+	}
+	//Draw board
+	for (int i = 0; i <= Max_i; i++) {
+		gotoxy(LEFT, TOP + i);
+		for (int j = 0; j <= Max_j; j++) {
+			if (i == 0) {
+				if (j == 0) cout << LEFT_TOP;
+				else if (j == Max_j) cout << RIGHT_TOP;
+				else if (j % 4 == 0) cout << T_SHAPE_DOWN;
+				else cout << HORIZONTAL_LINE;
+			}
+			else if (i == Max_i) {
+				if (j == 0) cout << LEFT_BOTTOM;
+				else if (j == Max_j) cout << RIGHT_BOTTOM;
+				else if (j % 4 == 0) cout << T_SHAPE_UP;
+				else cout << HORIZONTAL_LINE;
+			}
+			else if (i % 2 == 0) {
+				if (j == 0) cout << T_SHAPE_RIGHT;
+				else if (j == Max_j) cout << T_SHAPE_LEFT;
+				else if (j % 4 == 0) cout << CROSS;
+				else cout << HORIZONTAL_LINE;
+			}
+			else {
+				if (j % 4 == 0) cout << VERTICAL_LINE;
+				else cout << " ";
+			}
+		}
+	}
+}
+
+void drawMarks() {
+	board = board_states.back();
+	for (int i = 0; i < BOARD_SIZE; i++) {
+		for (int j = 0; j < BOARD_SIZE; j++) {
+			if (i == _x && j == _y) {
+				gotoxy(LEFT + 1 + 4 * i, TOP + 1 + 2 * j);
+				cout << "(" << board[i][j] << ")";
+			}
+			else {
+				gotoxy(LEFT + 1 + 4 * i, TOP + 1 + 2 * j);
+				cout << " " << board[i][j] << " ";
+			}
+		}
+	}
+}
+
+void Loading() {
+	system("cls");
+	gotoxy(42, 14); cout << "LOADING ";
+	for (int i = 0; i < 3; i++) {
+		cout << ". "; Sleep(300);
+	}
+	system("cls");
+
+}
+
 bool checkDraw() {
 	if (turn == 225 && win_state != true) {
 		return true;
@@ -352,9 +414,13 @@ void resetData() {
 
 void game() {
 gomoku:
+	system("cls");
+	drawBoard();
+	drew = true;
 	while (win_state != true && checkDraw() != true) {
+		if (drew == false) goto gomoku;
 		input();
-		drawBoard();
+		drawMarks();
 		turnCheck(turn);
 		checkWin();
 	}

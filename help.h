@@ -4,7 +4,7 @@
 #define HELP_H
 
 #include "Data.h"
-#include "View.h"
+#include "console.h"
 
 
 // Help Data
@@ -23,6 +23,5 @@ void DrawArrow();
 void DrawKey();
 void DrawEnter();
 int Help();
-void HandleKeyForHelp(int X, int Y, KEY_EVENT_RECORD key);
 
 #endif
