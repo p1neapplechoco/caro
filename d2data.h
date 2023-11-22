@@ -29,7 +29,7 @@ extern string D2_PLAYER02_NAME;
 const wstring D2_CHAR_NAME[11] = { L"BOT", L"LOVELY BEAR", L"METAL ROBOT", L"KAITO CAT", L"STRANGE ALIEN", L"DULL LION", L"OLD CROCODILE", L"SHORT SNAKE", L"KING CRAB", L"CUTE TURTLE", L"GIANT WHALE" };
 
 //SETINGS
-#define D2_X_SETTING 46
+#define D2_X_SETTING 37
 #define D2_Y_SETTING 15
 const string D2_ON_OFF[2] = { "Off", "On " };
 
@@ -41,6 +41,18 @@ extern int D2_WHICH_SETTING;
 //ABOUT
 #define D2_X_ABOUT 46
 #define D2_Y_ABOUT 9
+
+
+
+#define FLeft 82
+#define FTop 2
+#define FMax_i 82
+#define FMax_j 23
+
+#define LLeft 82
+#define LTop 25
+#define LMax_i 82
+#define LMax_j 38
 
 //BOARD
 extern int Turn;

@@ -1,13 +1,17 @@
-﻿#include "graphic.h"
+﻿
+#include "graphic.h"
 #include "game.h"
 #include "console.h"
 #include "data.h"
+#include "settings.h"
+
+
 
 #define MAX_CAP 20
 #define BOARD_SIZE 15 //default size
 #define EMPTY ' ' //when no one has marked the thing
 
-using namespace std;
+	using namespace std;
 
 bool drew;
 bool cpu_player = false;
@@ -34,19 +38,20 @@ char turnCheck(unsigned int turn) { //self explainatory
 	if (turn % 2 == 0) {
 		return PLAYER1;
 	}
-	else { 
+	else {
 		return PLAYER2;
 	}
 }
 
 void Save() { //saving
 save:
-	system("cls");
+	gotoxy(LLeft + 32, LTop + 11);
+	cout << "                                                              ";
 	string filename;
-	gotoxy(79, 32);
+	gotoxy(85, 32);
 	cout << "Nhap ten file de save: ";
 	cin >> filename;
-	gotoxy(79, 32);
+	gotoxy(85, 32);
 	cout << "                                                             ";
 
 	ifstream file;
@@ -55,8 +60,7 @@ save:
 	
 	file.open("./save/" + filename + ".txt");
 	if (file) {
-		system("cls");
-		gotoxy(79, 32);
+		gotoxy(85, 34);
 		cout << "File da ton tai, co muon xoa file cu ko? Y/N ";
 		switch (toupper(_getch())) {
 		case 'Y':
@@ -104,14 +108,15 @@ void getLoad() {
 }
 
 void Load() { //loading
-	gotoxy(LEFT + 10, TOP + 10);
+	DrawListLoad();
+	gotoxy(45, 17);
 	cout << "List of save files: ";
 	for (int i = 0; i < MAX_CAP; i++) {
-		gotoxy(LEFT + 10, TOP + 11 + i);
+		gotoxy(45, 18 + i);
 		cout << loadName[i];
 	}
 	string filename;
-	gotoxy(79, 32);
+	gotoxy(45, 32);
 	cout << "Nhap ten de load: ";
 	cin >> filename;
 	ifstream file;
@@ -119,9 +124,11 @@ void Load() { //loading
 
 	while (true) {
 		if (!file) {
-			system("cls");
-			gotoxy(79, 32);
+			gotoxy(45, 32);
 			cout << "File khong ton tai, vui long nhap lai:";
+			gotoxy(85, 32);
+			cout << "                           ";
+			gotoxy(85, 32);
 			cin >> filename;
 			file.open("./save/" + filename + ".txt");
 		}
@@ -155,6 +162,7 @@ void mark() {
 		turn++;
 		counter = 10;
 		undo = false;
+		DrawTurn((int)(turnCheck(turn) == PLAYER1));
 	}
 }
 
@@ -324,6 +332,7 @@ void checkWin() {
 }
 
 void drawBoard() {
+	DrawTurn((int)(turnCheck(turn) == PLAYER1));
 	color(116);
 	int Max_i = BOARD_SIZE * 2;
 	int Max_j = BOARD_SIZE * 4;
@@ -345,7 +354,7 @@ void drawBoard() {
 		gotoxy(LEFT + Max_j, TOP + Max_i - i);
 		cout << VERTICAL_LINE;
 
-		Sleep(25);
+		
 	}
 	//Draw board
 	for (int i = 0; i <= Max_i; i++) {
@@ -424,12 +433,28 @@ void drawMarks() {
 
 void Loading() {
 	system("cls");
-	gotoxy(42, 14); cout << "LOADING ";
+	int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
+	wstring loading[8];
+	loading[0] = L"██╗      ██████╗  █████╗ ██████╗ ██╗███╗   ██╗ ██████╗  ";
+	loading[1] = L"██║     ██╔═══██╗██╔══██╗██╔══██╗██║████╗  ██║██╔════╝  ";
+	loading[2] = L"██║     ██║   ██║███████║██║  ██║██║██╔██╗ ██║██║  ███╗ ";
+	loading[3] = L"██║     ██║   ██║██╔══██║██║  ██║██║██║╚██╗██║██║   ██║ ";
+	loading[4] = L"███████╗╚██████╔╝██║  ██║██████╔╝██║██║ ╚████║╚██████╔╝ ";
+	loading[5] = L"╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚═════╝ ╚═╝╚═╝  ╚═══╝ ╚═════╝  ";
+	loading[6] = L" ██ ";
 	for (int i = 0; i < 3; i++) {
-		cout << ". "; Sleep(300);
-	}
-	system("cls");
+		for (int j = 0; j < 6; j++)
+		{
+			gotoxy(30 + 25, 15 + j);
+			wcout << loading[j];
+		}
 
+	}
+	for (int i = 0; i < 3; i++) {
+		wcout << loading[6]; Sleep(300);
+	}
+	int CurrentMode = _setmode(_fileno(stdout), OldMode);
+	system("cls");
 }
 
 bool checkDraw() {
@@ -442,7 +467,7 @@ bool checkDraw() {
 void resetData() {
 	getLoad();
 	system("cls");
-	while (board_states.size() > 1){	
+	while (board_states.size() > 1) {
 		board_states.pop_back();
 	}
 	PLAYER1 = 'X';
@@ -457,8 +482,10 @@ void resetData() {
 }
 void game() {
 gomoku:
-	system("cls");
 	drawBoard();
+	DrawLogoFrame();
+	DrawInforFrame();
+	logo2();
 	drew = true;
 	while (win_state != true && checkDraw() != true) {
 		if (drew == false) goto gomoku;
@@ -470,10 +497,12 @@ gomoku:
 	if (win_state == true) {
 		if (turnCheck(turn + 1) == 'X') {
 			winsound();
+			color(113);
 			DrawWin(-1);
 		}
 		else {
 			winsound();
+			color(114);
 			DrawWin(1);
 		}
 	}
@@ -489,7 +518,7 @@ gomoku:
 			}
 			else
 				resetData();
-				return;;
+			return;;
 		}
 	}
 }

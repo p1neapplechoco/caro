@@ -4,12 +4,15 @@
 #include "about.h"
 #include <conio.h>
 #include "help.h"
+#include "settings.h"
+
+
 
 using namespace std;
 
 int main() {
 Menu:
-	gamemusic();
+	backgroundmusic();
 	setupConsole();
 	switch (Menu())
 	{
@@ -21,7 +24,7 @@ Menu:
 	case 2:
 		select();
 		Loading();
-		Option();
+		Setting();
 		goto Menu;
 	case 3:
 		select();
