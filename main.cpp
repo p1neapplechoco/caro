@@ -13,22 +13,28 @@ Menu:
 	switch (Menu())
 	{
 	case 1:
+		Loading();
 		gomoku();
 		goto Menu;
 	case 2:
+		Loading();
 		Option();
 		goto Menu;
 	case 3:
+		Loading();
 		Help();
 		while (1) {
 			if (_getch() == 13) {
+				Loading();
 				goto Menu;
 			}
 		}
 	case 4:
+		Loading();
 		About();
 		while (1) {
 			if (_getch() == 13) {
+				Loading();
 				goto Menu;
 			}
 		}

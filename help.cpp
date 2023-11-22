@@ -1,4 +1,4 @@
-#include "Help.h"
+﻿#include "Help.h"
 
 //Handle key for the Help Menu
 
@@ -264,3 +264,4 @@ int Help()
 
 	return 0x0000;
 }
+

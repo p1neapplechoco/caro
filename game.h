@@ -6,4 +6,6 @@
 
 #ifndef _GAME_H_
 void gomoku();
+void Loading();
+
 #endif
