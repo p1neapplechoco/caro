@@ -4,6 +4,7 @@
 #include "data.h"
 #include "settings.h"
 
+int current_num_files = 0;
 
 using namespace std;
 
@@ -103,10 +104,11 @@ void DrawTurn(int n) {
         Sleep(15);
     }
     int CurrentMode = _setmode(_fileno(stdout), OldMode);
-
+    
 }
 
-void DrawListLoad() {
+void DrawListLoad(string loadName[]) {
+    color(116);
     int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
     wstring list[6];
     list[0] = L"    ███████╗ █████╗ ██╗   ██╗███████╗██████╗     ███████╗██╗██╗     ███████╗███████╗ ";
@@ -123,6 +125,7 @@ void DrawListLoad() {
         }
     }
 
+
     
 
     
@@ -131,28 +134,37 @@ void DrawListLoad() {
     for (int i = 0; i < 82; i += 2) {
         gotoxy(D2_X_SETTING + i, D2_Y_SETTING);
         cout << D2_LOWER_FRAME << D2_LOWER_FRAME;
-        gotoxy(D2_X_SETTING + 80 - i, D2_Y_SETTING + 19);
+        gotoxy(D2_X_SETTING + 80 - i, D2_Y_SETTING + 22);
         cout << D2_UPPER_FRAME << D2_UPPER_FRAME;
 
     }
-
-    for (int i = 1; i < 19; i += 2) {
+    for (int i = 1; i < 22; i += 2) {
+        gotoxy(D2_X_SETTING + 81, D2_Y_SETTING + i - 1);
+        cout << D2_VERTICAL_FRAME;
         gotoxy(D2_X_SETTING + 81, D2_Y_SETTING + i);
         cout << D2_VERTICAL_FRAME;
-        gotoxy(D2_X_SETTING + 81, D2_Y_SETTING + i + 1);
+        gotoxy(D2_X_SETTING, D2_Y_SETTING + 22 - i);
         cout << D2_VERTICAL_FRAME;
-        gotoxy(D2_X_SETTING, D2_Y_SETTING + 19 - i);
-        cout << D2_VERTICAL_FRAME;
-        gotoxy(D2_X_SETTING, D2_Y_SETTING + 19 - i - 1);
+        gotoxy(D2_X_SETTING, D2_Y_SETTING + 22 - i - 1);
         cout << D2_VERTICAL_FRAME;
 
     }
 
+    for (int i = 0; i < 5; i++) {
+        drawhcn(45, 16 + 4 * i);
+        gotoxy(47, 17 + 4 * i);
+        cout << loadName[i];
+    }
+    for (int i = 5; i < 10; i++) {
+        drawhcn(88, 16 + 4 * (i - 5));
+        gotoxy(88, 17 + 4 * (i - 5));
+        cout << loadName[i];
+    }
 }
 
 
 void DrawLogoFrame() {
-
+    
     for (int i = 0; i <= LMax_i; i += 2) {
         gotoxy(LLeft + i, LTop);
         cout << Lower_Vertical << Lower_Vertical;
@@ -352,6 +364,22 @@ void DrawScore(int i, int x, int y)
     int CurrentMode = _setmode(_fileno(stdout), OldMode);
 }
 
+void EraseScore(int x, int y) {
+    gotoxy(x, y);
+    cout << "        ";
+    gotoxy(x, y+1);
+    cout << "        ";
+    gotoxy(x, y+2);
+    cout << "        ";
+    gotoxy(x, y+3);
+    cout << "        ";
+    gotoxy(x, y+4);
+    cout << "        ";
+    gotoxy(x, y+5);
+    cout << "        ";
+   
+}
+
 
 void DrawWin(int n) {
 
@@ -547,106 +575,73 @@ int GameMode()
     }
 }
 
-void DrawPause() {
-    int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
-    wstring pause[6];
-    pause[0] = L"  ██████╗  █████╗ ██╗   ██╗███████╗███████╗██████╗   ";
-    pause[1] = L"  ██╔══██╗██╔══██╗██║   ██║██╔════╝██╔════╝██╔══██╗  ";
-    pause[2] = L"  ██████╔╝███████║██║   ██║███████╗█████╗  ██║  ██║  ";
-    pause[3] = L"  ██╔═══╝ ██╔══██║██║   ██║╚════██║██╔══╝  ██║  ██║  ";
-    pause[4] = L"  ██║     ██║  ██║╚██████╔╝███████║███████╗██████╔╝  ";
-    pause[5] = L"  ╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚══════╝╚═════╝   ";
 
-
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 6; j++)
-        {
-            gotoxy(20 + 30, 8 + j);
-            wcout << pause[j];
-        }
+void getcurrent() {
+    ifstream inputFile("./save/list_of_names");
+    string line;
+    while (getline(inputFile, line)) {
+        current_num_files++;
     }
-    int CurrentMode = _setmode(_fileno(stdout), OldMode);
+    current_num_files--;
+    inputFile.close();
+}
+ 
+
+void DrawSelection(int counter,string loadName[]) {
+    DrawListLoad(loadName);
+    if (counter < 5 && counter >= 0)
+    {
+        color(117);
+        drawhcn(45, 16 + 4 * counter);
+        gotoxy(47, 17 + 4 * counter);
+        cout << loadName[counter];
+    }
+    else if (counter < 10 && counter >= 5)
+    {
+        color(117);
+        drawhcn(88, 16 + 4 * (counter - 5));
+        gotoxy(88, 17 + 4 * (counter - 5));
+        cout << loadName[counter];
+    }
 }
 
-int Pause()
-{
-    system("cls");
-    DrawPause();
-    drawhcn(66, 16);
-    drawhcn(66, 21);
-    drawhcn(66, 26);
-    drawhcn(66, 31);
-    string options[] = { "        RESUME       ", "        SETTINGS         ", "        HELP         ","        EXIT         " };
-    int counter = 1;
-    char key;
-
-    for (int i = 0;;)
-    {
-
-        gotoxy(67, 18);
-        cout << options[0];
-
-        gotoxy(67, 23);
-        cout << options[1];
-
-        gotoxy(67, 28);
-        cout << options[2];
-
-        gotoxy(67, 33);
-        cout << options[3];
-
-
-        key = _getch();
-
-        if (key == 72 && (counter >= 2 && counter <= 3))
-        {
-            select();
-            counter--;
-        }
-        if (key == 80 && (counter >= 1 && counter <= 2))
-        {
-            select();
-            counter++;
-        }
-        if (key == '\r')
-        {
-            select();
-            return counter;
-        }
-
-        if (key == 27)
-        {
-            return 4;
-        }
-
-        options[0] = "        RESUME       ";
-        options[1] = "       SETTINGS      ";
-        options[2] = "         HELP         ";
-        options[3] = "         EXIT         ";
-
-        if (counter == 1)
-        {
-            select1();
-
-            options[0] = "     >> RESUME <<    ";
-        }
-        if (counter == 2)
-        {
-            select1();
-
-            options[1] = "    >> SETTINGS <<      ";
-        }
-        if (counter == 3)
-        {
-            select1();
-
-            options[2] = "     >> HELP <<      ";
-        }
-        if (counter == 4)
-        {
-            select1();
-
-            options[3] = "     >> EXIT <<      ";
+string getLoadName(string loadName[], bool &isLoad) {
+    getcurrent();
+    gotoxy(1, 1);
+    cout << current_num_files;
+    int counter = 0;
+    isLoad = false;
+    for (int i = 0;;) {
+        DrawSelection(counter, loadName);            
+        switch (toupper(_getch())) {
+        case 'W': case 72:
+            if (counter > 0) counter--;
+            break;
+        case 'S': case 80:
+            if (counter < 5 || counter < 10) counter++;
+            break;
+        case 'A': case 75:
+            if (counter - 5 >= 0) counter -= 5;
+            break;
+        case 'D': case 77:
+            if (counter + 5 < 10) counter += 5;
+            break;
+        case '\r':
+            if (counter < current_num_files)
+            {
+                isLoad = true;
+                return loadName[counter];
+            }
+            else
+            {
+                isLoad = false;
+                return "0";
+            }
+        case 27:
+            isLoad = false;
+            return "0";
+        default:
+            break;
         }
     }
 }

@@ -6,8 +6,6 @@
 #include "help.h"
 #include "settings.h"
 
-
-
 using namespace std;
 
 int main() {
