@@ -42,4 +42,4 @@ v2.3
 
 v2.4 (22/11/23)
 - optimized code.
-- fixed board drawing flickering.
+- fixed board drawing flickering.(đi lên còn lỗi)
