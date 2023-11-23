@@ -8,19 +8,26 @@
 using namespace std;
 
 int main() {
+	gamemusic();
 Menu:
+	
+		
+	
 	setupConsole();
 	switch (Menu())
 	{
 	case 1:
+		select();
 		Loading();
 		gomoku();
 		goto Menu;
 	case 2:
+		select();
 		Loading();
 		Option();
 		goto Menu;
 	case 3:
+		select();
 		Loading();
 		Help();
 		while (1) {
@@ -30,6 +37,7 @@ Menu:
 			}
 		}
 	case 4:
+		select();
 		Loading();
 		About();
 		while (1) {
@@ -41,6 +49,7 @@ Menu:
 			
 		
 	case 5:
+		select();
 		return 1;
 	default:
 		break;

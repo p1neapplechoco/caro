@@ -1,4 +1,5 @@
 ﻿#include "menu.h"
+#include "game.h"
 
 
 using namespace std;
@@ -7,6 +8,7 @@ int Menu()
     {
    
         system("cls");
+        gamemusic();
         logo();
         drawmenu();
         int Set[] = { 116,116,116,116,116 };
@@ -37,14 +39,17 @@ int Menu()
 
             if (key == 72 && (counter >= 2 && counter <= 5))
             {
+               
                 counter--;
             }
             if (key == 80 && (counter >= 1 && counter <= 4))
             {
+               
                 counter++;
             }
             if (key == '\r')
             {
+               
                 return counter;
             }
 
@@ -62,26 +67,31 @@ int Menu()
 
             if (counter == 1)
             {
+                select1();
                 Set[0] = 117;
                 options[0] = "     >> PLAY <<      ";
             }
             if (counter == 2)
             {
+                select1();
                 Set[1] = 117;
                 options[1] = "    >> OPTION <<     ";
             }
             if (counter == 3)
             {
+                select1();
                 Set[2] = 117;
                 options[2] = "     >> HELP <<      ";
             }
             if (counter == 4)
             {
+                select1();
                 Set[3] = 117;
                 options[3] = "    >> CREDIT <<     ";
             }
             if (counter == 5)
             {
+                select1();
                 Set[4] = 117;
                 options[4] = "     >> EXIT <<      ";
             }

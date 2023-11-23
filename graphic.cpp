@@ -63,11 +63,12 @@ void drawnewgame() {
         cout << D2_VERTICAL_FRAME;
     }
 }
+
 int GameMode()
 {
     system("cls");
     logo();
-     drawnewgame();
+    drawnewgame();
     int Set[] = { 116,116,116,116,116 };
     string options[] = { "      NEW GAME       ", "        LOAD         ", "        EXIT         " };
     int counter = 1;
@@ -76,7 +77,6 @@ int GameMode()
     for (int i = 0;;)
     {
        
-        
         gotoxy(67, 18);
         cout << options[0];
        

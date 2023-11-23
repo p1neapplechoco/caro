@@ -7,5 +7,9 @@
 #ifndef _GAME_H_
 void gomoku();
 void Loading();
-
+void select();
+void gamemusic();
+void goXO();
+void enterXO();
+void select1();
 #endif

@@ -151,26 +151,31 @@ void input() {
 		switch (_getch()) { //keyboard input
 
 		case 'w': //up
+			goXO();
 			_y--;
 			if (_y < 0) { _y++; }
 			break;
 
 		case 's': //down
+			goXO();
 			_y++;
 			if (_y >= BOARD_SIZE) { _y--; }
 			break;
 
 		case 'a': //left
+			goXO();
 			_x--;
 			if (_x < 0) { _x++; }
 			break;
 
 		case 'd': //right
+			goXO();
 			_x++;
 			if (_x >= BOARD_SIZE) { _x--; }
 			break;
 
 		case '\r': //marking the spot
+			enterXO();
 			mark();
 			break;
 
@@ -179,21 +184,25 @@ void input() {
 			break;
 
 		case 72:
+			goXO();
 			_y--;
 			if (_y < 0) { _y++; }
 			break;
 
 		case 80:
+			goXO();
 			_y++;
 			if (_y >= BOARD_SIZE) { _y--; }
 			break;
 
 		case 75:
+			goXO();
 			_x--;
 			if (_x < 0) { _x++; }
 			break;
 
 		case 77:
+			goXO();
 			_x++;
 			if (_x >= BOARD_SIZE) { _x--; }
 			break;
@@ -448,7 +457,21 @@ void resetData() {
 	_y = BOARD_SIZE / 2;
 	undo = false;
 }
-
+void select(){
+	PlaySound(TEXT("Sounds//select.wav"), NULL, SND_FILENAME | SND_ASYNC );
+	}
+void gamemusic() {
+	PlaySound(TEXT("Sounds//gamemusic.wav"), NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
+}
+void goXO() {
+	PlaySound(TEXT("Sounds//goXO.wav"), NULL, SND_FILENAME | SND_ASYNC );
+}
+void enterXO() {
+	PlaySound(TEXT("Sounds//enterXO.wav"), NULL, SND_FILENAME | SND_ASYNC);
+}
+void select1() {
+	PlaySound(TEXT("Sounds//select1.wav"), NULL, SND_FILENAME | SND_ASYNC);
+}
 void game() {
 gomoku:
 	system("cls");
