@@ -208,6 +208,7 @@ void input() {
 			break;
 
 		case 32: //spacebar for marking
+			enterXO();
 			mark();
 			break;
 
@@ -457,21 +458,7 @@ void resetData() {
 	_y = BOARD_SIZE / 2;
 	undo = false;
 }
-void select(){
-	PlaySound(TEXT("Sounds//select.wav"), NULL, SND_FILENAME | SND_ASYNC );
-	}
-void gamemusic() {
-	PlaySound(TEXT("Sounds//gamemusic.wav"), NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
-}
-void goXO() {
-	PlaySound(TEXT("Sounds//goXO.wav"), NULL, SND_FILENAME | SND_ASYNC );
-}
-void enterXO() {
-	PlaySound(TEXT("Sounds//enterXO.wav"), NULL, SND_FILENAME | SND_ASYNC);
-}
-void select1() {
-	PlaySound(TEXT("Sounds//select1.wav"), NULL, SND_FILENAME | SND_ASYNC);
-}
+
 void game() {
 gomoku:
 	system("cls");
