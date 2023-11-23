@@ -48,7 +48,7 @@ save:
 	cout << "                                                             ";
 	ifstream file;
 	ofstream fileInput;
-	file.open(filename + ".txt");
+	file.open("./save/" + filename + ".txt");
 	if (file) {
 		system("cls");
 		gotoxy(79, 32);
@@ -56,7 +56,7 @@ save:
 		switch (_getch()) {
 		case 'y':
 			file.close();
-			fileInput.open(filename + ".txt",ios::out);
+			fileInput.open("./save/" + filename + ".txt", ios::out);
 			fileInput << _x << " " << _y << " " << turnx << " " << turno << " " << turnCheck(turn) << " " << turnCheck(turn + 1);
 			for (int j = 0; j < BOARD_SIZE; j++) {
 				for (int k = 0; k < BOARD_SIZE; k++) {
@@ -72,7 +72,7 @@ save:
 	}
 	else {
 		file.close();
-		fileInput.open(filename + ".txt", ios::out);
+		fileInput.open("./save/" + filename + ".txt", ios::out);
 		fileInput << _x << " " << _y << " " << turnx << " " << turno << " " << turnCheck(turn) << " " << turnCheck(turn + 1);
 		for (int j = 0; j < BOARD_SIZE; j++) {
 			for (int k = 0; k < BOARD_SIZE; k++) {
@@ -90,7 +90,7 @@ void Load() {
 	cout << "Nhap ten de load: ";
 	cin >> filename;
 	ifstream file;
-	file.open(filename + ".txt");
+	file.open("./save/" + filename + ".txt");
 
 	while (true) {
 		if (!file) {
@@ -98,7 +98,7 @@ void Load() {
 			gotoxy(79, 32);
 			cout << "File khong ton tai, vui long nhap lai:";
 			cin >> filename;
-			file.open(filename + ".txt");
+			file.open("./save/" + filename + ".txt");
 		}
 		else
 		{
