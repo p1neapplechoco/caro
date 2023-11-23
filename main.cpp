@@ -8,9 +8,9 @@
 using namespace std;
 
 int main() {
-	gamemusic();
-Menu:
 	
+Menu:
+	gamemusic();
 		
 	
 	setupConsole();

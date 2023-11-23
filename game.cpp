@@ -461,7 +461,7 @@ void select(){
 	PlaySound(TEXT("Sounds//select.wav"), NULL, SND_FILENAME | SND_ASYNC );
 	}
 void gamemusic() {
-	PlaySound(TEXT("Sounds//gamemusic.wav"), NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
+	PlaySound(TEXT("Sounds//gamemusic.wav"), NULL, SND_FILENAME | SND_ASYNC | SND_LOOP | SND_SYNC);
 }
 void goXO() {
 	PlaySound(TEXT("Sounds//goXO.wav"), NULL, SND_FILENAME | SND_ASYNC );
@@ -471,6 +471,9 @@ void enterXO() {
 }
 void select1() {
 	PlaySound(TEXT("Sounds//select1.wav"), NULL, SND_FILENAME | SND_ASYNC);
+}
+void win() {
+	PlaySound(TEXT("Sounds//win.wav"), NULL, SND_FILENAME | SND_ASYNC);
 }
 void game() {
 gomoku:
@@ -485,6 +488,7 @@ gomoku:
 		checkWin();
 	}
 	if (win_state == true) {
+		win();
 		gotoxy(79, 32);
 		cout << turnCheck(turn + 1);
 	}
