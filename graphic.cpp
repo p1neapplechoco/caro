@@ -1,5 +1,6 @@
 ﻿#include "graphic.h"
 #include "d2data.h"
+#include "game.h"
 
 using namespace std;
 
@@ -91,14 +92,17 @@ int GameMode()
 
         if (key == 72 && (counter >= 2 && counter <= 3))
         {
+            select();
             counter--;
         }
         if (key == 80 && (counter >= 1 && counter <= 2))
         {
+            select();
             counter++;
         }
         if (key == '\r')
         {
+            select();
             return counter;
         }
 
@@ -112,16 +116,19 @@ int GameMode()
 
         if (counter == 1)
         {
+            select1();
             Set[0] = 117;
             options[0] = "   >> NEW GAME <<    ";
         }
         if (counter == 2)
         {
+            select1();
             Set[1] = 117;
             options[1] = "     >> LOAD <<      ";
         }
         if (counter == 3)
         {
+            select1();
             Set[2] = 117;
             options[2] = "     >> EXIT <<      ";
         }

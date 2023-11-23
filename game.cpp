@@ -458,7 +458,6 @@ void resetData() {
 	_y = BOARD_SIZE / 2;
 	undo = false;
 }
-
 void game() {
 gomoku:
 	system("cls");
@@ -472,6 +471,7 @@ gomoku:
 		checkWin();
 	}
 	if (win_state == true) {
+		win();
 		gotoxy(79, 32);
 		cout << turnCheck(turn + 1);
 	}
