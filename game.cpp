@@ -24,13 +24,17 @@ int _y = BOARD_SIZE / 2;
 int _xmark;
 int _ymark;
 int turnx = 0;
-int turny = 0;
+int turno = 0;
 
 bool undo = false;
 
 char turnCheck(unsigned int turn) { //self explainatory
-	if (turn % 2 == 0) { return PLAYER1; }
-	else return PLAYER2;
+	if (turn % 2 == 0) {
+		return PLAYER1;
+	}
+	else { 
+		return PLAYER2;
+	}
 }
 
 void Save() {
@@ -53,7 +57,7 @@ save:
 		case 'y':
 			file.close();
 			fileInput.open(filename + ".txt",ios::out);
-			fileInput << _x << " " << _y << " " << turnx << " " << turny << " " << turnCheck(turn) << " " << turnCheck(turn + 1);
+			fileInput << _x << " " << _y << " " << turnx << " " << turno << " " << turnCheck(turn) << " " << turnCheck(turn + 1);
 			for (int j = 0; j < BOARD_SIZE; j++) {
 				for (int k = 0; k < BOARD_SIZE; k++) {
 					fileInput << board[k][j];
@@ -69,7 +73,7 @@ save:
 	else {
 		file.close();
 		fileInput.open(filename + ".txt", ios::out);
-		fileInput << _x << " " << _y << " " << turnx << " " << turny << " " << turnCheck(turn) << " " << turnCheck(turn + 1);
+		fileInput << _x << " " << _y << " " << turnx << " " << turno << " " << turnCheck(turn) << " " << turnCheck(turn + 1);
 		for (int j = 0; j < BOARD_SIZE; j++) {
 			for (int k = 0; k < BOARD_SIZE; k++) {
 				fileInput << board[k][j];
@@ -98,7 +102,7 @@ void Load() {
 		}
 		else
 		{
-			file >> _x >> _y >> turnx >> turny >> PLAYER1 >> PLAYER2;
+			file >> _x >> _y >> turnx >> turno >> PLAYER1 >> PLAYER2;
 			for (int i = 0; i < BOARD_SIZE; i++) {
 				for (int j = 0; j < BOARD_SIZE; j++) {
 					file >> noskipws >> board[j][i];
@@ -111,6 +115,37 @@ void Load() {
 	system("cls");
 }
 
+void mark() {
+	if (board[_x][_y] == EMPTY) {
+		board[_x][_y] = turnCheck(turn);
+		board_states.push_back(board);
+		_xmark = _x;
+		_ymark = _y;
+		if (turn % 2 == 0) {
+			turnx++;
+		}
+		else {
+			turno++;
+		}
+		turn++;
+		counter = 10;
+		undo = false;
+	}
+}
+
+void Undo() {
+	if (turn > 0) {
+		board_states.pop_back();
+		turn--;
+		if (turn % 2 == 0) {
+			turnx--;
+		}
+		else {
+			turno--;
+		}
+		undo = true;
+	}
+}
 void input() {
 	if (_kbhit())
 		switch (_getch()) { //keyboard input
@@ -136,29 +171,12 @@ void input() {
 			break;
 
 		case '\r': //marking the spot
-			while (true) {
-				if (board[_x][_y] == EMPTY) {
-					board[_x][_y] = turnCheck(turn);
-					board_states.push_back(board);
-					_xmark = _x;
-					_ymark = _y;
-					turn++;
-					counter = 10;
-					undo = false;
-					break;
-				}
-				else break;
-			}
+			mark();
 			break;
 
 		case 'u': //undo button
-			if (turn > 0) {
-				board_states.pop_back();
-				turn--;
-				undo = true;
-				break;				
-			}
-			else break;
+			Undo();
+			break;
 
 		case 72:
 			_y--;
@@ -181,19 +199,7 @@ void input() {
 			break;
 
 		case 32: //spacebar for marking
-			while (true) {
-				if (board[_x][_y] == EMPTY) {
-					board[_x][_y] = turnCheck(turn);
-					board_states.push_back(board);
-					_xmark = _x;
-					_ymark = _y;
-					turn++;
-					counter = 10;
-					undo = false;
-					break;
-				}
-				else break;
-			}
+			mark();
 			break;
 
 		case 'p': //save button
@@ -371,12 +377,41 @@ void drawMarks() {
 		for (int j = 0; j < BOARD_SIZE; j++) {
 			if (i == _x && j == _y) {
 				gotoxy(LEFT + 1 + 4 * i, TOP + 1 + 2 * j);
-				cout << "(" << board[i][j] << ")";
+				if (board[i][j] == PLAYER1) {
+					cout << "(";
+					color(113);
+					cout << board[i][j];
+					color(116);
+					cout << ")";
+				}
+				else if (board[i][j] == PLAYER2) {
+					cout << "(";
+					color(114);
+					cout << board[i][j];
+					color(116);
+					cout << ")";
+				}
+				else cout << "(" << board[i][j] << ")";
 			}
 			else {
 				gotoxy(LEFT + 1 + 4 * i, TOP + 1 + 2 * j);
-				cout << " " << board[i][j] << " ";
+				if (board[i][j] == PLAYER1) {
+					cout << " ";
+					color(113);
+					cout << board[i][j];
+					color(116);
+					cout << " ";
+				}
+				else if (board[i][j] == PLAYER2) {
+					cout << " ";
+					color(114);
+					cout << board[i][j];
+					color(116);
+					cout << " ";;
+				}
+				else cout << " " << board[i][j] << " ";
 			}
+
 		}
 	}
 }
@@ -392,7 +427,7 @@ void Loading() {
 }
 
 bool checkDraw() {
-	if (turn == 225 && win_state != true) {
+	if (turnx + turno == 225 && win_state != true) {
 		return true;
 	}
 	return false;
@@ -406,6 +441,8 @@ void resetData() {
 	PLAYER1 = 'X';
 	PLAYER2 = 'O';
 	turn = 0;
+	turnx = 0;
+	turno = 0;
 	win_state = false;
 	_x = BOARD_SIZE / 2;
 	_y = BOARD_SIZE / 2;

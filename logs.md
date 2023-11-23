@@ -40,6 +40,11 @@ v2.2 (10/11/23)
 v2.3
 - fixed saving.
 
-v2.4 (22/11/23)
+v2.5 (22/11/23)
 - optimized code.
 - fixed board drawing flickering.
+
+v2.5.1 (23/11/23)
+- fixed checkDraw doesn't work when loading a save files.
+- added color for marks.
+- optimized code.
