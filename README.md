@@ -2,7 +2,7 @@
 
 - first ever coding project!!!
 
-# history changes
+# change history
 v1.0 (31/10/23)
 - revamped menu.
 - added logo.
