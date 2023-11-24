@@ -1,5 +1,6 @@
 ﻿#include "graphic.h"
 #include "d2data.h"
+#include "game.h"
 
 using namespace std;
 
@@ -45,59 +46,63 @@ void drawmenu() {
     }
 }
 
+void drawnewgame() {
+    for (int i = 60; i < 95; i += 2) {
+        gotoxy(i, 15);
+        cout << D2_LOWER_FRAME << D2_LOWER_FRAME;
+    }
+    for (int i = 60; i < 95; i += 2) {
+        gotoxy(i, 32);
+        cout << D2_LOWER_FRAME << D2_LOWER_FRAME;
+    }
+    for (int i = 16; i < 33; i++) {
+        gotoxy(60, i);
+        cout << D2_VERTICAL_FRAME;
+    }
+    for (int i = 16; i < 33; i++) {
+        gotoxy(95, i);
+        cout << D2_VERTICAL_FRAME;
+    }
+}
+
 int GameMode()
 {
     system("cls");
     logo();
+    drawnewgame();
     int Set[] = { 116,116,116,116,116 };
-    string options[] = { "|      NEW GAME       |", "|        LOAD         |", "|        EXIT         |" };
+    string options[] = { "      NEW GAME       ", "        LOAD         ", "        EXIT         " };
     int counter = 1;
     char key;
 
     for (int i = 0;;)
     {
-        gotoxy(67, 16);
-        color(Set[0]);
-        cout << " _____________________ ";
-        gotoxy(67, 17);
-        cout << "|                     |";
+       
         gotoxy(67, 18);
         cout << options[0];
-        gotoxy(67, 19);
-        cout << "|_____________________|";
-
-        gotoxy(67, 21);
-        color(Set[1]);
-        cout << " _____________________ ";
-        gotoxy(67, 22);
-        cout << "|                     |";
+       
         gotoxy(67, 23);
         cout << options[1];
-        gotoxy(67, 24);
-        cout << "|_____________________|";
-
-        gotoxy(67, 26);
-        color(Set[2]);
-        cout << " _____________________ ";
-        gotoxy(67, 27);
-        cout << "|                     |";
+        
         gotoxy(67, 28);
         cout << options[2];
-        gotoxy(67, 29);
-        cout << "|_____________________|";
+       
 
         key = _getch();
 
         if (key == 72 && (counter >= 2 && counter <= 3))
         {
+            select();
             counter--;
         }
         if (key == 80 && (counter >= 1 && counter <= 2))
         {
+            select();
             counter++;
         }
         if (key == '\r')
         {
+            select();
             return counter;
         }
 
@@ -105,24 +110,27 @@ int GameMode()
         Set[1] = 116;
         Set[2] = 116;
 
-        options[0] = "|      NEW GAME       |";
-        options[1] = "|        LOAD         |";
-        options[2] = "|        EXIT         |";
+        options[0] = "      NEW GAME       ";
+        options[1] = "        LOAD         ";
+        options[2] = "        EXIT         ";
 
         if (counter == 1)
         {
+            select1();
             Set[0] = 117;
-            options[0] = "|   >> NEW GAME <<    |";
+            options[0] = "   >> NEW GAME <<    ";
         }
         if (counter == 2)
         {
+            select1();
             Set[1] = 117;
-            options[1] = "|     >> LOAD <<      |";
+            options[1] = "     >> LOAD <<      ";
         }
         if (counter == 3)
         {
+            select1();
             Set[2] = 117;
-            options[2] = "|     >> EXIT <<      |";
+            options[2] = "     >> EXIT <<      ";
         }
     }
 }

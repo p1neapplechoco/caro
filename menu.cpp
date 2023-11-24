@@ -1,4 +1,5 @@
 ﻿#include "menu.h"
+#include "game.h"
 
 
 using namespace std;
@@ -37,14 +38,17 @@ int Menu()
 
             if (key == 72 && (counter >= 2 && counter <= 5))
             {
+               
                 counter--;
             }
             if (key == 80 && (counter >= 1 && counter <= 4))
             {
+               
                 counter++;
             }
             if (key == '\r')
             {
+               
                 return counter;
             }
 
@@ -85,8 +89,6 @@ int Menu()
                 Set[4] = 117;
                 options[4] = "     >> EXIT <<      ";
             }
-
-
         }
     }
 

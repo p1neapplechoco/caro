@@ -5,5 +5,6 @@
 #ifndef _GRAPHIC_H_
 void logo();
 void drawmenu();
+void drawnewgame();
 int GameMode();
 #endif
