@@ -8,11 +8,8 @@
 using namespace std;
 
 int main() {
-	
 Menu:
 	gamemusic();
-		
-	
 	setupConsole();
 	switch (Menu())
 	{
