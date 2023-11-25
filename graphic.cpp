@@ -46,6 +46,62 @@ void drawmenu() {
     }
 }
 
+void DrawWin(int n) {
+	
+	int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
+	
+	wstring XWin[6];
+	XWin[0] = L"██╗  ██╗     ██╗    ██╗██╗███╗   ██╗";
+	XWin[1] = L"╚██╗██╔╝     ██║    ██║██║████╗  ██║";
+	XWin[2] = L" ╚███╔╝      ██║ █╗ ██║██║██╔██╗ ██║";
+	XWin[3] = L" ██╔██╗      ██║███╗██║██║██║╚██╗██║";
+	XWin[4] = L"██╔╝ ██╗     ╚███╔███╔╝██║██║ ╚████║";
+	XWin[5] = L"╚═╝  ╚═╝      ╚══╝╚══╝ ╚═╝╚═╝  ╚═══╝";
+
+	wstring Draw[6];
+	Draw[0] = L"██████╗ ██████╗  █████╗ ██╗    ██╗";
+	Draw[1] = L"██╔══██╗██╔══██╗██╔══██╗██║    ██║";
+	Draw[2] = L"██║  ██║██████╔╝███████║██║ █╗ ██║";
+	Draw[3] = L"██║  ██║██╔══██╗██╔══██║██║███╗██║";
+	Draw[4] = L"██████╔╝██║  ██║██║  ██║╚███╔███╔╝";
+	Draw[5] = L"╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝ ╚══╝╚══╝ ";
+
+	wstring OWin[6];
+	OWin[0] = L" ██████╗     ██╗    ██╗██╗███╗   ██╗";
+	OWin[1] = L"██╔═══██╗    ██║    ██║██║████╗  ██║";
+	OWin[2] = L"██║   ██║    ██║ █╗ ██║██║██╔██╗ ██║";
+	OWin[3] = L"██║   ██║    ██║███╗██║██║██║╚██╗██║";
+	OWin[4] = L"╚██████╔╝    ╚███╔███╔╝██║██║ ╚████║";
+	OWin[5] = L" ╚═════╝      ╚══╝╚══╝ ╚═╝╚═╝  ╚═══╝";
+
+	
+	
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 6; j++)
+		{
+			
+			gotoxy(82 + 25, 25 + 4 + j);
+			if (n == -1) wcout << XWin[j];
+			if (n == 0) wcout << Draw[j];
+			if (n == 1) wcout << OWin[j];
+			Sleep(200);
+
+		}
+		Sleep(200);
+		for (int j = 0; j < 6; j++)
+		{
+			gotoxy(82 + 25, 25 + 4 + j);
+			wcout << "                                    ";
+			Sleep(100);
+
+		}
+	}
+	
+	int CurrentMode = _setmode(_fileno(stdout), OldMode);
+	
+	
+}
+
 void drawnewgame() {
     for (int i = 60; i < 95; i += 2) {
         gotoxy(i, 15);
@@ -66,11 +122,11 @@ void drawnewgame() {
 }
 
 void drawhcn(int x, int y) {
-    for (int i = x; i <= x + 18; i += 1) {
+    for (int i = x; i <= x + 21; i += 1) {
         gotoxy(i, y);
         cout << D2_LOWER_FRAME << D2_LOWER_FRAME;
     }
-    for (int i = x; i <= x + 18; i += 1) {
+    for (int i = x; i <= x + 21; i += 1) {
         gotoxy(i, y + 3);
         cout << D2_LOWER_FRAME << D2_LOWER_FRAME;
     }
@@ -79,7 +135,7 @@ void drawhcn(int x, int y) {
         cout << D2_VERTICAL_FRAME;
     }
     for (int i = y + 1 ; i <= y +3; i++) {
-        gotoxy(x + 19, i);
+        gotoxy(x + 22, i);
         cout << D2_VERTICAL_FRAME;
 
 
@@ -87,17 +143,16 @@ void drawhcn(int x, int y) {
 }
 
 void drawMenu() {
-    drawhcn(68, 16);
-    drawhcn(68, 21);
-    drawhcn(68, 26);
-    drawhcn(68, 31);
-    drawhcn(68, 36);
-    drawhcn(68, 41);
+    drawhcn(66, 16);
+    drawhcn(66, 21);
+    drawhcn(66, 26);
+    drawhcn(66, 31);
+    drawhcn(66, 36);
 }
 void drawNewgame() {
-    drawhcn(68, 16);
-    drawhcn(68, 21);
-    drawhcn(68, 26);
+    drawhcn(66, 16);
+    drawhcn(66, 21);
+    drawhcn(66, 26);
 }
 int GameMode()
 {
@@ -111,16 +166,16 @@ int GameMode()
 
     for (int i = 0;;)
     {
-       
+
         gotoxy(67, 18);
         cout << options[0];
-       
+
         gotoxy(67, 23);
         cout << options[1];
-        
+
         gotoxy(67, 28);
         cout << options[2];
-       
+
 
         key = _getch();
 
@@ -139,6 +194,12 @@ int GameMode()
             select();
             return counter;
         }
+
+        if (key == 27)
+        {
+            return 4;
+        }
+
 
         Set[0] = 116;
         Set[1] = 116;

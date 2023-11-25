@@ -28,63 +28,6 @@ int turno = 0;
 
 bool undo = false;
 
-void DrawWin(int n) {
-	
-	int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
-	
-	wstring XWin[6];
-	XWin[0] = L"██╗  ██╗     ██╗    ██╗██╗███╗   ██╗";
-	XWin[1] = L"╚██╗██╔╝     ██║    ██║██║████╗  ██║";
-	XWin[2] = L" ╚███╔╝      ██║ █╗ ██║██║██╔██╗ ██║";
-	XWin[3] = L" ██╔██╗      ██║███╗██║██║██║╚██╗██║";
-	XWin[4] = L"██╔╝ ██╗     ╚███╔███╔╝██║██║ ╚████║";
-	XWin[5] = L"╚═╝  ╚═╝      ╚══╝╚══╝ ╚═╝╚═╝  ╚═══╝";
-
-	wstring Draw[6];
-	Draw[0] = L"██████╗ ██████╗  █████╗ ██╗    ██╗";
-	Draw[1] = L"██╔══██╗██╔══██╗██╔══██╗██║    ██║";
-	Draw[2] = L"██║  ██║██████╔╝███████║██║ █╗ ██║";
-	Draw[3] = L"██║  ██║██╔══██╗██╔══██║██║███╗██║";
-	Draw[4] = L"██████╔╝██║  ██║██║  ██║╚███╔███╔╝";
-	Draw[5] = L"╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝ ╚══╝╚══╝ ";
-
-	wstring OWin[6];
-	OWin[0] = L" ██████╗     ██╗    ██╗██╗███╗   ██╗";
-	OWin[1] = L"██╔═══██╗    ██║    ██║██║████╗  ██║";
-	OWin[2] = L"██║   ██║    ██║ █╗ ██║██║██╔██╗ ██║";
-	OWin[3] = L"██║   ██║    ██║███╗██║██║██║╚██╗██║";
-	OWin[4] = L"╚██████╔╝    ╚███╔███╔╝██║██║ ╚████║";
-	OWin[5] = L" ╚═════╝      ╚══╝╚══╝ ╚═╝╚═╝  ╚═══╝";
-
-	
-	
-	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 6; j++)
-		{
-			
-			gotoxy(82 + 25, 25 + 4 + j);
-			if (n == -1) wcout << XWin[j];
-			if (n == 0) wcout << Draw[j];
-			if (n == 1) wcout << OWin[j];
-			Sleep(200);
-
-		}
-		Sleep(200);
-		for (int j = 0; j < 6; j++)
-		{
-			gotoxy(82 + 25, 25 + 4 + j);
-			wcout << "                                    ";
-			Sleep(100);
-
-		}
-	}
-	
-	int CurrentMode = _setmode(_fileno(stdout), OldMode);
-	
-	
-}
-
-
 char turnCheck(unsigned int turn) { //self explainatory
 	if (turn % 2 == 0) {
 		return PLAYER1;
@@ -94,7 +37,7 @@ char turnCheck(unsigned int turn) { //self explainatory
 	}
 }
 
-void Save() {
+void Save() { //saving
 save:
 	system("cls");
 	string filename;
@@ -141,7 +84,7 @@ save:
 	}
 }
 
-void Load() {
+void Load() { //loading
 	string filename;
 	gotoxy(79, 32);
 	cout << "Nhap ten de load: ";
@@ -502,7 +445,7 @@ bool checkDraw() {
 
 void resetData() {
 	system("cls");
-	while (board_states.size() > 1){
+	while (board_states.size() > 1){	
 		board_states.pop_back();
 	}
 	PLAYER1 = 'X';
@@ -570,6 +513,8 @@ void gomoku() {
 		resetData();
 		Load();
 		game();
+		break;
+	default:
 		break;
 	}
 }

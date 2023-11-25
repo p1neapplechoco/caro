@@ -10,4 +10,5 @@ int GameMode();
 void drawhcn(int x, int y);
 void drawMenu();
 void drawNewgame();
+void DrawWin(int);
 #endif
