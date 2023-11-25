@@ -15,3 +15,6 @@ void enterXO() {
 void select1() {
 	PlaySound(TEXT("Sounds//select1.wav"), NULL, SND_FILENAME | SND_ASYNC);
 }
+void winsound() {
+	PlaySound(TEXT("Sounds//win.wav"), NULL, SND_FILENAME | SND_ASYNC);
+}

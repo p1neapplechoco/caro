@@ -1,4 +1,4 @@
-#include "graphic.h"
+﻿#include "graphic.h"
 #include "game.h"
 #include "console.h"
 #include "data.h"
@@ -28,6 +28,63 @@ int turno = 0;
 
 bool undo = false;
 
+void DrawWin(int n) {
+	
+	int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
+	
+	wstring XWin[6];
+	XWin[0] = L"██╗  ██╗     ██╗    ██╗██╗███╗   ██╗";
+	XWin[1] = L"╚██╗██╔╝     ██║    ██║██║████╗  ██║";
+	XWin[2] = L" ╚███╔╝      ██║ █╗ ██║██║██╔██╗ ██║";
+	XWin[3] = L" ██╔██╗      ██║███╗██║██║██║╚██╗██║";
+	XWin[4] = L"██╔╝ ██╗     ╚███╔███╔╝██║██║ ╚████║";
+	XWin[5] = L"╚═╝  ╚═╝      ╚══╝╚══╝ ╚═╝╚═╝  ╚═══╝";
+
+	wstring Draw[6];
+	Draw[0] = L"██████╗ ██████╗  █████╗ ██╗    ██╗";
+	Draw[1] = L"██╔══██╗██╔══██╗██╔══██╗██║    ██║";
+	Draw[2] = L"██║  ██║██████╔╝███████║██║ █╗ ██║";
+	Draw[3] = L"██║  ██║██╔══██╗██╔══██║██║███╗██║";
+	Draw[4] = L"██████╔╝██║  ██║██║  ██║╚███╔███╔╝";
+	Draw[5] = L"╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝ ╚══╝╚══╝ ";
+
+	wstring OWin[6];
+	OWin[0] = L" ██████╗     ██╗    ██╗██╗███╗   ██╗";
+	OWin[1] = L"██╔═══██╗    ██║    ██║██║████╗  ██║";
+	OWin[2] = L"██║   ██║    ██║ █╗ ██║██║██╔██╗ ██║";
+	OWin[3] = L"██║   ██║    ██║███╗██║██║██║╚██╗██║";
+	OWin[4] = L"╚██████╔╝    ╚███╔███╔╝██║██║ ╚████║";
+	OWin[5] = L" ╚═════╝      ╚══╝╚══╝ ╚═╝╚═╝  ╚═══╝";
+
+	
+	
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 6; j++)
+		{
+			
+			gotoxy(82 + 25, 25 + 4 + j);
+			if (n == -1) wcout << XWin[j];
+			if (n == 0) wcout << Draw[j];
+			if (n == 1) wcout << OWin[j];
+			Sleep(200);
+
+		}
+		Sleep(200);
+		for (int j = 0; j < 6; j++)
+		{
+			gotoxy(82 + 25, 25 + 4 + j);
+			wcout << "                                    ";
+			Sleep(100);
+
+		}
+	}
+	
+	int CurrentMode = _setmode(_fileno(stdout), OldMode);
+	
+	
+}
+
+
 char turnCheck(unsigned int turn) { //self explainatory
 	if (turn % 2 == 0) {
 		return PLAYER1;
@@ -48,7 +105,7 @@ save:
 	cout << "                                                             ";
 	ifstream file;
 	ofstream fileInput;
-	file.open(filename + ".txt");
+	file.open("./save/" + filename + ".txt");
 	if (file) {
 		system("cls");
 		gotoxy(79, 32);
@@ -56,7 +113,7 @@ save:
 		switch (_getch()) {
 		case 'y':
 			file.close();
-			fileInput.open(filename + ".txt",ios::out);
+			fileInput.open("./save/" + filename + ".txt", ios::out);
 			fileInput << _x << " " << _y << " " << turnx << " " << turno << " " << turnCheck(turn) << " " << turnCheck(turn + 1);
 			for (int j = 0; j < BOARD_SIZE; j++) {
 				for (int k = 0; k < BOARD_SIZE; k++) {
@@ -72,7 +129,7 @@ save:
 	}
 	else {
 		file.close();
-		fileInput.open(filename + ".txt", ios::out);
+		fileInput.open("./save/" + filename + ".txt", ios::out);
 		fileInput << _x << " " << _y << " " << turnx << " " << turno << " " << turnCheck(turn) << " " << turnCheck(turn + 1);
 		for (int j = 0; j < BOARD_SIZE; j++) {
 			for (int k = 0; k < BOARD_SIZE; k++) {
@@ -90,7 +147,7 @@ void Load() {
 	cout << "Nhap ten de load: ";
 	cin >> filename;
 	ifstream file;
-	file.open(filename + ".txt");
+	file.open("./save/" + filename + ".txt");
 
 	while (true) {
 		if (!file) {
@@ -98,7 +155,7 @@ void Load() {
 			gotoxy(79, 32);
 			cout << "File khong ton tai, vui long nhap lai:";
 			cin >> filename;
-			file.open(filename + ".txt");
+			file.open("./save/" + filename + ".txt");
 		}
 		else
 		{
@@ -471,13 +528,18 @@ gomoku:
 		checkWin();
 	}
 	if (win_state == true) {
-		win();
-		gotoxy(79, 32);
-		cout << turnCheck(turn + 1);
+		if (turnCheck(turn + 1) == 'X') {
+			winsound();
+			DrawWin(-1);
+		}
+		else {
+			winsound();
+			DrawWin(1);
+		}
 	}
 	else if (checkDraw() == true) {
-		gotoxy(79, 32);
-		cout << "Draw";
+		winsound();
+		DrawWin(0);
 	}
 	while (true) {
 		if (_kbhit()) {

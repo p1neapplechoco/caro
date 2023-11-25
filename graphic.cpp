@@ -65,11 +65,45 @@ void drawnewgame() {
     }
 }
 
+void drawhcn(int x, int y) {
+    for (int i = x; i <= x + 18; i += 1) {
+        gotoxy(i, y);
+        cout << D2_LOWER_FRAME << D2_LOWER_FRAME;
+    }
+    for (int i = x; i <= x + 18; i += 1) {
+        gotoxy(i, y + 3);
+        cout << D2_LOWER_FRAME << D2_LOWER_FRAME;
+    }
+    for (int i = y + 1; i <= y + 3; i++) {
+        gotoxy(x, i);
+        cout << D2_VERTICAL_FRAME;
+    }
+    for (int i = y + 1 ; i <= y +3; i++) {
+        gotoxy(x + 19, i);
+        cout << D2_VERTICAL_FRAME;
+
+
+    }
+}
+
+void drawMenu() {
+    drawhcn(68, 16);
+    drawhcn(68, 21);
+    drawhcn(68, 26);
+    drawhcn(68, 31);
+    drawhcn(68, 36);
+    drawhcn(68, 41);
+}
+void drawNewgame() {
+    drawhcn(68, 16);
+    drawhcn(68, 21);
+    drawhcn(68, 26);
+}
 int GameMode()
 {
     system("cls");
     logo();
-    drawnewgame();
+    drawNewgame();
     int Set[] = { 116,116,116,116,116 };
     string options[] = { "      NEW GAME       ", "        LOAD         ", "        EXIT         " };
     int counter = 1;
