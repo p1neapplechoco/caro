@@ -8,6 +8,17 @@
 #include "console.h"
 
 
+
+#define LLeft 82
+#define LTop 25
+#define LMax_i 82
+#define LMax_j 38
+
+#define FLeft 82
+#define FTop 2
+#define FMax_i 82
+#define FMax_j 23
+
 //ASCII CODE
 #define D2_UPPER_FRAME char(223)
 #define D2_LOWER_FRAME char(220)
@@ -55,3 +66,6 @@ extern int Count;
 extern char _MATRIX[18][18];
 
 #endif
+
+
+

@@ -1,5 +1,6 @@
 ﻿#include "menu.h"
 #include "game.h"
+#include "settings.h"
 
 
 using namespace std;
@@ -69,26 +70,31 @@ int Menu()
             if (counter == 1)
             {
                 Set[0] = 117;
+                select1();
                 options[0] = "     >> PLAY <<      ";
             }
             if (counter == 2)
             {
                 Set[1] = 117;
+                select1();
                 options[1] = "    >> OPTION <<     ";
             }
             if (counter == 3)
             {
                 Set[2] = 117;
+                select1();
                 options[2] = "     >> HELP <<      ";
             }
             if (counter == 4)
             {
                 Set[3] = 117;
+                select1();
                 options[3] = "    >> CREDIT <<     ";
             }
             if (counter == 5)
             {
                 Set[4] = 117;
+                select1();
                 options[4] = "     >> EXIT <<      ";
             }
         }
@@ -111,7 +117,7 @@ int Option() {
 
         gotoxy(10, 6);
         color(Set[1]);
-        cout << "Music: ";
+        cout << "Music: On/Off";
 
         gotoxy(10, 7);
         color(Set[2]);
