@@ -9,7 +9,7 @@ int Menu()
    
         system("cls");
         logo();
-        drawmenu();
+        drawMenu();
         int Set[] = { 116,116,116,116,116 };
         string options[] = { "        PLAY         ", "       OPTION        ", "        HELP         ", "       CREDIT        ", "        EXIT         " };
         int counter = 1;
@@ -19,6 +19,7 @@ int Menu()
         {
             
             gotoxy(67, 18);
+            
             cout << options[0];
            
             gotoxy(67, 23);
@@ -31,6 +32,7 @@ int Menu()
             cout << options[3];
             
             gotoxy(67, 38);
+            
             cout << options[4];
             
 

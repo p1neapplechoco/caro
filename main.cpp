@@ -43,8 +43,6 @@ Menu:
 				goto Menu;
 			}
 		}
-			
-		
 	case 5:
 		select();
 		return 1;

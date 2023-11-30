@@ -1,4 +1,4 @@
-#include "graphic.h"
+﻿#include "graphic.h"
 #include "game.h"
 #include "console.h"
 #include "data.h"
@@ -37,7 +37,7 @@ char turnCheck(unsigned int turn) { //self explainatory
 	}
 }
 
-void Save() {
+void Save() { //saving
 save:
 	system("cls");
 	string filename;
@@ -84,7 +84,7 @@ save:
 	}
 }
 
-void Load() {
+void Load() { //loading
 	string filename;
 	gotoxy(79, 32);
 	cout << "Nhap ten de load: ";
@@ -445,7 +445,7 @@ bool checkDraw() {
 
 void resetData() {
 	system("cls");
-	while (board_states.size() > 1){
+	while (board_states.size() > 1){	
 		board_states.pop_back();
 	}
 	PLAYER1 = 'X';
@@ -471,13 +471,18 @@ gomoku:
 		checkWin();
 	}
 	if (win_state == true) {
-		win();
-		gotoxy(79, 32);
-		cout << turnCheck(turn + 1);
+		if (turnCheck(turn + 1) == 'X') {
+			winsound();
+			DrawWin(-1);
+		}
+		else {
+			winsound();
+			DrawWin(1);
+		}
 	}
 	else if (checkDraw() == true) {
-		gotoxy(79, 32);
-		cout << "Draw";
+		winsound();
+		DrawWin(0);
 	}
 	while (true) {
 		if (_kbhit()) {
@@ -508,6 +513,8 @@ void gomoku() {
 		resetData();
 		Load();
 		game();
+		break;
+	default:
 		break;
 	}
 }
