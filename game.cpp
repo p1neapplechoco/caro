@@ -31,11 +31,9 @@ bool undo = false;
 
 char turnCheck(unsigned int turn) { //self explainatory
 	if (turn % 2 == 0) {
-		DrawTurn(0);
 		return PLAYER1;
 	}
 	else { 
-		DrawTurn(1);
 		return PLAYER2;
 	}
 }
@@ -135,6 +133,7 @@ void mark() {
 		turn++;
 		counter = 10;
 		undo = false;
+		DrawTurn((int)(turnCheck(turn) == PLAYER1));
 	}
 }
 
@@ -333,6 +332,7 @@ void checkWin() {
 }
 
 void drawBoard() {
+	DrawTurn((int)(turnCheck(turn) == PLAYER1));
 	color(116);
 	int Max_i = BOARD_SIZE * 2;
 	int Max_j = BOARD_SIZE * 4;
