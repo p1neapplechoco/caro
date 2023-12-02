@@ -4,8 +4,10 @@
 #include "sfx.h"
 #include "d2data.h"
 
-int music = 1;
-int sound = 1;
+
+bool music = true;
+bool sound = true;
+
 int Setting() {
 	system("cls");
 	int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
@@ -91,22 +93,38 @@ int Setting() {
 
 		key = _getch();
 
-		if (key == 72 && (counter >= 2 && counter <= 5))
+		if ((key == 72 || key == 'w') && (counter >= 2 && counter <= 4))
 		{
 
 			counter--;
 		}
-		if (key == 80 && (counter >= 1 && counter <= 4))
+		if ((key == 80 || key == 's') && (counter >= 1 && counter <= 3))
 		{
 
 			counter++;
 		}
 		if (key == '\r')
 		{
-
-			return counter;
+			switch (counter) {
+			case 1:
+				music = true;
+				backgroundmusic();
+				break;
+			case 2:
+				music = false;
+				backgroundmusic();
+				break;
+			case 3:
+				sound = true;
+				break;
+			case 4:
+				sound = false;
+			default:
+				break;
+			}
 		}
 
+		if (key == 27) return counter;
 
 		options[0] = "        ON         ";
 		options[1] = "        OFF        ";
@@ -143,84 +161,30 @@ int Setting() {
 
 		}
 	}
-
-	switch (Setting()) {
-	case 1:
-		music = 1;
-		break;
-	case 2:
-		music = 0;
-		break;
-	case 3:
-		sound = 1;
-		break;
-	case 4:
-		sound = 0;
-	default:
-		break;
-	}
-
 }
-
-
-
-
 
 
 
 void select() {
-	if (sound == 1) {
-		PlaySound(TEXT("Sounds//select.wav"), NULL, SND_FILENAME | SND_ASYNC);
-	}
-	else if (sound == 0) {
-		PlaySound(TEXT("Sounds//silent.wav"), NULL, SND_FILENAME | SND_ASYNC);
-	}
+	(sound) ? PlaySound(TEXT("Sounds//select.wav"), NULL, SND_FILENAME | SND_ASYNC) : PlaySound(TEXT("Sounds//silent.wav"), NULL, SND_FILENAME | SND_ASYNC);
 }
-void gamemusic() {
-	if (sound == 1) {
-		PlaySound(TEXT("Sounds//gamemusic.wav"), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
-	}
-	else if (sound == 0) {
-		PlaySound(TEXT("Sounds//silent.wav"), NULL, SND_FILENAME | SND_ASYNC);
-	}
-}
+
 void backgroundmusic() {
-	if (music == 1) {
-		mciSendString(L"play \"sounds//backgroundmusic.mp3\" repeat", NULL, 0, 0);
-	}
-	else if (music == 0) {
-		mciSendString(L"pause \"sounds//backgroundmusic.mp3\"", NULL, 0, 0);
-	}
+	(music) ? mciSendString(L"play \"sounds//backgroundmusic.mp3\" repeat", NULL, 0, 0) : mciSendString(L"pause \"sounds//backgroundmusic.mp3\"", NULL, 0, 0);
 }
+
 void goXO() {
-	if (sound == 1) {
-		PlaySound(TEXT("Sounds//goXO.wav"), NULL, SND_FILENAME | SND_ASYNC);
-	}
-	else if (sound == 0) {
-		PlaySound(TEXT("Sounds//silent.wav"), NULL, SND_FILENAME | SND_ASYNC);
-	}
+	(sound) ? PlaySound(TEXT("Sounds//goXO.wav"), NULL, SND_FILENAME | SND_ASYNC) : PlaySound(TEXT("Sounds//silent.wav"), NULL, SND_FILENAME | SND_ASYNC);
 }
+
 void enterXO() {
-	if (sound == 1) {
-		PlaySound(TEXT("Sounds//enterXO.wav"), NULL, SND_FILENAME | SND_ASYNC);
-	}
-	else if (sound == 0) {
-		PlaySound(TEXT("Sounds//silent.wav"), NULL, SND_FILENAME | SND_ASYNC);
-	}
+	(sound) ? PlaySound(TEXT("Sounds//enterXO.wav"), NULL, SND_FILENAME | SND_ASYNC) : PlaySound(TEXT("Sounds//silent.wav"), NULL, SND_FILENAME | SND_ASYNC);
 }
+
 void select1() {
-	if (sound == 1) {
-		PlaySound(TEXT("Sounds//select1.wav"), NULL, SND_FILENAME | SND_ASYNC);
-	}
-	else if (sound == 0) {
-		PlaySound(TEXT("Sounds//silent.wav"), NULL, SND_FILENAME | SND_ASYNC);
-	}
+	(sound) ? PlaySound(TEXT("Sounds//select1.wav"), NULL, SND_FILENAME | SND_ASYNC) : PlaySound(TEXT("Sounds//silent.wav"), NULL, SND_FILENAME | SND_ASYNC);
 }
+
 void winsound() {
-	if (sound == 1) {
-		PlaySound(TEXT("Sounds//win.wav"), NULL, SND_FILENAME | SND_ASYNC);
-	}
-	else if (sound == 0) {
-		PlaySound(TEXT("Sounds//silent.wav"), NULL, SND_FILENAME | SND_ASYNC);
-	}
+	(sound) ? PlaySound(TEXT("Sounds//win.wav"), NULL, SND_FILENAME | SND_ASYNC) : PlaySound(TEXT("Sounds//silent.wav"), NULL, SND_FILENAME | SND_ASYNC);
 }
