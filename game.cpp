@@ -7,6 +7,7 @@
 
 
 
+#define MAX_CAP 20
 #define BOARD_SIZE 15 //default size
 #define EMPTY ' ' //when no one has marked the thing
 
@@ -20,6 +21,7 @@ int counter;
 
 vector<vector<char>> board(BOARD_SIZE, vector<char>(BOARD_SIZE, EMPTY)); //storing the board
 vector<vector<vector<char>>> board_states(1, vector<vector<char>>(BOARD_SIZE, vector<char>(BOARD_SIZE, EMPTY))); //storing each universe of the board
+string loadName[MAX_CAP]; //storing board names for loading
 
 char PLAYER1 = 'X'; //player x
 char PLAYER2 = 'O'; //player o
@@ -29,7 +31,7 @@ int _xmark;
 int _ymark;
 int turnx = 0;
 int turno = 0;
-
+int currentLoadNum;
 bool undo = false;
 
 char turnCheck(unsigned int turn) { //self explainatory
@@ -49,14 +51,17 @@ save:
 	cin >> filename;
 	gotoxy(85, 32);
 	cout << "                                                             ";
+
 	ifstream file;
 	ofstream fileInput;
+	ofstream fileName;
+	
 	file.open("./save/" + filename + ".txt");
 	if (file) {
 		gotoxy(85, 34);
 		cout << "File da ton tai, co muon xoa file cu ko? Y/N ";
-		switch (_getch()) {
-		case 'y':
+		switch (toupper(_getch())) {
+		case 'Y':
 			file.close();
 			fileInput.open("./save/" + filename + ".txt", ios::out);
 			fileInput << _x << " " << _y << " " << turnx << " " << turno << " " << turnCheck(turn) << " " << turnCheck(turn + 1);
@@ -66,12 +71,11 @@ save:
 				}
 			}
 			fileInput.close();
-			gotoxy(85, 34);
-			cout << "                                                     ";
+			fileName.open("./save/list_of_names",ios::app);
+			fileName << filename << endl;
+			fileName.close();
 			break;
-		case 'n':
-			gotoxy(85, 34);
-			cout << "                                                     ";
+		case 'N':
 			goto save;
 		}
 		return;
@@ -86,11 +90,28 @@ save:
 			}
 		}
 		fileInput.close();
+		fileName.open("./save/list_of_names", ios::app);
+		fileName << filename << endl;
+		fileName.close();
 		return;
 	}
 }
 
+void getLoad() {
+	ifstream file;
+	file.open("./save/list_of_names");
+	for (int i = 0; i < MAX_CAP; i++)
+		file >> loadName[i];
+	file.close();
+}
+
 void Load() { //loading
+	gotoxy(LEFT + 10, TOP + 10);
+	cout << "List of save files: ";
+	for (int i = 0; i < MAX_CAP; i++) {
+		gotoxy(LEFT + 10, TOP + 11 + i);
+		cout << loadName[i];
+	}
 	string filename;
 	gotoxy(79, 32);
 	cout << "Nhap ten de load: ";
@@ -155,71 +176,42 @@ void Undo() {
 }
 void input() {
 	if (_kbhit())
-		switch (_getch()) { //keyboard input
+		switch (toupper(_getch())) { //keyboard input
 
-		case 'w': //up
+		case 'W': case 72: //up
 			goXO();
 			_y--;
 			if (_y < 0) { _y++; }
 			break;
 
-		case 's': //down
+		case 'S': case 80: //down
 			goXO();
 			_y++;
 			if (_y >= BOARD_SIZE) { _y--; }
 			break;
 
-		case 'a': //left
+		case 'A': case 75: //left
 			goXO();
 			_x--;
 			if (_x < 0) { _x++; }
 			break;
 
-		case 'd': //right
+		case 'D':case 77: //right
 			goXO();
 			_x++;
 			if (_x >= BOARD_SIZE) { _x--; }
 			break;
 
-		case '\r': //marking the spot
+		case '\r':case 32: //marking the spot
 			enterXO();
 			mark();
 			break;
 
-		case 'u': //undo button
+		case 'U': //undo button
 			Undo();
 			break;
 
-		case 72:
-			goXO();
-			_y--;
-			if (_y < 0) { _y++; }
-			break;
-
-		case 80:
-			goXO();
-			_y++;
-			if (_y >= BOARD_SIZE) { _y--; }
-			break;
-
-		case 75:
-			goXO();
-			_x--;
-			if (_x < 0) { _x++; }
-			break;
-
-		case 77:
-			goXO();
-			_x++;
-			if (_x >= BOARD_SIZE) { _x--; }
-			break;
-
-		case 32: //spacebar for marking
-			enterXO();
-			mark();
-			break;
-
-		case 'p': //save button
+		case 'T': //save button
 			Save();
 			drew = false;
 			break;
@@ -468,6 +460,7 @@ bool checkDraw() {
 }
 
 void resetData() {
+	getLoad();
 	system("cls");
 	while (board_states.size() > 1) {
 		board_states.pop_back();
@@ -534,13 +527,11 @@ void gomoku() {
 		break;
 	case 2:
 		resetData();
-		cpu_player = true;
+		Load();
 		game();
 		break;
 	case 3:
-		resetData();
-		Load();
-		game();
+		return;
 		break;
 	default:
 		break;
