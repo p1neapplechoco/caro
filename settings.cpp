@@ -50,7 +50,7 @@ int Setting() {
 		cout << D2_LOWER_FRAME << D2_LOWER_FRAME;
 		gotoxy(D2_X_SETTING + 80 - i, D2_Y_SETTING + 19);
 		cout << D2_UPPER_FRAME << D2_UPPER_FRAME;
-		Sleep(10);
+		
 	}
 
 	for (int i = 1; i < 19; i += 2) {
@@ -62,14 +62,14 @@ int Setting() {
 		cout << D2_VERTICAL_FRAME;
 		gotoxy(D2_X_SETTING, D2_Y_SETTING + 19 - i - 1);
 		cout << D2_VERTICAL_FRAME;
-		Sleep(10);
+		
 	}
 
 	gotoxy(D2_X_SETTING + 18, D2_Y_SETTING + 5); //D2 X Setting = 46, D2y=15
 	printf("Music:");
 	gotoxy(D2_X_SETTING + 18, D2_Y_SETTING + 13);
 	printf("Sound:");
-	string options[] = { "        ON         ", "       OFF        ", "        ON         ", "       OFF        " };
+	string options[] = { "        ON         ", "        OFF        ", "        ON         ", "        OFF        " };
 	int counter = 1;
 	char key;
 
@@ -124,7 +124,10 @@ int Setting() {
 			}
 		}
 
-		if (key == 27) return counter;
+		if (key == 27) {
+			Loading();
+			return counter;
+		}
 
 		options[0] = "        ON         ";
 		options[1] = "        OFF        ";
@@ -136,28 +139,28 @@ int Setting() {
 		{
 
 			select1();
-			options[0] = "     >> ON <<      ";
+			options[0] = "     >> ON  <<      ";
 
 		}
 		if (counter == 2)
 		{
 
 			select1();
-			options[1] = "    >> OFF <<     ";
+			options[1] = "    >>  OFF  <<     ";
 
 		}
 		if (counter == 3)
 		{
 
 			select1();
-			options[2] = "     >> ON <<      ";
+			options[2] = "     >> ON  <<      ";
 
 		}
 		if (counter == 4)
 		{
 
 			select1();
-			options[3] = "    >> OFF <<     ";
+			options[3] = "    >>  OFF  <<     ";
 
 		}
 	}

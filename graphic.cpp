@@ -153,7 +153,8 @@ void DrawInforFrame() {
         cout << Horizontal_Line;
         
     }
-
+    gotoxy(LLeft + 32, LTop + 11);
+    cout << "Press 'p' to Save Game";
 }
 
 
