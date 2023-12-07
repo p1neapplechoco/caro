@@ -560,69 +560,72 @@ int GameMode()
 }
 
 
-void getcurrent(){
+void getcurrent() {
+    ifstream inputFile("./save/list_of_names");
     string line;
-    ifstream myfile("list_of_names");
-    while (getline(myfile, line))
+    while (getline(inputFile, line)) {
         current_num_files++;
+    }
+    current_num_files--;
+    inputFile.close();
 }
-
  
 
-string getLoadName(string loadName[], bool isLoad) {
+void DrawSelection(int counter,string loadName[]) {
+    DrawListLoad(loadName);
+    if (counter < 5 && counter >= 0)
+    {
+        color(117);
+        drawhcn(45, 16 + 4 * counter);
+        gotoxy(47, 17 + 4 * counter);
+        cout << loadName[counter];
+    }
+    else if (counter < 10 && counter >= 5)
+    {
+        color(117);
+        drawhcn(88, 16 + 4 * (counter - 5));
+        gotoxy(88, 17 + 4 * (counter - 5));
+        cout << loadName[counter];
+    }
+}
+
+string getLoadName(string loadName[], bool &isLoad) {
     getcurrent();
+    gotoxy(1, 1);
+    cout << current_num_files;
     int counter = 0;
     isLoad = false;
-    while (true) {
-        if (_kbhit()) {
-            switch (toupper(_getch())) {
-            case 'W': case 72:
-                if (counter > 0) counter--;
-                DrawListLoad(loadName);
-                break;
-            case 'S': case 80:
-                if (counter < 5 || counter < 10) counter++;
-                DrawListLoad(loadName);
-                break;
-            case 'A': case 75:
-                if (counter - 5 >= 0) counter -= 5;
-                DrawListLoad(loadName);
-                break;
-            case 'D': case 77:
-                if (counter + 5 > 10) counter += 5;
-                DrawListLoad(loadName);
-                break;
-            case '\r':
-                if (counter < current_num_files)
-                {
-                    isLoad = true;
-                    return loadName[counter];
-                }
-                else
-                {
-                    isLoad = false;
-                    return "0";
-                }
-            case 27:
+    for (int i = 0;;) {
+        DrawSelection(counter, loadName);            
+        switch (toupper(_getch())) {
+        case 'W': case 72:
+            if (counter > 0) counter--;
+            break;
+        case 'S': case 80:
+            if (counter < 5 || counter < 10) counter++;
+            break;
+        case 'A': case 75:
+            if (counter - 5 >= 0) counter -= 5;
+            break;
+        case 'D': case 77:
+            if (counter + 5 < 10) counter += 5;
+            break;
+        case '\r':
+            if (counter < current_num_files)
+            {
+                isLoad = true;
+                return loadName[counter];
+            }
+            else
+            {
                 isLoad = false;
                 return "0";
-            default:
-                break;
             }
-        }
-
-        if (counter < 5 && counter >= 0) {
-            color(117);
-            drawhcn(45, 16 + 4 * counter);
-            gotoxy(47, 17 + 4 * counter);
-            cout << loadName[counter];
-        }
-
-        if (counter < 10 && counter >= 5) {
-            color(117);
-            drawhcn(88, 16 + 4 * (counter - 5));
-            gotoxy(88, 17 + 4 * (counter - 5));
-            cout << loadName[counter];
+        case 27:
+            isLoad = false;
+            return "0";
+        default:
+            break;
         }
     }
 }

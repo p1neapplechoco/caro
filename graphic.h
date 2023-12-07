@@ -16,6 +16,6 @@ void DrawInforFrame();
 void DrawTurn(int n);
 void logo2();
 void DrawListLoad(string loadName[]);
-string getLoadName(string loadName[], bool);
+string getLoadName(string loadName[], bool &isLoad);
 void DrawScore(int i, int x, int y);
 #endif

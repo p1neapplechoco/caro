@@ -89,7 +89,7 @@ save:
 	else {
 		file.close();
 		fileInput.open("./save/" + filename + ".txt", ios::out);
-		fileInput << _x << " " << _y << " " << turnx << " " << turno << " " << turnCheck(turn) << " " << turnCheck(turn + 1) << xscore << oscore;
+		fileInput << _x << " " << _y << " " << turnx << " " << turno << " " << turnCheck(turn) << " " << turnCheck(turn + 1) << " " << xscore << " " << oscore << " ";
 		for (int j = 0; j < BOARD_SIZE; j++) {
 			for (int k = 0; k < BOARD_SIZE; k++) {
 				fileInput << board[k][j];
@@ -115,7 +115,7 @@ void Load() { //loading
 	DrawListLoad(loadName);
 	string filename;
 	filename = getLoadName(loadName,isLoad);
-	if (isLoad) {
+	if (isLoad == true) {
 		ifstream file;
 		file.open("./save/" + filename + ".txt");
 		file >> _x >> _y >> turnx >> turno >> PLAYER1 >> PLAYER2 >> xscore >> oscore;
@@ -524,8 +524,10 @@ GameMode:
 		resetData();
 		Load();
 		if (isLoad == false) goto GameMode;
-		game();
-		break;
+		else {
+			game();
+			break;
+		}
 	case 3:
 		return;
 		break;
