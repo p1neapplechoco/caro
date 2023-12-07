@@ -7,11 +7,11 @@
 
 
 
-#define MAX_CAP 20
+#define MAX_CAP 10
 #define BOARD_SIZE 15 //default size
 #define EMPTY ' ' //when no one has marked the thing
 
-	using namespace std;
+using namespace std;
 
 bool drew;
 bool cpu_player = false;
@@ -31,7 +31,11 @@ int _xmark;
 int _ymark;
 int turnx = 0;
 int turno = 0;
+int xscore = 0;
+int oscore = 0;
 int currentLoadNum;
+
+bool isLoad = false;
 bool undo = false;
 
 char turnCheck(unsigned int turn) { //self explainatory
@@ -85,7 +89,7 @@ save:
 	else {
 		file.close();
 		fileInput.open("./save/" + filename + ".txt", ios::out);
-		fileInput << _x << " " << _y << " " << turnx << " " << turno << " " << turnCheck(turn) << " " << turnCheck(turn + 1);
+		fileInput << _x << " " << _y << " " << turnx << " " << turno << " " << turnCheck(turn) << " " << turnCheck(turn + 1) << xscore << oscore;
 		for (int j = 0; j < BOARD_SIZE; j++) {
 			for (int k = 0; k < BOARD_SIZE; k++) {
 				fileInput << board[k][j];
@@ -108,43 +112,23 @@ void getLoad() {
 }
 
 void Load() { //loading
-	DrawListLoad();
-	gotoxy(45, 17);
-	cout << "List of save files: ";
-	for (int i = 0; i < MAX_CAP; i++) {
-		gotoxy(45, 18 + i);
-		cout << loadName[i];
-	}
+	DrawListLoad(loadName);
 	string filename;
-	gotoxy(45, 32);
-	cout << "Nhap ten de load: ";
-	cin >> filename;
-	ifstream file;
-	file.open("./save/" + filename + ".txt");
-
-	while (true) {
-		if (!file) {
-			gotoxy(45, 32);
-			cout << "File khong ton tai, vui long nhap lai:";
-			gotoxy(85, 32);
-			cout << "                           ";
-			gotoxy(85, 32);
-			cin >> filename;
-			file.open("./save/" + filename + ".txt");
-		}
-		else
-		{
-			file >> _x >> _y >> turnx >> turno >> PLAYER1 >> PLAYER2;
-			for (int i = 0; i < BOARD_SIZE; i++) {
-				for (int j = 0; j < BOARD_SIZE; j++) {
-					file >> noskipws >> board[j][i];
-				}
+	filename = getLoadName(loadName,isLoad);
+	if (isLoad) {
+		ifstream file;
+		file.open("./save/" + filename + ".txt");
+		file >> _x >> _y >> turnx >> turno >> PLAYER1 >> PLAYER2 >> xscore >> oscore;
+		for (int i = 0; i < BOARD_SIZE; i++) {
+			for (int j = 0; j < BOARD_SIZE; j++) {
+				file >> noskipws >> board[j][i];
 			}
-			board_states.push_back(board);
-			break;
 		}
+		board_states.push_back(board);
+		system("cls");
 	}
-	system("cls");
+	else
+		system("cls");
 }
 
 void mark() {
@@ -472,12 +456,15 @@ void resetData() {
 	}
 	PLAYER1 = 'X';
 	PLAYER2 = 'O';
+	xscore = 0;
+	oscore = 0;
 	turn = 0;
 	turnx = 0;
 	turno = 0;
 	win_state = false;
 	_x = BOARD_SIZE / 2;
 	_y = BOARD_SIZE / 2;
+	isLoad = false;
 	undo = false;
 }
 void game() {
@@ -496,11 +483,13 @@ gomoku:
 	}
 	if (win_state == true) {
 		if (turnCheck(turn + 1) == 'X') {
+			xscore++;
 			winsound();
 			color(113);
 			DrawWin(-1);
 		}
 		else {
+			oscore++;
 			winsound();
 			color(114);
 			DrawWin(1);
@@ -524,6 +513,7 @@ gomoku:
 }
 
 void gomoku() {
+GameMode:
 	system("cls");
 	switch (GameMode()) {
 	case 1:
@@ -533,6 +523,7 @@ void gomoku() {
 	case 2:
 		resetData();
 		Load();
+		if (isLoad == false) goto GameMode;
 		game();
 		break;
 	case 3:

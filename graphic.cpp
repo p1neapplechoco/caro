@@ -4,6 +4,7 @@
 #include "data.h"
 #include "settings.h"
 
+int current_num_files = 0;
 
 using namespace std;
 
@@ -106,7 +107,8 @@ void DrawTurn(int n) {
 
 }
 
-void DrawListLoad() {
+void DrawListLoad(string loadName[]) {
+    color(116);
     int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
     wstring list[6];
     list[0] = L"    ███████╗ █████╗ ██╗   ██╗███████╗██████╗     ███████╗██╗██╗     ███████╗███████╗ ";
@@ -123,6 +125,7 @@ void DrawListLoad() {
         }
     }
 
+
     
 
     
@@ -131,23 +134,32 @@ void DrawListLoad() {
     for (int i = 0; i < 82; i += 2) {
         gotoxy(D2_X_SETTING + i, D2_Y_SETTING);
         cout << D2_LOWER_FRAME << D2_LOWER_FRAME;
-        gotoxy(D2_X_SETTING + 80 - i, D2_Y_SETTING + 19);
+        gotoxy(D2_X_SETTING + 80 - i, D2_Y_SETTING + 22);
         cout << D2_UPPER_FRAME << D2_UPPER_FRAME;
 
     }
-
-    for (int i = 1; i < 19; i += 2) {
+    for (int i = 1; i < 22; i += 2) {
+        gotoxy(D2_X_SETTING + 81, D2_Y_SETTING + i - 1);
+        cout << D2_VERTICAL_FRAME;
         gotoxy(D2_X_SETTING + 81, D2_Y_SETTING + i);
         cout << D2_VERTICAL_FRAME;
-        gotoxy(D2_X_SETTING + 81, D2_Y_SETTING + i + 1);
+        gotoxy(D2_X_SETTING, D2_Y_SETTING + 22 - i);
         cout << D2_VERTICAL_FRAME;
-        gotoxy(D2_X_SETTING, D2_Y_SETTING + 19 - i);
-        cout << D2_VERTICAL_FRAME;
-        gotoxy(D2_X_SETTING, D2_Y_SETTING + 19 - i - 1);
+        gotoxy(D2_X_SETTING, D2_Y_SETTING + 22 - i - 1);
         cout << D2_VERTICAL_FRAME;
 
     }
 
+    for (int i = 0; i < 5; i++) {
+        drawhcn(45, 16 + 4 * i);
+        gotoxy(47, 17 + 4 * i);
+        cout << loadName[i];
+    }
+    for (int i = 5; i < 10; i++) {
+        drawhcn(88, 16 + 4 * (i - 5));
+        gotoxy(88, 17 + 4 * (i - 5));
+        cout << loadName[i];
+    }
 }
 
 
@@ -543,6 +555,74 @@ int GameMode()
             select1();
             Set[2] = 117;
             options[2] = "     >> EXIT <<      ";
+        }
+    }
+}
+
+
+void getcurrent(){
+    string line;
+    ifstream myfile("list_of_names");
+    while (getline(myfile, line))
+        current_num_files++;
+}
+
+ 
+
+string getLoadName(string loadName[], bool isLoad) {
+    getcurrent();
+    int counter = 0;
+    isLoad = false;
+    while (true) {
+        if (_kbhit()) {
+            switch (toupper(_getch())) {
+            case 'W': case 72:
+                if (counter > 0) counter--;
+                DrawListLoad(loadName);
+                break;
+            case 'S': case 80:
+                if (counter < 5 || counter < 10) counter++;
+                DrawListLoad(loadName);
+                break;
+            case 'A': case 75:
+                if (counter - 5 >= 0) counter -= 5;
+                DrawListLoad(loadName);
+                break;
+            case 'D': case 77:
+                if (counter + 5 > 10) counter += 5;
+                DrawListLoad(loadName);
+                break;
+            case '\r':
+                if (counter < current_num_files)
+                {
+                    isLoad = true;
+                    return loadName[counter];
+                }
+                else
+                {
+                    isLoad = false;
+                    return "0";
+                }
+            case 27:
+                isLoad = false;
+                return "0";
+            default:
+                break;
+            }
+        }
+
+        if (counter < 5 && counter >= 0) {
+            color(117);
+            drawhcn(45, 16 + 4 * counter);
+            gotoxy(47, 17 + 4 * counter);
+            cout << loadName[counter];
+        }
+
+        if (counter < 10 && counter >= 5) {
+            color(117);
+            drawhcn(88, 16 + 4 * (counter - 5));
+            gotoxy(88, 17 + 4 * (counter - 5));
+            cout << loadName[counter];
         }
     }
 }

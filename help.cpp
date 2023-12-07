@@ -3,7 +3,8 @@
 //Handle key for the Help Menu
 
 
-//Draw parts in Help
+//
+//  parts in Help
 void DrawArrow() {
 	int x = D3_Help_Box_Left + D3_Help_Max_i - D3_Help_Max_i / 4, y = D3_Help_Box_Top + 4;
 	gotoxy(x - 2, y - 1);

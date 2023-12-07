@@ -58,7 +58,8 @@ extern int D2_WHICH_SETTING;
 extern int Turn;
 extern int Score1;
 extern int Score2;
-extern int Draw;
+extern int 
+;
 extern int Temp;
 extern string FileName;
 extern int Finish;

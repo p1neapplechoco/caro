@@ -15,6 +15,7 @@ void DrawLogoFrame();
 void DrawInforFrame();
 void DrawTurn(int n);
 void logo2();
-void DrawListLoad();
+void DrawListLoad(string loadName[]);
+string getLoadName(string loadName[], bool);
 void DrawScore(int i, int x, int y);
 #endif
