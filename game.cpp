@@ -463,7 +463,6 @@ gomoku:
 	else if (isExit == true) {
 		return;
 	}
-	_kbhit() = 0;
 	Sleep(4000);
 	while (true) {
 		if (_kbhit()) {
