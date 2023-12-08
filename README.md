@@ -53,3 +53,9 @@ v2.5.1 (23/11/23)
 - fixed checkDraw doesn't work when loading a save files.
 - added color for marks.
 - optimized code.
+
+v3.0 (8/12/23)
+- added a load menu (kinda laggy).
+- added multiple features (necessary features for a game).
+- minor fixes.
+- optimized code.
