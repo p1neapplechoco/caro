@@ -54,6 +54,61 @@ void logo2() {
 }
 
 
+void drawBoard(char PLAYER) {
+    DrawTurn((int)(PLAYER));
+    color(116);
+    int Max_i = BOARD_SIZE * 2;
+    int Max_j = BOARD_SIZE * 4;
+    //Effect
+    gotoxy(LEFT, TOP);
+    cout << LEFT_TOP << HORIZONTAL_LINE;
+    gotoxy(LEFT + Max_j, TOP + Max_i);
+    cout << RIGHT_BOTTOM;
+    int j = 1;
+    for (int i = 1; j < Max_j / 2; i++, j++) {
+
+        gotoxy(LEFT + 2 * j, TOP);
+        cout << HORIZONTAL_LINE << HORIZONTAL_LINE;
+        gotoxy(LEFT, TOP + i);
+        cout << VERTICAL_LINE;
+
+        gotoxy(LEFT + Max_j - 2 * j, TOP + Max_i);
+        cout << HORIZONTAL_LINE << HORIZONTAL_LINE;
+        gotoxy(LEFT + Max_j, TOP + Max_i - i);
+        cout << VERTICAL_LINE;
+
+
+    }
+    //Draw board
+    for (int i = 0; i <= Max_i; i++) {
+        gotoxy(LEFT, TOP + i);
+        for (int j = 0; j <= Max_j; j++) {
+            if (i == 0) {
+                if (j == 0) cout << LEFT_TOP;
+                else if (j == Max_j) cout << RIGHT_TOP;
+                else if (j % 4 == 0) cout << T_SHAPE_DOWN;
+                else cout << HORIZONTAL_LINE;
+            }
+            else if (i == Max_i) {
+                if (j == 0) cout << LEFT_BOTTOM;
+                else if (j == Max_j) cout << RIGHT_BOTTOM;
+                else if (j % 4 == 0) cout << T_SHAPE_UP;
+                else cout << HORIZONTAL_LINE;
+            }
+            else if (i % 2 == 0) {
+                if (j == 0) cout << T_SHAPE_RIGHT;
+                else if (j == Max_j) cout << T_SHAPE_LEFT;
+                else if (j % 4 == 0) cout << CROSS;
+                else cout << HORIZONTAL_LINE;
+            }
+            else {
+                if (j % 4 == 0) cout << VERTICAL_LINE;
+                else cout << " ";
+            }
+        }
+    }
+}
+
 void DrawTurn(int n) {
     int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
     wstring X[6];
@@ -72,7 +127,7 @@ void DrawTurn(int n) {
     O[4] = L"╚██████╔╝";
     O[5] = L" ╚═════╝";
 
-    //int n = 1: X Turn / n=0: Y Turn
+    //int n = 1: X Turn / n = 0: Y Turn
     if (n == 1) {
 
         for (int i = 0; i < 6; i++) {
@@ -107,6 +162,32 @@ void DrawTurn(int n) {
     
 }
 
+
+void DrawPause() {
+
+    drawhcn(66, 16);
+    drawhcn(66, 21);
+    drawhcn(66, 26);
+    drawhcn(66, 31);
+
+    int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
+    wstring pause[6];
+    pause[0] = L"  ██████╗  █████╗ ██╗   ██╗███████╗███████╗██████╗   ";
+    pause[1] = L"  ██╔══██╗██╔══██╗██║   ██║██╔════╝██╔════╝██╔══██╗  ";
+    pause[2] = L"  ██████╔╝███████║██║   ██║███████╗█████╗  ██║  ██║  ";
+    pause[3] = L"  ██╔═══╝ ██╔══██║██║   ██║╚════██║██╔══╝  ██║  ██║  ";
+    pause[4] = L"  ██║     ██║  ██║╚██████╔╝███████║███████╗██████╔╝  ";
+    pause[5] = L"  ╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚══════╝╚═════╝   ";
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 6; j++)
+        {
+            gotoxy(51, 8 + j);
+            wcout << pause[j];
+        }
+    }
+    int CurrentMode = _setmode(_fileno(stdout), OldMode);
+}
+
 void DrawListLoad(string loadName[]) {
     color(116);
     int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
@@ -124,10 +205,6 @@ void DrawListLoad(string loadName[]) {
             wcout << list[j];
         }
     }
-
-
-    
-
     
     int CurrentMode = _setmode(_fileno(stdout), OldMode);
 
@@ -234,6 +311,33 @@ void drawmenu() {
 
     }
 }
+
+void Loading() {
+    system("cls");
+    int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
+    wstring loading[8];
+    loading[0] = L"██╗      ██████╗  █████╗ ██████╗ ██╗███╗   ██╗ ██████╗  ";
+    loading[1] = L"██║     ██╔═══██╗██╔══██╗██╔══██╗██║████╗  ██║██╔════╝  ";
+    loading[2] = L"██║     ██║   ██║███████║██║  ██║██║██╔██╗ ██║██║  ███╗ ";
+    loading[3] = L"██║     ██║   ██║██╔══██║██║  ██║██║██║╚██╗██║██║   ██║ ";
+    loading[4] = L"███████╗╚██████╔╝██║  ██║██████╔╝██║██║ ╚████║╚██████╔╝ ";
+    loading[5] = L"╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚═════╝ ╚═╝╚═╝  ╚═══╝ ╚═════╝  ";
+    loading[6] = L" ██ ";
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 6; j++)
+        {
+            gotoxy(30 + 25, 15 + j);
+            wcout << loading[j];
+        }
+
+    }
+    for (int i = 0; i < 3; i++) {
+        wcout << loading[6]; Sleep(300);
+    }
+    int CurrentMode = _setmode(_fileno(stdout), OldMode);
+    system("cls");
+}
+
 
 void DrawScore(int i, int x, int y)
 {
@@ -367,19 +471,18 @@ void DrawScore(int i, int x, int y)
 void EraseScore(int x, int y) {
     gotoxy(x, y);
     cout << "        ";
-    gotoxy(x, y+1);
+    gotoxy(x, y + 1);
     cout << "        ";
-    gotoxy(x, y+2);
+    gotoxy(x, y + 2);
     cout << "        ";
-    gotoxy(x, y+3);
+    gotoxy(x, y + 3);
     cout << "        ";
-    gotoxy(x, y+4);
+    gotoxy(x, y + 4);
     cout << "        ";
-    gotoxy(x, y+5);
+    gotoxy(x, y + 5);
     cout << "        ";
-   
-}
 
+}
 
 void DrawWin(int n) {
 
@@ -575,17 +678,14 @@ int GameMode()
     }
 }
 
-
 void getcurrent() {
     ifstream inputFile("./save/list_of_names");
     string line;
     while (getline(inputFile, line)) {
         current_num_files++;
     }
-    current_num_files--;
     inputFile.close();
 }
- 
 
 void DrawSelection(int counter,string loadName[]) {
     DrawListLoad(loadName);
@@ -644,4 +744,87 @@ string getLoadName(string loadName[], bool &isLoad) {
             break;
         }
     }
+}
+
+int Pause()
+{
+    color(116);
+    system("cls");
+    DrawPause();
+    string options[] = { "       RESUME        ", "      SETTINGS       ", "    SAVE AND EXIT    ", "     EXIT TO MENU    "};
+    int counter = 1;
+    char key;
+
+    for (int i = 0;;)
+    {
+
+        gotoxy(67, 18);
+        cout << options[0];
+
+        gotoxy(67, 23);
+        cout << options[1];
+
+        gotoxy(67, 28);
+        cout << options[2];
+
+        gotoxy(67, 33);
+        cout << options[3];
+
+
+        key = _getch();
+
+        if (key == 72 && (counter >= 2 && counter <= 4))
+        {
+            select();
+            counter--;
+        }
+        if (key == 80 && (counter >= 1 && counter <= 3))
+        {
+            select();
+            counter++;
+        }
+        if (key == '\r')
+        {
+            select();
+            return counter;
+        }
+
+        if (key == 27)
+        {
+            return 5;
+        }
+
+        options[0] = "       RESUME        ";
+        options[1] = "      SETTINGS       ";
+        options[2] = "    SAVE AND EXIT    ";
+        options[3] = "     EXIT TO MENU    ";
+
+        if (counter == 1)
+        {
+            select1();
+            options[0] = "    >> RESUME <<     ";
+        }
+        if (counter == 2)
+        {
+            select1();
+            options[1] = "   >> SETTINGS <<    ";
+        }
+        if (counter == 3)
+        {
+            select1();
+            options[2] = " >> SAVE AND EXIT << ";
+        }if (counter == 4)
+        {
+            select1();
+            options[3] = "  >> EXIT TO MENU << ";
+        }
+    }
+}
+
+void drawGame(char PLAYER) {
+    system("cls");
+    drawBoard(PLAYER);
+    DrawLogoFrame();
+    DrawInforFrame();
+    logo2();
 }

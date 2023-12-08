@@ -3,6 +3,7 @@
 #include "menu.h"
 #include "sfx.h"
 #include "d2data.h"
+#include "graphic.h"
 
 
 bool music = true;
@@ -41,6 +42,7 @@ int Setting() {
 
 		
 	}
+
 	int CurrentMode = _setmode(_fileno(stdout), OldMode);
 	gotoxy(D2_X_SETTING + 24, D2_Y_SETTING + 17);
 	cout << "Press Esc to return Menu";

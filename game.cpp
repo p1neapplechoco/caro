@@ -1,5 +1,4 @@
-﻿
-#include "graphic.h"
+﻿#include "graphic.h"
 #include "game.h"
 #include "console.h"
 #include "data.h"
@@ -8,7 +7,6 @@
 
 
 #define MAX_CAP 10
-#define BOARD_SIZE 15 //default size
 #define EMPTY ' ' //when no one has marked the thing
 
 using namespace std;
@@ -17,6 +15,7 @@ bool drew;
 bool cpu_player = false;
 unsigned int turn = 0;
 bool win_state = false;
+bool isExit = false;
 int counter;
 
 vector<vector<char>> board(BOARD_SIZE, vector<char>(BOARD_SIZE, EMPTY)); //storing the board
@@ -163,6 +162,7 @@ void Undo() {
 		undo = true;
 	}
 }
+
 void input() {
 	if (_kbhit())
 		switch (toupper(_getch())) { //keyboard input
@@ -206,7 +206,34 @@ void input() {
 			break;
 
 		case 27: //escape quit
-			win_state = true;
+			switch (Pause()) {
+			case 1:
+				drawGame(turnCheck(turn + +1));
+				DrawTurn((int)(turnCheck(turn) == PLAYER1));
+				DrawScore(xscore, FLeft + 30, FTop + 13);
+				DrawScore(oscore, FLeft + 50, FTop + 13);
+				break;
+			case 2:
+				Setting();
+				drawGame(turnCheck(turn + +1));
+				DrawTurn((int)(turnCheck(turn) == PLAYER1));
+				DrawScore(xscore, FLeft + 30, FTop + 13);
+				DrawScore(oscore, FLeft + 50, FTop + 13);
+				break;
+			case 3:
+				Save();
+				isExit = true;
+				break;
+			case 4:
+				isExit = true;
+				break;
+			case 5:
+				drawGame(turnCheck(turn + +1));
+				DrawTurn((int)(turnCheck(turn) == PLAYER1));
+				DrawScore(xscore, FLeft + 30, FTop + 13);
+				DrawScore(oscore, FLeft + 50, FTop + 13);
+				break;
+			}
 			break;
 
 		default:
@@ -315,60 +342,6 @@ void checkWin() {
 	}
 }
 
-void drawBoard() {
-	DrawTurn((int)(turnCheck(turn) == PLAYER1));
-	color(116);
-	int Max_i = BOARD_SIZE * 2;
-	int Max_j = BOARD_SIZE * 4;
-	//Effect
-	gotoxy(LEFT, TOP);
-	cout << LEFT_TOP << HORIZONTAL_LINE;
-	gotoxy(LEFT + Max_j, TOP + Max_i);
-	cout << RIGHT_BOTTOM;
-	int j = 1;
-	for (int i = 1; j < Max_j / 2; i++, j++) {
-
-		gotoxy(LEFT + 2 * j, TOP);
-		cout << HORIZONTAL_LINE << HORIZONTAL_LINE;
-		gotoxy(LEFT, TOP + i);
-		cout << VERTICAL_LINE;
-
-		gotoxy(LEFT + Max_j - 2 * j, TOP + Max_i);
-		cout << HORIZONTAL_LINE << HORIZONTAL_LINE;
-		gotoxy(LEFT + Max_j, TOP + Max_i - i);
-		cout << VERTICAL_LINE;
-
-		
-	}
-	//Draw board
-	for (int i = 0; i <= Max_i; i++) {
-		gotoxy(LEFT, TOP + i);
-		for (int j = 0; j <= Max_j; j++) {
-			if (i == 0) {
-				if (j == 0) cout << LEFT_TOP;
-				else if (j == Max_j) cout << RIGHT_TOP;
-				else if (j % 4 == 0) cout << T_SHAPE_DOWN;
-				else cout << HORIZONTAL_LINE;
-			}
-			else if (i == Max_i) {
-				if (j == 0) cout << LEFT_BOTTOM;
-				else if (j == Max_j) cout << RIGHT_BOTTOM;
-				else if (j % 4 == 0) cout << T_SHAPE_UP;
-				else cout << HORIZONTAL_LINE;
-			}
-			else if (i % 2 == 0) {
-				if (j == 0) cout << T_SHAPE_RIGHT;
-				else if (j == Max_j) cout << T_SHAPE_LEFT;
-				else if (j % 4 == 0) cout << CROSS;
-				else cout << HORIZONTAL_LINE;
-			}
-			else {
-				if (j % 4 == 0) cout << VERTICAL_LINE;
-				else cout << " ";
-			}
-		}
-	}
-}
 
 void drawMarks() {
 	board = board_states.back();
@@ -415,32 +388,6 @@ void drawMarks() {
 	}
 }
 
-void Loading() {
-	system("cls");
-	int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
-	wstring loading[8];
-	loading[0] = L"██╗      ██████╗  █████╗ ██████╗ ██╗███╗   ██╗ ██████╗  ";
-	loading[1] = L"██║     ██╔═══██╗██╔══██╗██╔══██╗██║████╗  ██║██╔════╝  ";
-	loading[2] = L"██║     ██║   ██║███████║██║  ██║██║██╔██╗ ██║██║  ███╗ ";
-	loading[3] = L"██║     ██║   ██║██╔══██║██║  ██║██║██║╚██╗██║██║   ██║ ";
-	loading[4] = L"███████╗╚██████╔╝██║  ██║██████╔╝██║██║ ╚████║╚██████╔╝ ";
-	loading[5] = L"╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚═════╝ ╚═╝╚═╝  ╚═══╝ ╚═════╝  ";
-	loading[6] = L" ██ ";
-	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 6; j++)
-		{
-			gotoxy(30 + 25, 15 + j);
-			wcout << loading[j];
-		}
-
-	}
-	for (int i = 0; i < 3; i++) {
-		wcout << loading[6]; Sleep(300);
-	}
-	int CurrentMode = _setmode(_fileno(stdout), OldMode);
-	system("cls");
-}
-
 bool checkDraw() {
 	if (turnx + turno == 225 && win_state != true) {
 		return true;
@@ -464,14 +411,13 @@ void resetData() {
 	_y = BOARD_SIZE / 2;
 	isLoad = false;
 	undo = false;
+	isExit = false;
 }
+
 void game() {
-	
 gomoku:
-	drawBoard();
-	DrawLogoFrame();
-	DrawInforFrame();
-	logo2();
+	drawGame(turnCheck(turn + +1));
+	DrawTurn((int)(turnCheck(turn) == PLAYER1));
 	DrawScore(xscore, FLeft + 30, FTop + 13);
 	DrawScore(oscore, FLeft + 50, FTop + 13);
 	wstring Line = L"▀▀▀";
@@ -480,7 +426,7 @@ gomoku:
 	wcout << Line;
 	int CurrentMode = _setmode(_fileno(stdout), OldMode);
 	drew = true;
-	while (win_state != true && checkDraw() != true) {
+	while (win_state != true && checkDraw() != true && isExit != true) {
 		if (drew == false) goto gomoku;
 		input();
 		drawMarks();
@@ -514,6 +460,11 @@ gomoku:
 		winsound();
 		DrawWin(0);
 	}
+	else if (isExit == true) {
+		return;
+	}
+	_kbhit() = 0;
+	Sleep(4000);
 	while (true) {
 		if (_kbhit()) {
 			if (_getch() == 'y') {
