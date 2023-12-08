@@ -104,7 +104,7 @@ void DrawTurn(int n) {
         Sleep(15);
     }
     int CurrentMode = _setmode(_fileno(stdout), OldMode);
-
+    
 }
 
 void DrawListLoad(string loadName[]) {
@@ -164,7 +164,6 @@ void DrawListLoad(string loadName[]) {
 
 
 void DrawLogoFrame() {
-
     for (int i = 0; i <= LMax_i; i += 2) {
         gotoxy(LLeft + i, LTop);
         cout << Lower_Vertical << Lower_Vertical;
@@ -362,6 +361,22 @@ void DrawScore(int i, int x, int y)
         y++;
     }
     int CurrentMode = _setmode(_fileno(stdout), OldMode);
+}
+
+void EraseScore(int x, int y) {
+    gotoxy(x, y);
+    cout << "        ";
+    gotoxy(x, y+1);
+    cout << "        ";
+    gotoxy(x, y+2);
+    cout << "        ";
+    gotoxy(x, y+3);
+    cout << "        ";
+    gotoxy(x, y+4);
+    cout << "        ";
+    gotoxy(x, y+5);
+    cout << "        ";
+   
 }
 
 

@@ -468,11 +468,19 @@ void resetData() {
 	undo = false;
 }
 void game() {
+	
 gomoku:
 	drawBoard();
 	DrawLogoFrame();
 	DrawInforFrame();
 	logo2();
+	DrawScore(xscore, FLeft + 30, FTop + 13);
+	DrawScore(oscore, FLeft + 50, FTop + 13);
+	wstring Line = L"▀▀▀";
+	int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
+	gotoxy(96 + 27, 18);
+	wcout << Line;
+	int CurrentMode = _setmode(_fileno(stdout), OldMode);
 	drew = true;
 	while (win_state != true && checkDraw() != true) {
 		if (drew == false) goto gomoku;
@@ -484,15 +492,24 @@ gomoku:
 	if (win_state == true) {
 		if (turnCheck(turn + 1) == 'X') {
 			xscore++;
+			EraseScore(FLeft + 30, FTop + 13);
+			DrawScore(xscore, FLeft + 30, FTop + 13);
+			DrawScore(oscore, FLeft + 50, FTop + 13);
 			winsound();
 			color(113);
 			DrawWin(-1);
+			
 		}
+
 		else {
 			oscore++;
 			winsound();
+			EraseScore(FLeft + 50, FTop + 13);
+			DrawScore(xscore, FLeft + 30, FTop + 13);
+			DrawScore(oscore, FLeft + 50, FTop + 13);
 			color(114);
 			DrawWin(1);
+			
 		}
 	}
 	else if (checkDraw() == true) {
@@ -518,6 +535,8 @@ GameMode:
 	switch (GameMode()) {
 	case 1:
 		resetData();
+		xscore = 0;
+		oscore = 0;
 		game();
 		break;
 	case 2:
