@@ -286,8 +286,6 @@ void DrawInforFrame() {
         cout << Horizontal_Line;
         
     }
-    gotoxy(LLeft + 32, LTop + 11);
-    cout << "Press 'T' to Save Game";
 }
 
 
@@ -602,7 +600,7 @@ void drawNewgame() {
     drawhcn(66, 21);
     drawhcn(66, 26);
 }
-int GameMode()
+int PlayMenu()
 {
     system("cls");
     logo();
@@ -674,6 +672,82 @@ int GameMode()
             select1();
             Set[2] = 117;
             options[2] = "     >> EXIT <<      ";
+        }
+    }
+}
+
+int GameMode()
+{
+    system("cls");
+    logo();
+    drawNewgame();
+    int Set[] = { 116,116,116,116,116 };
+    string options[] = { "    PvsCPU (EASY)    ", "    PvsCPU (HARD)    ", "        PvsP         " };
+    int counter = 1;
+    char key;
+
+    for (int i = 0;;)
+    {
+
+        gotoxy(67, 18);
+        cout << options[0];
+
+        gotoxy(67, 23);
+        cout << options[1];
+
+        gotoxy(67, 28);
+        cout << options[2];
+
+
+        key = _getch();
+
+        if (key == 72 && (counter >= 2 && counter <= 3))
+        {
+            select();
+            counter--;
+        }
+        if (key == 80 && (counter >= 1 && counter <= 2))
+        {
+            select();
+            counter++;
+        }
+        if (key == '\r')
+        {
+            select();
+            return counter;
+        }
+
+        if (key == 27)
+        {
+            return 4;
+        }
+
+
+        Set[0] = 116;
+        Set[1] = 116;
+        Set[2] = 116;
+
+        options[0] = "    PvsCPU (EASY)    ";
+        options[1] = "    PvsCPU (HARD)    ";
+        options[2] = "        PvsP         ";
+
+        if (counter == 1)
+        {
+            select1();
+            Set[0] = 117;
+            options[0] = " >> PvsCPU (EASY) << ";
+        }
+        if (counter == 2)
+        {
+            select1();
+            Set[1] = 117;
+            options[1] = " >> PvsCPU (HARD) << ";
+        }
+        if (counter == 3)
+        {
+            select1();
+            Set[2] = 117;
+            options[2] = "     >> PvsP <<      ";
         }
     }
 }

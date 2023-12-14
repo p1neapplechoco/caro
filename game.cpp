@@ -11,8 +11,8 @@
 
 using namespace std;
 
-bool drew;
-bool cpu_player = false;
+bool drew = false;
+int cpu_player = false;
 unsigned int turn = 0;
 bool win_state = false;
 bool isExit = false;
@@ -53,7 +53,7 @@ save:
 	string filename;
 	gotoxy(85, 32);
 	cout << "Nhap ten file de save: ";
-	cin >> filename;
+	getline(cin, filename);
 	gotoxy(85, 32);
 	cout << "                                                             ";
 
@@ -69,7 +69,7 @@ save:
 		case 'Y':
 			file.close();
 			fileInput.open("./save/" + filename + ".txt", ios::out);
-			fileInput << _x << " " << _y << " " << turnx << " " << turno << " " << turnCheck(turn) << " " << turnCheck(turn + 1);
+			fileInput << cpu_player << " " << _x << " " << _y << " " << turnx << " " << turno << " " << turnCheck(turn) << " " << turnCheck(turn + 1);
 			for (int j = 0; j < BOARD_SIZE; j++) {
 				for (int k = 0; k < BOARD_SIZE; k++) {
 					fileInput << board[k][j];
@@ -88,7 +88,7 @@ save:
 	else {
 		file.close();
 		fileInput.open("./save/" + filename + ".txt", ios::out);
-		fileInput << _x << " " << _y << " " << turnx << " " << turno << " " << turnCheck(turn) << " " << turnCheck(turn + 1) << " " << xscore << " " << oscore << " ";
+		fileInput << cpu_player << " " << _x << " " << _y << " " << turnx << " " << turno << " " << turnCheck(turn) << " " << turnCheck(turn + 1) << " " << xscore << " " << oscore << " ";
 		for (int j = 0; j < BOARD_SIZE; j++) {
 			for (int k = 0; k < BOARD_SIZE; k++) {
 				fileInput << board[k][j];
@@ -106,7 +106,7 @@ void getLoad() {
 	ifstream file;
 	file.open("./save/list_of_names");
 	for (int i = 0; i < MAX_CAP; i++)
-		file >> loadName[i];
+		getline(file, loadName[i]);
 	file.close();
 }
 
@@ -117,7 +117,7 @@ void Load() { //loading
 	if (isLoad == true) {
 		ifstream file;
 		file.open("./save/" + filename + ".txt");
-		file >> _x >> _y >> turnx >> turno >> PLAYER1 >> PLAYER2 >> xscore >> oscore;
+		file >> cpu_player >> _x >> _y >> turnx >> turno >> PLAYER1 >> PLAYER2 >> xscore >> oscore;
 		for (int i = 0; i < BOARD_SIZE; i++) {
 			for (int j = 0; j < BOARD_SIZE; j++) {
 				file >> noskipws >> board[j][i];
@@ -337,6 +337,7 @@ void checkWin() {
 		}
 		if (count >= 5) {
 			win_state = true;
+
 			return;
 		}
 	}
@@ -416,6 +417,7 @@ void resetData() {
 
 void game() {
 gomoku:
+	cpu_player = 0;
 	drawGame(turnCheck(turn + +1));
 	DrawTurn((int)(turnCheck(turn) == PLAYER1));
 	DrawScore(xscore, FLeft + 30, FTop + 13);
@@ -463,8 +465,8 @@ gomoku:
 	else if (isExit == true) {
 		return;
 	}
-	Sleep(4000);
-	while (true) {
+
+	while (!isExit) {
 		if (_kbhit()) {
 			if (_getch() == 'y') {
 				resetData();
@@ -752,13 +754,35 @@ void computer_input() {
 			Undo();
 			break;
 
-		case 'T': //save button
-			Save();
-			drew = false;
-			break;
-
 		case 27: //escape quit
-			win_state = true;
+			switch (Pause()) {
+			case 1:
+				drawGame(turnCheck(turn + +1));
+				DrawTurn((int)(turnCheck(turn) == PLAYER1));
+				DrawScore(xscore, FLeft + 30, FTop + 13);
+				DrawScore(oscore, FLeft + 50, FTop + 13);
+				break;
+			case 2:
+				Setting();
+				drawGame(turnCheck(turn + +1));
+				DrawTurn((int)(turnCheck(turn) == PLAYER1));
+				DrawScore(xscore, FLeft + 30, FTop + 13);
+				DrawScore(oscore, FLeft + 50, FTop + 13);
+				break;
+			case 3:
+				Save();
+				isExit = true;
+				break;
+			case 4:
+				isExit = true;
+				break;
+			case 5:
+				drawGame(turnCheck(turn + +1));
+				DrawTurn((int)(turnCheck(turn) == PLAYER1));
+				DrawScore(xscore, FLeft + 30, FTop + 13);
+				DrawScore(oscore, FLeft + 50, FTop + 13);
+				break;
+			}
 			break;
 
 		default:
@@ -767,6 +791,7 @@ void computer_input() {
 }
 void hard() {
 gomoku:
+	cpu_player = 1;
 	drawGame(turnCheck(turn + +1));
 	DrawTurn((int)(turnCheck(turn) == PLAYER1));
 	DrawScore(xscore, FLeft + 30, FTop + 13);
@@ -784,7 +809,7 @@ gomoku:
 		turnCheck(turn);
 	}
 	
-	Sleep(4000);
+
 	while (true) {
 		if (_kbhit()) {
 			if (_getch() == 'y') {
@@ -1063,13 +1088,35 @@ void computer_input2() {
 			Undo();
 			break;
 
-		case 'T': //save button
-			Save();
-			drew = false;
-			break;
-
 		case 27: //escape quit
-			win_state = true;
+			switch (Pause()) {
+			case 1:
+				drawGame(turnCheck(turn + +1));
+				DrawTurn((int)(turnCheck(turn) == PLAYER1));
+				DrawScore(xscore, FLeft + 30, FTop + 13);
+				DrawScore(oscore, FLeft + 50, FTop + 13);
+				break;
+			case 2:
+				Setting();
+				drawGame(turnCheck(turn + +1));
+				DrawTurn((int)(turnCheck(turn) == PLAYER1));
+				DrawScore(xscore, FLeft + 30, FTop + 13);
+				DrawScore(oscore, FLeft + 50, FTop + 13);
+				break;
+			case 3:
+				Save();
+				isExit = true;
+				break;
+			case 4:
+				isExit = true;
+				break;
+			case 5:
+				drawGame(turnCheck(turn + +1));
+				DrawTurn((int)(turnCheck(turn) == PLAYER1));
+				DrawScore(xscore, FLeft + 30, FTop + 13);
+				DrawScore(oscore, FLeft + 50, FTop + 13);
+				break;
+			}
 			break;
 
 		default:
@@ -1078,6 +1125,7 @@ void computer_input2() {
 }
 void easy() {
 gomoku:
+	cpu_player = -1;
 	drawGame(turnCheck(turn + +1));
 	DrawTurn((int)(turnCheck(turn) == PLAYER1));
 	DrawScore(xscore, FLeft + 30, FTop + 13);
@@ -1095,8 +1143,8 @@ gomoku:
 		turnCheck(turn);
 	}
 
-	Sleep(4000);
-	while (true) {
+
+	while (!isExit) {
 		if (_kbhit()) {
 			if (_getch() == 'y') {
 				resetData();
@@ -1112,22 +1160,34 @@ gomoku:
 void gomoku() {
 GameMode:
 	system("cls");
-	switch (GameMode()) {
+	switch (PlayMenu()) {
 	case 1:
 		resetData();
-		xscore = 0;
-		oscore = 0;
-		//hard();
-		easy();
+		switch (GameMode()) {
+		case 1:
+			easy();
+			break;
+		case 2:
+			hard();
+			break;
+		case 3:
+			game();
+			break;
+		default:
+			break;
+		}
 		break;
 	case 2:
 		resetData();
 		Load();
 		if (isLoad == false) goto GameMode;
-		else {
+		if (cpu_player == 1) hard();
+		else if (cpu_player == -1) easy();
+		else
+		{
 			game();
-			break;
 		}
+		break;
 	case 3:
 		return;
 		break;
