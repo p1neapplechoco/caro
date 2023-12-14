@@ -4,6 +4,8 @@
 #include "data.h"
 #include "settings.h"
 
+
+
 #define MAX_CAP 10
 #define EMPTY ' ' //when no one has marked the thing
 
@@ -16,7 +18,7 @@ bool win_state = false;
 bool isExit = false;
 int counter;
 
-vector<vector<char>> board(BOARD_SIZE, vector<char>(BOARD_SIZE, EMPTY)); //storing the current board
+vector<vector<char>> board(BOARD_SIZE, vector<char>(BOARD_SIZE, EMPTY)); //storing the board
 vector<vector<vector<char>>> board_states(1, vector<vector<char>>(BOARD_SIZE, vector<char>(BOARD_SIZE, EMPTY))); //storing each universe of the board
 string loadName[MAX_CAP]; //storing board names for loading
 
@@ -128,7 +130,7 @@ void Load() { //loading
 		system("cls");
 }
 
-void mark(int _x, int _y) {
+void mark() {
 	if (board[_x][_y] == EMPTY) {
 		board[_x][_y] = turnCheck(turn);
 		board_states.push_back(board);
@@ -148,7 +150,7 @@ void mark(int _x, int _y) {
 }
 
 void Undo() {
-	if (turn > 0 && cpu_player == false) {
+	if (turn > 0) {
 		board_states.pop_back();
 		turn--;
 		if (turn % 2 == 0) {
@@ -157,14 +159,6 @@ void Undo() {
 		else {
 			turno--;
 		}
-		undo = true;
-	}
-	else if (turn > 0 && cpu_player != false) {
-		board_states.pop_back();
-		board_states.pop_back();
-		turn -= 2;
-		turnx--;
-		turno--;
 		undo = true;
 	}
 }
@@ -199,11 +193,16 @@ void input() {
 
 		case '\r':case 32: //marking the spot
 			enterXO();
-			mark(_x,_y);
+			mark();
 			break;
 
 		case 'U': //undo button
 			Undo();
+			break;
+
+		case 'T': //save button
+			Save();
+			drew = false;
 			break;
 
 		case 27: //escape quit
@@ -407,8 +406,6 @@ void resetData() {
 	turn = 0;
 	turnx = 0;
 	turno = 0;
-	xscore = 0;
-	oscore = 0;
 	win_state = false;
 	_x = BOARD_SIZE / 2;
 	_y = BOARD_SIZE / 2;
@@ -475,7 +472,7 @@ gomoku:
 			}
 			else
 				resetData();
-			return;
+			return;;
 		}
 	}
 }
@@ -650,29 +647,70 @@ void computer_mark() {
 				turno++;
 			}
 			turn++;
+
+			counter = 10;
 			undo = false;
 			drawMarks();
+			turnCheck(turn);
 			checkWin();
-			if (win_state != true)
+			if (win_state == true) 
 			{
-				cpu toado = maydanhhard();
-				_x = toado.x;
-				_y = toado.y;
-				board[_x][_y] = turnCheck(turn);
-				board_states.push_back(board);
-				_xmark = _x;
-				_ymark = _y;
-				if (turn % 2 == 0) {
-					turnx++;
-				}
-				else {
-					turno++;
-				}
-				turn++;
-				undo = false;
-				drawMarks();
-				turnCheck(turn);
-				checkWin();
+				board[_x][_y] = 'X';
+					xscore++;
+					EraseScore(FLeft + 30, FTop + 13);
+					DrawScore(xscore, FLeft + 30, FTop + 13);
+					DrawScore(oscore, FLeft + 50, FTop + 13);
+					winsound();
+					color(113);
+					DrawWin(-1);
+					return;
+
+			}
+			else if (checkDraw() == true) {
+				winsound();
+				DrawWin(0);
+				return;
+			}
+			else if (isExit == true) {
+				return;
+			}
+			cpu toado = maydanhhard();
+			_x = toado.x;
+			_y = toado.y;
+			board[_x][_y] = turnCheck(turn);
+			board_states.push_back(board);
+			_xmark = _x;
+			_ymark = _y;
+			if (turn % 2 == 0) {
+				turnx++;
+			}
+			else {
+				turno++;
+			}
+			turn++;
+			counter = 10;
+			undo = false;
+			drawMarks();
+			turnCheck(turn);
+			checkWin();
+			if (win_state == true) 
+			{
+					oscore++;
+					winsound();
+					EraseScore(FLeft + 50, FTop + 13);
+					DrawScore(xscore, FLeft + 30, FTop + 13);
+					DrawScore(oscore, FLeft + 50, FTop + 13);
+					color(114);
+					DrawWin(1);
+					return;
+			}
+			else if (checkDraw() == true) {
+				winsound();
+				DrawWin(0);
+				return;
+			}
+			else if (isExit == true) {
+				return;
 			}
 		}
 	}
@@ -714,35 +752,13 @@ void computer_input() {
 			Undo();
 			break;
 
+		case 'T': //save button
+			Save();
+			drew = false;
+			break;
+
 		case 27: //escape quit
-			switch (Pause()) {
-			case 1:
-				drawGame(turnCheck(turn + +1));
-				DrawTurn((int)(turnCheck(turn) == PLAYER1));
-				DrawScore(xscore, FLeft + 30, FTop + 13);
-				DrawScore(oscore, FLeft + 50, FTop + 13);
-				break;
-			case 2:
-				Setting();
-				drawGame(turnCheck(turn + +1));
-				DrawTurn((int)(turnCheck(turn) == PLAYER1));
-				DrawScore(xscore, FLeft + 30, FTop + 13);
-				DrawScore(oscore, FLeft + 50, FTop + 13);
-				break;
-			case 3:
-				Save();
-				isExit = true;
-				break;
-			case 4:
-				isExit = true;
-				break;
-			case 5:
-				drawGame(turnCheck(turn + +1));
-				DrawTurn((int)(turnCheck(turn) == PLAYER1));
-				DrawScore(xscore, FLeft + 30, FTop + 13);
-				DrawScore(oscore, FLeft + 50, FTop + 13);
-				break;
-			}
+			win_state = true;
 			break;
 
 		default:
@@ -766,38 +782,8 @@ gomoku:
 		computer_input();
 		drawMarks();
 		turnCheck(turn);
-		checkWin();
 	}
-	if (win_state == true) {
-		if (turnCheck(turn + 1) == 'X') {
-			xscore++;
-			EraseScore(FLeft + 30, FTop + 13);
-			DrawScore(xscore, FLeft + 30, FTop + 13);
-			DrawScore(oscore, FLeft + 50, FTop + 13);
-			winsound();
-			color(113);
-			DrawWin(-1);
-
-		}
-
-		else {
-			oscore++;
-			winsound();
-			EraseScore(FLeft + 50, FTop + 13);
-			DrawScore(xscore, FLeft + 30, FTop + 13);
-			DrawScore(oscore, FLeft + 50, FTop + 13);
-			color(114);
-			DrawWin(1);
-
-		}
-	}
-	else if (checkDraw() == true) {
-		winsound();
-		DrawWin(0);
-	}
-	else if (isExit == true) {
-		return;
-	}
+	
 	Sleep(4000);
 	while (true) {
 		if (_kbhit()) {
@@ -807,7 +793,7 @@ gomoku:
 			}
 			else
 				resetData();
-			return;
+			return;;
 		}
 	}
 }
@@ -972,34 +958,74 @@ void computer_mark2() {
 				turno++;
 			}
 			turn++;
+
+			counter = 10;
 			undo = false;
 			drawMarks();
+			turnCheck(turn);
 			checkWin();
-			if (win_state != true)
+			if (win_state == true)
 			{
-				cpu toado = maydanheasy();
-				_x = toado.x;
-				_y = toado.y;
-				board[_x][_y] = turnCheck(turn);
-				board_states.push_back(board);
-				_xmark = _x;
-				_ymark = _y;
-				if (turn % 2 == 0) {
-					turnx++;
-				}
-				else {
-					turno++;
-				}
-				turn++;
-				undo = false;
-				drawMarks();
-				turnCheck(turn);
-				checkWin();
+				board[_x][_y] = 'X';
+				xscore++;
+				EraseScore(FLeft + 30, FTop + 13);
+				DrawScore(xscore, FLeft + 30, FTop + 13);
+				DrawScore(oscore, FLeft + 50, FTop + 13);
+				winsound();
+				color(113);
+				DrawWin(-1);
+				return;
+
+			}
+			else if (checkDraw() == true) {
+				winsound();
+				DrawWin(0);
+				return;
+			}
+			else if (isExit == true) {
+				return;
+			}
+			cpu toado = maydanheasy();
+			_x = toado.x;
+			_y = toado.y;
+			board[_x][_y] = turnCheck(turn);
+			board_states.push_back(board);
+			_xmark = _x;
+			_ymark = _y;
+			if (turn % 2 == 0) {
+				turnx++;
+			}
+			else {
+				turno++;
+			}
+			turn++;
+			counter = 10;
+			undo = false;
+			drawMarks();
+			turnCheck(turn);
+			checkWin();
+			if (win_state == true)
+			{
+				oscore++;
+				winsound();
+				EraseScore(FLeft + 50, FTop + 13);
+				DrawScore(xscore, FLeft + 30, FTop + 13);
+				DrawScore(oscore, FLeft + 50, FTop + 13);
+				color(114);
+				DrawWin(1);
+				return;
+			}
+			else if (checkDraw() == true) {
+				winsound();
+				DrawWin(0);
+				return;
+			}
+			else if (isExit == true) {
+				return;
 			}
 		}
 	}
 }
-
 void computer_input2() {
 	if (_kbhit())
 		switch (toupper(_getch())) { //keyboard input
@@ -1037,35 +1063,13 @@ void computer_input2() {
 			Undo();
 			break;
 
+		case 'T': //save button
+			Save();
+			drew = false;
+			break;
+
 		case 27: //escape quit
-			switch (Pause()) {
-			case 1:
-				drawGame(turnCheck(turn + +1));
-				DrawTurn((int)(turnCheck(turn) == PLAYER1));
-				DrawScore(xscore, FLeft + 30, FTop + 13);
-				DrawScore(oscore, FLeft + 50, FTop + 13);
-				break;
-			case 2:
-				Setting();
-				drawGame(turnCheck(turn + +1));
-				DrawTurn((int)(turnCheck(turn) == PLAYER1));
-				DrawScore(xscore, FLeft + 30, FTop + 13);
-				DrawScore(oscore, FLeft + 50, FTop + 13);
-				break;
-			case 3:
-				Save();
-				isExit = true;
-				break;
-			case 4:
-				isExit = true;
-				break;
-			case 5:
-				drawGame(turnCheck(turn + +1));
-				DrawTurn((int)(turnCheck(turn) == PLAYER1));
-				DrawScore(xscore, FLeft + 30, FTop + 13);
-				DrawScore(oscore, FLeft + 50, FTop + 13);
-				break;
-			}
+			win_state = true;
 			break;
 
 		default:
@@ -1089,38 +1093,8 @@ gomoku:
 		computer_input2();
 		drawMarks();
 		turnCheck(turn);
-		checkWin();
 	}
-	if (win_state == true) {
-		if (turnCheck(turn + 1) == 'X') {
-			xscore++;
-			EraseScore(FLeft + 30, FTop + 13);
-			DrawScore(xscore, FLeft + 30, FTop + 13);
-			DrawScore(oscore, FLeft + 50, FTop + 13);
-			winsound();
-			color(113);
-			DrawWin(-1);
 
-		}
-
-		else {
-			oscore++;
-			winsound();
-			EraseScore(FLeft + 50, FTop + 13);
-			DrawScore(xscore, FLeft + 30, FTop + 13);
-			DrawScore(oscore, FLeft + 50, FTop + 13);
-			color(114);
-			DrawWin(1);
-
-		}
-	}
-	else if (checkDraw() == true) {
-		winsound();
-		DrawWin(0);
-	}
-	else if (isExit == true) {
-		return;
-	}
 	Sleep(4000);
 	while (true) {
 		if (_kbhit()) {
@@ -1130,7 +1104,7 @@ gomoku:
 			}
 			else
 				resetData();
-			return;
+			return;;
 		}
 	}
 }
@@ -1138,25 +1112,13 @@ gomoku:
 void gomoku() {
 GameMode:
 	system("cls");
-	switch (PlayMenu()) {
+	switch (GameMode()) {
 	case 1:
 		resetData();
-		switch (GameMode()) {
-		case 1:
-			cpu_player = true;
-			easy();
-			break;
-		case 2:
-			cpu_player = true;
-			hard();
-			break;
-		case 3:
-			cpu_player = false;
-			game();
-			break;
-		default:
-			break;
-		}
+		xscore = 0;
+		oscore = 0;
+		//hard();
+		easy();
 		break;
 	case 2:
 		resetData();

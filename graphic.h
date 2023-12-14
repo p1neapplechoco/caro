@@ -25,6 +25,4 @@ void EraseScore(int x, int y);
 int Pause();
 void drawGame(char);
 void Loading();
-int PlayMenu();
-int GameMode();
 #endif
