@@ -168,8 +168,6 @@ int Setting() {
 	}
 }
 
-
-
 void select() {
 	(sound) ? PlaySound(TEXT("Sounds//select.wav"), NULL, SND_FILENAME | SND_ASYNC) : PlaySound(TEXT("Sounds//silent.wav"), NULL, SND_FILENAME | SND_ASYNC);
 }

@@ -56,7 +56,7 @@ void logo2() {
 
 void drawBoard(char PLAYER) {
     DrawTurn((int)(PLAYER));
-    color(116);
+    color(115);
     int Max_i = BOARD_SIZE * 2;
     int Max_j = BOARD_SIZE * 4;
     //Effect
@@ -164,6 +164,7 @@ void DrawTurn(int n) {
 
 
 void DrawPause() {
+    color(116);
 
     drawhcn(66, 16);
     drawhcn(66, 21);
@@ -189,7 +190,6 @@ void DrawPause() {
 }
 
 void DrawListLoad(string loadName[]) {
-    color(116);
     int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
     wstring list[6];
     list[0] = L"    ███████╗ █████╗ ██╗   ██╗███████╗██████╗     ███████╗██╗██╗     ███████╗███████╗ ";
@@ -201,6 +201,7 @@ void DrawListLoad(string loadName[]) {
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 6; j++)
         {
+            color(116 + i);
             gotoxy(10 + 25, 5 + j);
             wcout << list[j];
         }
@@ -822,9 +823,10 @@ string getLoadName(string loadName[], bool &isLoad) {
 
 int Pause()
 {
-    color(116);
+    color(115);
     system("cls");
     DrawPause();
+    color(116);
     string options[] = { "       RESUME        ", "      SETTINGS       ", "    SAVE AND EXIT    ", "     EXIT TO MENU    "};
     int counter = 1;
     char key;
