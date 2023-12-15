@@ -4,8 +4,6 @@
 #include "data.h"
 #include "settings.h"
 
-
-
 #define MAX_CAP 10
 #define EMPTY ' ' //when no one has marked the thing
 
@@ -426,24 +424,6 @@ gomoku:
 	cout << "PLAYER 2";
 	DrawScore(xscore, FLeft + 30, FTop + 13);
 	DrawScore(oscore, FLeft + 50, FTop + 13);
-	wstring Line = L"▀▀▀";
-	int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
-	gotoxy(96 + 27, 16);
-	wcout << Line;
-	wstring pvp[3];
-	pvp[0] = L" ░▒█▀▀█░░░▄░░░▄░█▀▀░░░▒█▀▀█";
-	pvp[1] = L" ░▒█▄▄█░░░░█▄█░░▀▀▄░░░▒█▄▄█";
-	pvp[2] = L" ░▒█░░░░░░░░▀░░░▀▀▀░░░▒█░░░";
-
-	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 3; j++)
-		{
-			gotoxy(25, j);
-			wcout << pvp[j];
-		}
-	}
-
-	int CurrentMode = _setmode(_fileno(stdout), OldMode);
 	drew = true;
 	while (win_state != true && checkDraw() != true && isExit != true) {
 		if (drew == false) goto gomoku;
@@ -1150,26 +1130,6 @@ gomoku:
 	DrawTurn((int)(turnCheck(turn) == PLAYER1));
 	DrawScore(xscore, FLeft + 30, FTop + 13);
 	DrawScore(oscore, FLeft + 50, FTop + 13);
-	wstring Line = L"▀▀▀";
-	int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
-	gotoxy(96 + 27, 16);
-	wcout << Line;
-
-
-	wstring pvc[3];
-	pvc[0] = L" ░▒█▀▀█░░░▄░░░▄░█▀▀░░░▒█▀▀▄░▒█▀▀█░▒█░▒█";
-	pvc[1] = L" ░▒█▄▄█░░░░█▄█░░▀▀▄░░░▒█░░░░▒█▄▄█░▒█░▒█";
-	pvc[2] = L" ░▒█░░░░░░░░▀░░░▀▀▀░░░▒█▄▄▀░▒█░░░░░▀▄▄▀";
-
-	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 3; j++)
-		{
-			gotoxy(15, j);
-			wcout << pvc[j];
-		}
-	}
-
-	int CurrentMode = _setmode(_fileno(stdout), OldMode);
 	drew = true;
 	while (win_state != true && checkDraw() != true && isExit != true) {
 		if (drew == false) goto gomoku;

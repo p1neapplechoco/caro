@@ -79,6 +79,7 @@ void drawBoard(char PLAYER) {
 
 
     }
+    color(112);
     //Draw board
     for (int i = 0; i <= Max_i; i++) {
         gotoxy(LEFT, TOP + i);
@@ -107,6 +108,7 @@ void drawBoard(char PLAYER) {
             }
         }
     }
+    color(116);
 }
 
 void DrawTurn(int n) {
@@ -262,18 +264,18 @@ void DrawLogoFrame() {
     }
 
     int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
-    gotoxy(10, 35); wcout << L"╔═════╗";
-    gotoxy(10, 36); wcout << L"║ Esc ║ : PAUSE";
-    gotoxy(10, 37); wcout << L"╚═════╝";
+    gotoxy(10, 37); wcout << L"╔═════╗";
+    gotoxy(10, 38); wcout << L"║ Esc ║ : PAUSE";
+    gotoxy(10, 39); wcout << L"╚═════╝";
 
 
-    gotoxy(35, 35); wcout << L"╔═════╗";
-    gotoxy(35, 36); wcout << L"║  T  ║ : SAVE";
-    gotoxy(35, 37); wcout << L"╚═════╝";
+    gotoxy(30, 37); wcout << L"╔═════╗";
+    gotoxy(30, 38); wcout << L"║  U  ║ : UNDO";
+    gotoxy(30, 39); wcout << L"╚═════╝";
 
-    gotoxy(60, 35); wcout << L"╔═════╗";
-    gotoxy(60, 36); wcout << L"║  U  ║ : UNDO";
-    gotoxy(60, 37); wcout << L"╚═════╝";
+    gotoxy(50, 37); wcout << L"╔═════════════════╗";
+    gotoxy(50, 38); wcout << L"║  SPACE / ENTER  ║ : MARK";
+    gotoxy(50, 39); wcout << L"╚═════════════════╝";
     int CurrentMode = _setmode(_fileno(stdout), OldMode);
 
 }
@@ -916,7 +918,7 @@ void DrawPvC() {
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++)
         {
-            gotoxy(15, j);
+            gotoxy(20, 3 + j);
             wcout << pvc[j];
         }
     }
