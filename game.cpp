@@ -208,14 +208,14 @@ void input() {
 		case 27: //escape quit
 			switch (Pause()) {
 			case 1:
-				drawGame(turnCheck(turn + +1));
+				drawGame(turnCheck(turn + +1), cpu_player);
 				DrawTurn((int)(turnCheck(turn) == PLAYER1));
 				DrawScore(xscore, FLeft + 30, FTop + 13);
 				DrawScore(oscore, FLeft + 50, FTop + 13);
 				break;
 			case 2:
 				Setting();
-				drawGame(turnCheck(turn + +1));
+				drawGame(turnCheck(turn + +1), cpu_player);
 				DrawTurn((int)(turnCheck(turn) == PLAYER1));
 				DrawScore(xscore, FLeft + 30, FTop + 13);
 				DrawScore(oscore, FLeft + 50, FTop + 13);
@@ -228,7 +228,7 @@ void input() {
 				isExit = true;
 				break;
 			case 5:
-				drawGame(turnCheck(turn + +1));
+				drawGame(turnCheck(turn + +1), cpu_player);
 				DrawTurn((int)(turnCheck(turn) == PLAYER1));
 				DrawScore(xscore, FLeft + 30, FTop + 13);
 				DrawScore(oscore, FLeft + 50, FTop + 13);
@@ -418,7 +418,7 @@ void resetData() {
 void game() {
 gomoku:
 	cpu_player = 0;
-	drawGame(turnCheck(turn + +1));
+	drawGame(turnCheck(turn + +1), cpu_player);
 	DrawTurn((int)(turnCheck(turn) == PLAYER1));
 	gotoxy(FLeft + 13, FTop + 11);
 	cout << "PLAYER 1";
@@ -774,14 +774,14 @@ void computer_input() {
 		case 27: //escape quit
 			switch (Pause()) {
 			case 1:
-				drawGame(turnCheck(turn + +1));
+				drawGame(turnCheck(turn + +1), cpu_player);
 				DrawTurn((int)(turnCheck(turn) == PLAYER1));
 				DrawScore(xscore, FLeft + 30, FTop + 13);
 				DrawScore(oscore, FLeft + 50, FTop + 13);
 				break;
 			case 2:
 				Setting();
-				drawGame(turnCheck(turn + +1));
+				drawGame(turnCheck(turn + +1), cpu_player);
 				DrawTurn((int)(turnCheck(turn) == PLAYER1));
 				DrawScore(xscore, FLeft + 30, FTop + 13);
 				DrawScore(oscore, FLeft + 50, FTop + 13);
@@ -794,7 +794,7 @@ void computer_input() {
 				isExit = true;
 				break;
 			case 5:
-				drawGame(turnCheck(turn + +1));
+				drawGame(turnCheck(turn + +1), cpu_player);
 				DrawTurn((int)(turnCheck(turn) == PLAYER1));
 				DrawScore(xscore, FLeft + 30, FTop + 13);
 				DrawScore(oscore, FLeft + 50, FTop + 13);
@@ -809,7 +809,7 @@ void computer_input() {
 void hard() {
 gomoku:
 	cpu_player = 1;
-	drawGame(turnCheck(turn + +1));
+	drawGame(turnCheck(turn + +1), cpu_player);
 	DrawTurn((int)(turnCheck(turn) == PLAYER1));
 	gotoxy(FLeft + 13, FTop + 11);
 	cout << "PLAYER";
@@ -817,23 +817,6 @@ gomoku:
 	cout << "COMPUTER";
 	DrawScore(xscore, FLeft + 30, FTop + 13);
 	DrawScore(oscore, FLeft + 50, FTop + 13);
-	wstring Line = L"▀▀▀";
-	int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
-	gotoxy(96 + 27, 16);
-	wcout << Line;
-	wstring pvc[3];
-	pvc[0] = L" ░▒█▀▀█░░░▄░░░▄░█▀▀░░░▒█▀▀▄░▒█▀▀█░▒█░▒█";
-	pvc[1] = L" ░▒█▄▄█░░░░█▄█░░▀▀▄░░░▒█░░░░▒█▄▄█░▒█░▒█";
-	pvc[2] = L" ░▒█░░░░░░░░▀░░░▀▀▀░░░▒█▄▄▀░▒█░░░░░▀▄▄▀";
-
-	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 3; j++)
-		{
-			gotoxy(15, j);
-			wcout << pvc[j];
-		}
-	}
-	int CurrentMode = _setmode(_fileno(stdout), OldMode);
 	drew = true;
 	while (win_state != true && checkDraw() != true && isExit != true) {
 		if (drew == false) goto gomoku;
@@ -1124,14 +1107,14 @@ void computer_input2() {
 		case 27: //escape quit
 			switch (Pause()) {
 			case 1:
-				drawGame(turnCheck(turn + +1));
+				drawGame(turnCheck(turn + +1), cpu_player);
 				DrawTurn((int)(turnCheck(turn) == PLAYER1));
 				DrawScore(xscore, FLeft + 30, FTop + 13);
 				DrawScore(oscore, FLeft + 50, FTop + 13);
 				break;
 			case 2:
 				Setting();
-				drawGame(turnCheck(turn + +1));
+				drawGame(turnCheck(turn + +1), cpu_player);
 				DrawTurn((int)(turnCheck(turn) == PLAYER1));
 				DrawScore(xscore, FLeft + 30, FTop + 13);
 				DrawScore(oscore, FLeft + 50, FTop + 13);
@@ -1144,7 +1127,7 @@ void computer_input2() {
 				isExit = true;
 				break;
 			case 5:
-				drawGame(turnCheck(turn + +1));
+				drawGame(turnCheck(turn + +1), cpu_player);
 				DrawTurn((int)(turnCheck(turn) == PLAYER1));
 				DrawScore(xscore, FLeft + 30, FTop + 13);
 				DrawScore(oscore, FLeft + 50, FTop + 13);
@@ -1159,7 +1142,7 @@ void computer_input2() {
 void easy() {
 gomoku:
 	cpu_player = -1;
-	drawGame(turnCheck(turn + +1));
+	drawGame(turnCheck(turn + +1), cpu_player);
 	gotoxy(FLeft + 13, FTop + 11);
 	cout << "PLAYER";
 	gotoxy(FLeft + 65, FTop + 11);

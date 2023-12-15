@@ -21,8 +21,8 @@
 using namespace std;
 
 //Game Data
-#define LEFT 7
-#define TOP 3
+#define LEFT 10
+#define TOP 6
 
 //Console size
 #define HEIGHT 720

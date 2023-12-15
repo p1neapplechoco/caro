@@ -884,26 +884,6 @@ int Pause()
     }
 }
 
-void drawGame(char PLAYER) {
-    system("cls");
-    drawBoard(PLAYER);
-    DrawLogoFrame();
-    DrawInforFrame();
-    logo2();
-}
-
-void HighLight(int x, int y) {
-    color(118);
-    for (int i = x; i < x + 21; i++) {
-        for (int j = y; j < y + 3; j++) {
-            gotoxy(i, j);
-            cout << " ";
-        }
-       
-    }
-    color(112);
-}
-
 void DrawPvP() {
 
     int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
@@ -924,24 +904,48 @@ void DrawPvP() {
 }
 
 void DrawPvC() {
-            int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
-        wstring pvc[3];
-        pvc[0] = L" ░▒█▀▀█░░░▄░░░▄░█▀▀░░░▒█▀▀▄░▒█▀▀█░▒█░▒█";
-        pvc[1] = L" ░▒█▄▄█░░░░█▄█░░▀▀▄░░░▒█░░░░▒█▄▄█░▒█░▒█";
-        pvc[2] = L" ░▒█░░░░░░░░▀░░░▀▀▀░░░▒█▄▄▀░▒█░░░░░▀▄▄▀";
+    wstring Line = L"▀▀▀";
+    int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
+    gotoxy(96 + 27, 16);
+    wcout << Line;
+    wstring pvc[3];
+    pvc[0] = L" ░▒█▀▀█░░░▄░░░▄░█▀▀░░░▒█▀▀▄░▒█▀▀█░▒█░▒█";
+    pvc[1] = L" ░▒█▄▄█░░░░█▄█░░▀▀▄░░░▒█░░░░▒█▄▄█░▒█░▒█";
+    pvc[2] = L" ░▒█░░░░░░░░▀░░░▀▀▀░░░▒█▄▄▀░▒█░░░░░▀▄▄▀";
 
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++)
-            {
-                gotoxy(10, j);
-                wcout << pvc[j];
-            }
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++)
+        {
+            gotoxy(15, j);
+            wcout << pvc[j];
         }
+    }
+    int CurrentMode = _setmode(_fileno(stdout), OldMode);
+}
 
-        int CurrentMode = _setmode(_fileno(stdout), OldMode);
+void drawGame(char PLAYER, int cpu_player) {
+    system("cls");
+    drawBoard(PLAYER);
+    if (cpu_player != 0) DrawPvC();
+    else DrawPvP();
+    DrawLogoFrame();
+    DrawInforFrame();
+    logo2();
 }
 
 
+
+void HighLight(int x, int y) {
+    color(118);
+    for (int i = x; i < x + 21; i++) {
+        for (int j = y; j < y + 3; j++) {
+            gotoxy(i, j);
+            cout << " ";
+        }
+       
+    }
+    color(112);
+}
 
 void DrawBox(int x, int y, int w, int h) {
     gotoxy(x, y);
