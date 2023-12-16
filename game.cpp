@@ -148,16 +148,28 @@ void mark() {
 }
 
 void Undo() {
-	if (turn > 0) {
-		board_states.pop_back();
-		turn--;
-		if (turn % 2 == 0) {
+	if (cpu_player == 0) {
+		if (turn > 0) {
+			board_states.pop_back();
+			turn--;
+			if (turn % 2 == 0) {
+				turnx--;
+			}
+			else {
+				turno--;
+			}
+			undo = true;
+		}
+	}
+	else {
+		if (turn > 2) {
+			board_states.pop_back();
+			board_states.pop_back();
+			turn -= 2;
 			turnx--;
-		}
-		else {
 			turno--;
+			undo = true;
 		}
-		undo = true;
 	}
 }
 
