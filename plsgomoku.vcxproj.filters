@@ -27,9 +27,6 @@
     <ClCompile Include="game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="cutscenes.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="graphic.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -37,9 +34,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="help.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="sfx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="settings.cpp">
@@ -56,9 +50,6 @@
     <ClInclude Include="game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="cutscenes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="graphic.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -72,9 +63,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="d2data.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sfx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="settings.h">

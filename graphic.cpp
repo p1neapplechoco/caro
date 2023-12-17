@@ -5,9 +5,9 @@
 #include "settings.h"
 #include "help.h"
 
-int current_num_files = 0;
-
 using namespace std;
+
+int current_num_files = 0;
 
 void logo() {
     color(112);
@@ -363,9 +363,9 @@ void DrawLogoFrame() {
         gotoxy(x + 4 + g + 9, y + 2);
         cout << " : TO GO";
         gotoxy(x - 12, y + 5);
-        cout << "The winner is the first player to form a horizontal, vertical, or diagonal line"; 
+        cout << "The winner is the first player to form a horizontal, vertical, or "; 
         gotoxy(x - 12, y + 6);
-        cout << "of five game pieces in a row.";
+        cout << "diagonal line of five game pieces in a row.";
         gotoxy(x + 40, y + 8);
         cout << "GOOD LUCK PLAYERS !";
             
@@ -373,19 +373,19 @@ void DrawLogoFrame() {
 
     int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
    
-    gotoxy(10, 37); wcout << L"╔═════╗";
-    gotoxy(10, 38); wcout << L"║ Esc ║ : PAUSE";
-    gotoxy(10, 39); wcout << L"╚═════╝";
+    gotoxy(10, 38); wcout << L"╔═════╗";
+    gotoxy(10, 39); wcout << L"║ Esc ║ : PAUSE";
+    gotoxy(10, 40); wcout << L"╚═════╝";
 
 
 
-    gotoxy(30, 37); wcout << L"╔═════╗";
-    gotoxy(30, 38); wcout << L"║  U  ║ : UNDO";
-    gotoxy(30, 39); wcout << L"╚═════╝";
+    gotoxy(30, 38); wcout << L"╔═════╗";
+    gotoxy(30, 39); wcout << L"║  U  ║ : UNDO";
+    gotoxy(30, 40); wcout << L"╚═════╝";
 
-    gotoxy(50, 37); wcout << L"╔═════════════════╗";
-    gotoxy(50, 38); wcout << L"║  SPACE / ENTER  ║ : MARK";
-    gotoxy(50, 39); wcout << L"╚═════════════════╝";
+    gotoxy(50, 38); wcout << L"╔═════════════════╗";
+    gotoxy(50, 39); wcout << L"║  SPACE / ENTER  ║ : MARK";
+    gotoxy(50, 40); wcout << L"╚═════════════════╝";
     int CurrentMode = _setmode(_fileno(stdout), OldMode);
 
 }
@@ -857,13 +857,15 @@ int GameMode()
     }
 }
 
-void getcurrent() {
+int getcurrent() {
+    int filesnum = 0;
     ifstream inputFile("./save/list_of_names");
     string line;
     while (getline(inputFile, line)) {
-        current_num_files++;
+        filesnum++;
     }
     inputFile.close();
+    return filesnum;
 }
 
 void DrawSelection(int counter,string loadName[]) {
@@ -885,7 +887,7 @@ void DrawSelection(int counter,string loadName[]) {
 }
 
 string getLoadName(string loadName[], bool &isLoad) {
-    getcurrent();
+    current_num_files = getcurrent();
     gotoxy(1, 1);
     cout << current_num_files;
     int counter = 0;
@@ -1004,7 +1006,7 @@ void DrawPvP() {
     wstring Line = L"▀▀▀";
     int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
 
-    gotoxy(96 + 27, 16);
+    gotoxy(96 + 27, 17);
     wcout << Line;
     wstring pvp[6];
     pvp[0] = L"  ██████╗     ██╗   ██╗███████╗     ██████╗ ";
@@ -1017,7 +1019,7 @@ void DrawPvP() {
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 6; j++)
         {
-            gotoxy(15, j);
+            gotoxy(23, j + 1);
             wcout << pvp[j];
         }
     }
@@ -1044,7 +1046,7 @@ void DrawPvC() {
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 6; j++)
         {
-            gotoxy(10,  j);
+            gotoxy(10, j + 1);
             wcout << pvc[j];
         }
     }
