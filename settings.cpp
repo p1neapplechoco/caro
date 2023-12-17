@@ -147,28 +147,28 @@ int Setting() {
 		{
 
 			select1();
-			options[0] = "     >> ON  <<     ";
+			options[0] = "     >> ON  <<      ";
 
 		}
 		if (counter == 2)
 		{
 
 			select1();
-			options[1] = "    >>  OFF  <<    ";
+			options[1] = "    >>  OFF  <<     ";
 
 		}
 		if (counter == 3)
 		{
 
 			select1();
-			options[2] = "     >> ON  <<     ";
+			options[2] = "     >> ON  <<      ";
 
 		}
 		if (counter == 4)
 		{
 
 			select1();
-			options[3] = "    >>  OFF  <<    ";
+			options[3] = "    >>  OFF  <<     ";
 
 		}
 	}

@@ -54,4 +54,15 @@ extern int D2_WHICH_SETTING;
 #define LMax_i 82
 #define LMax_j 38
 
+//BOARD
+extern int Turn;
+extern int Score1;
+extern int Score2;
+extern int Temp;
+extern string FileName;
+extern int Finish;
+extern int Count;
+
+extern char _MATRIX[18][18];
+
 #endif
