@@ -33,6 +33,13 @@ void DrawPvC();
 void DrawBox(int x, int y, int w, int h);
 void DrawHcn(int x, int y);
 void MenuLogo(int x, int y);
+int getcurrent();
 void animal(int x, int y);
+void animal2(int x, int y);
+void animal3(int x, int y);
+void animal4(int x, int y);
+void animal5(int x, int y);
+
+
 
 #endif

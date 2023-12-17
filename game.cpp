@@ -44,59 +44,131 @@ char turnCheck(unsigned int turn) { //self explainatory
 	}
 }
 
-void Save() { //saving
-save:
-	gotoxy(LLeft + 32, LTop + 11);
-	cout << "                                                              ";
-	string filename;
-	gotoxy(85, 32);
-	cout << "Nhap ten file de save: ";
-	getline(cin, filename);
-	gotoxy(85, 32);
-	cout << "                                                             ";
-
+bool isExist(string filename) {
 	ifstream file;
-	ofstream fileInput;
-	ofstream fileName;
-	
 	file.open("./save/" + filename + ".txt");
 	if (file) {
-		gotoxy(85, 34);
-		cout << "File da ton tai, co muon xoa file cu ko? Y/N ";
-		switch (toupper(_getch())) {
-		case 'Y':
-			file.close();
+		file.close();
+		return true;
+	}
+	else
+	{	
+		file.close();
+		return false;
+	}
+}
+
+void Save() { //saving
+	int filesnum = getcurrent();
+	if (filesnum < 10) {
+	save:
+		gotoxy(95, 28);
+		cout << "                                                                                                                    ";
+		string filename = "";
+		int x, y;
+		x = 60;
+		y = 26;
+		for (int i = x; i <= x + 32; i += 1) {
+			gotoxy(i, y);
+			cout << D2_LOWER_FRAME << D2_LOWER_FRAME;
+		}
+		for (int i = x; i <= x + 32; i += 1) {
+			gotoxy(i, y + 3);
+			cout << D2_LOWER_FRAME << D2_LOWER_FRAME;
+		}
+		for (int i = y + 1; i <= y + 3; i++) {
+			gotoxy(x, i);
+			cout << D2_VERTICAL_FRAME;
+		}
+		for (int i = y + 1; i <= y + 3; i++) {
+			gotoxy(x + 33, i);
+			cout << D2_VERTICAL_FRAME;
+
+		}
+
+		gotoxy(63, 27);
+		cout << "                             ";
+		gotoxy(63, 28);
+		cout << " PLEASE INPUT YOUR FILE NAME ";
+		while (true) {
+			char key = _getch();
+			if (key == '\b') {
+				if (filename.length() > 0) filename.pop_back();
+				gotoxy(95, 28);
+				cout << "                                                                                                                    ";
+				gotoxy(96, 28);
+				cout << filename;
+			}
+			else if (key == '\r') break;
+			else if (key == 27) {
+				isExit = false;
+				return;
+			}
+			else if ((key >= 'a' && key <= 'z') || (key >= 'A' && key <= 'Z') || (key >= '0' && key <= '9') || key == ' ') filename += key;
+			gotoxy(96, 28);
+			cout << filename;
+		}
+
+		while (filename.length() > 10 || filename.length() <= 0) {
+			gotoxy(63, 27);
+			cout << "                             ";
+			gotoxy(62, 28);
+			cout << "   INVALID NAME, TRY AGAIN   ";
+			gotoxy(95, 28);
+			cout << "                                                                                                                    ";
+			if (_kbhit()) goto save;
+		}
+
+		ofstream fileInput;
+		ofstream fileName;
+
+		if (isExist(filename)) {
+			gotoxy(62, 28);
+			cout << "EXISTED FILE, OVERWRITE? (Y/N)";
+			switch (toupper(_getch())) {
+			case 'Y':
+				fileInput.open("./save/" + filename + ".txt", ios::out);
+				fileInput << cpu_player << " " << _x << " " << _y << " " << turnx << " " << turno << " " << turnCheck(turn) << " " << turnCheck(turn + 1);
+				for (int j = 0; j < BOARD_SIZE; j++) {
+					for (int k = 0; k < BOARD_SIZE; k++) {
+						fileInput << board[k][j];
+					}
+				}
+				fileInput.close();
+				fileName.open("./save/list_of_names", ios::app);
+				fileName << filename << endl;
+				fileName.close();
+				isExit = true;
+				break;
+			case 'N':
+				goto save;
+			}
+		}
+		else {
 			fileInput.open("./save/" + filename + ".txt", ios::out);
-			fileInput << cpu_player << " " << _x << " " << _y << " " << turnx << " " << turno << " " << turnCheck(turn) << " " << turnCheck(turn + 1);
+			fileInput << cpu_player << " " << _x << " " << _y << " " << turnx << " " << turno << " " << turnCheck(turn) << " " << turnCheck(turn + 1) << " " << xscore << " " << oscore << " ";
 			for (int j = 0; j < BOARD_SIZE; j++) {
 				for (int k = 0; k < BOARD_SIZE; k++) {
 					fileInput << board[k][j];
 				}
 			}
 			fileInput.close();
-			fileName.open("./save/list_of_names",ios::app);
+			fileName.open("./save/list_of_names", ios::app);
 			fileName << filename << endl;
 			fileName.close();
-			break;
-		case 'N':
-			goto save;
+			isExit = true;
+			return;
 		}
-		return;
 	}
 	else {
-		file.close();
-		fileInput.open("./save/" + filename + ".txt", ios::out);
-		fileInput << cpu_player << " " << _x << " " << _y << " " << turnx << " " << turno << " " << turnCheck(turn) << " " << turnCheck(turn + 1) << " " << xscore << " " << oscore << " ";
-		for (int j = 0; j < BOARD_SIZE; j++) {
-			for (int k = 0; k < BOARD_SIZE; k++) {
-				fileInput << board[k][j];
+		while (true) {
+			gotoxy(67, 28);
+			cout << "  MAX IS 10 FILES!!  ";
+			if (_kbhit()) {
+				isExit = false;
+				return;
 			}
 		}
-		fileInput.close();
-		fileName.open("./save/list_of_names", ios::app);
-		fileName << filename << endl;
-		fileName.close();
-		return;
 	}
 }
 
@@ -128,25 +200,6 @@ void Load() { //loading
 		system("cls");
 }
 
-void mark() {
-	if (board[_x][_y] == EMPTY) {
-		board[_x][_y] = turnCheck(turn);
-		board_states.push_back(board);
-		_xmark = _x;
-		_ymark = _y;
-		if (turn % 2 == 0) {
-			turnx++;
-		}
-		else {
-			turno++;
-		}
-		turn++;
-		counter = 10;
-		undo = false;
-		DrawTurn((int)(turnCheck(turn) == PLAYER1));
-	}
-}
-
 void Undo() {
 	if (cpu_player == 0) {
 		if (turn > 0) {
@@ -170,6 +223,25 @@ void Undo() {
 			turno--;
 			undo = true;
 		}
+	}
+}
+
+void mark() {
+	if (board[_x][_y] == EMPTY) {
+		board[_x][_y] = turnCheck(turn);
+		board_states.push_back(board);
+		_xmark = _x;
+		_ymark = _y;
+		if (turn % 2 == 0) {
+			turnx++;
+		}
+		else {
+			turno++;
+		}
+		turn++;
+		counter = 10;
+		undo = false;
+		DrawTurn((int)(turnCheck(turn) == PLAYER1));
 	}
 }
 
@@ -816,9 +888,9 @@ gomoku:
 		drawMarks();
 		turnCheck(turn);
 	}
-	
 
-	while (true) {
+
+	while (!isExit) {
 		if (_kbhit()) {
 			if (_getch() == 'y') {
 				resetData();
@@ -1097,6 +1169,7 @@ void computer_input2() {
 			break;
 
 		case 27: //escape quit
+		pause:
 			switch (Pause()) {
 			case 1:
 				drawGame(turnCheck(turn + +1), cpu_player);
@@ -1113,7 +1186,7 @@ void computer_input2() {
 				break;
 			case 3:
 				Save();
-				isExit = true;
+				if (isExit == false) goto pause;
 				break;
 			case 4:
 				isExit = true;

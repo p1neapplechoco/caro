@@ -5,9 +5,9 @@
 #include "settings.h"
 #include "help.h"
 
-int current_num_files = 0;
-
 using namespace std;
+
+int current_num_files = 0;
 
 void logo() {
     color(112);
@@ -363,9 +363,9 @@ void DrawLogoFrame() {
         gotoxy(x + 4 + g + 9, y + 2);
         cout << " : TO GO";
         gotoxy(x - 12, y + 5);
-        cout << "The winner is the first player to form a horizontal, vertical, or diagonal line"; 
+        cout << "The winner is the first player to form a horizontal, vertical, or "; 
         gotoxy(x - 12, y + 6);
-        cout << "of five game pieces in a row.";
+        cout << "diagonal line of five game pieces in a row.";
         gotoxy(x + 40, y + 8);
         cout << "GOOD LUCK PLAYERS !";
             
@@ -373,19 +373,19 @@ void DrawLogoFrame() {
 
     int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
    
-    gotoxy(10, 37); wcout << L"╔═════╗";
-    gotoxy(10, 38); wcout << L"║ Esc ║ : PAUSE";
-    gotoxy(10, 39); wcout << L"╚═════╝";
+    gotoxy(10, 38); wcout << L"╔═════╗";
+    gotoxy(10, 39); wcout << L"║ Esc ║ : PAUSE";
+    gotoxy(10, 40); wcout << L"╚═════╝";
 
 
 
-    gotoxy(30, 37); wcout << L"╔═════╗";
-    gotoxy(30, 38); wcout << L"║  U  ║ : UNDO";
-    gotoxy(30, 39); wcout << L"╚═════╝";
+    gotoxy(30, 38); wcout << L"╔═════╗";
+    gotoxy(30, 39); wcout << L"║  U  ║ : UNDO";
+    gotoxy(30, 40); wcout << L"╚═════╝";
 
-    gotoxy(50, 37); wcout << L"╔═════════════════╗";
-    gotoxy(50, 38); wcout << L"║  SPACE / ENTER  ║ : MARK";
-    gotoxy(50, 39); wcout << L"╚═════════════════╝";
+    gotoxy(50, 38); wcout << L"╔═════════════════╗";
+    gotoxy(50, 39); wcout << L"║  SPACE / ENTER  ║ : MARK";
+    gotoxy(50, 40); wcout << L"╚═════════════════╝";
     int CurrentMode = _setmode(_fileno(stdout), OldMode);
 
 }
@@ -706,6 +706,8 @@ int PlayMenu()
     system("cls");
     logo();
     drawNewgame();
+    animal4(100, 18);
+    animal5(35, 18);
     int Set[] = { 116,116,116,116,116 };
     string options[] = { "      NEW GAME       ", "        LOAD         ", "        EXIT         " };
     int counter = 1;
@@ -782,6 +784,8 @@ int GameMode()
     system("cls");
     logo();
     drawNewgame();
+    animal2(100,18);
+    animal3(35, 24);
     int Set[] = { 116,116,116,116,116 };
     string options[] = { "    PvsCPU (EASY)    ", "    PvsCPU (HARD)    ", "        PvsP         " };
     int counter = 1;
@@ -853,13 +857,15 @@ int GameMode()
     }
 }
 
-void getcurrent() {
+int getcurrent() {
+    int filesnum = 0;
     ifstream inputFile("./save/list_of_names");
     string line;
     while (getline(inputFile, line)) {
-        current_num_files++;
+        filesnum++;
     }
     inputFile.close();
+    return filesnum;
 }
 
 void DrawSelection(int counter,string loadName[]) {
@@ -881,7 +887,7 @@ void DrawSelection(int counter,string loadName[]) {
 }
 
 string getLoadName(string loadName[], bool &isLoad) {
-    getcurrent();
+    current_num_files = getcurrent();
     gotoxy(1, 1);
     cout << current_num_files;
     int counter = 0;
@@ -997,22 +1003,28 @@ int Pause()
 }
 
 void DrawPvP() {
-
+    wstring Line = L"▀▀▀";
     int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
-    wstring pvp[3];
-    pvp[0] = L" ░▒█▀▀█░░░▄░░░▄░█▀▀░░░▒█▀▀█";
-    pvp[1] = L" ░▒█▄▄█░░░░█▄█░░▀▀▄░░░▒█▄▄█";
-    pvp[2] = L" ░▒█░░░░░░░░▀░░░▀▀▀░░░▒█░░░";
+
+    gotoxy(96 + 27, 17);
+    wcout << Line;
+    wstring pvp[6];
+    pvp[0] = L"  ██████╗     ██╗   ██╗███████╗     ██████╗ ";
+    pvp[1] = L"  ██╔══██╗    ██║   ██║██╔════╝     ██╔══██╗";
+    pvp[2] = L"  ██████╔╝    ██║   ██║███████╗     ██████╔╝";
+    pvp[3] = L"  ██╔═══╝     ╚██╗ ██╔╝╚════██║     ██╔═══╝ ";
+    pvp[4] = L"  ██║          ╚████╔╝ ███████║     ██║     ";
+    pvp[5] = L"  ╚═╝           ╚═══╝  ╚══════╝     ╚═╝     ";
 
     for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++)
+        for (int j = 0; j < 6; j++)
         {
-            gotoxy(25, j);
+            gotoxy(18, j + 1);
             wcout << pvp[j];
         }
     }
-
     int CurrentMode = _setmode(_fileno(stdout), OldMode);
+
 }
 
 void DrawPvC() {
@@ -1022,17 +1034,19 @@ void DrawPvC() {
     wcout << Line;
 
                
-                                                                     
-
-    wstring pvc[3];
-    pvc[0] = L" ░▒█▀▀█░░░▄░░░▄░█▀▀░░░▒█▀▀▄░▒█▀▀█░▒█░▒█";
-    pvc[1] = L" ░▒█▄▄█░░░░█▄█░░▀▀▄░░░▒█░░░░▒█▄▄█░▒█░▒█";
-    pvc[2] = L" ░▒█░░░░░░░░▀░░░▀▀▀░░░▒█▄▄▀░▒█░░░░░▀▄▄▀";
+                                                               
+    wstring pvc[6];
+    pvc[0] = L"  ██████╗     ██╗   ██╗███████╗     ██████╗██████╗ ██╗   ██╗";
+    pvc[1] = L"  ██╔══██╗    ██║   ██║██╔════╝    ██╔════╝██╔══██╗██║   ██║";
+    pvc[2] = L"  ██████╔╝    ██║   ██║███████╗    ██║     ██████╔╝██║   ██║";
+    pvc[3] = L"  ██╔═══╝     ╚██╗ ██╔╝╚════██║    ██║     ██╔═══╝ ██║   ██║";
+    pvc[4] = L"  ██║          ╚████╔╝ ███████║    ╚██████╗██║     ╚██████╔╝";
+    pvc[5] = L"  ╚═╝           ╚═══╝  ╚══════╝     ╚═════╝╚═╝      ╚═════╝ ";
 
     for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++)
+        for (int j = 0; j < 6; j++)
         {
-            gotoxy(20, 3 + j);
+            gotoxy(10, j + 1);
             wcout << pvc[j];
         }
     }
@@ -1136,7 +1150,7 @@ void MenuLogo(int x, int y)
 void animal(int x, int y) {
     int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
     gotoxy(x, y);
-    wcout << D2_BEAR_1;
+    wcout << D2_COMPUTER_1;
     gotoxy(x, y + 1);
     wcout << D2_BEAR_2;
     gotoxy(x, y + 2);
@@ -1172,4 +1186,80 @@ void animal(int x, int y) {
 
     int CurrentMode = _setmode(_fileno(stdout), OldMode);
 }
+
+void animal2(int x, int y) {
+
+    int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
+    gotoxy(x, y);
+    wcout << D2_COMPUTER_1;
+    gotoxy(x, y + 1);
+    wcout << D2_COMPUTER_2;
+    gotoxy(x, y + 2);
+    wcout << D2_COMPUTER_3;
+    gotoxy(x, y + 3);
+    wcout << D2_COMPUTER_4;
+    gotoxy(x, y + 4);
+    wcout << D2_COMPUTER_5;
+
+   
+
+
+
+    int CurrentMode = _setmode(_fileno(stdout), OldMode);
+
+}
+
+void animal3(int x, int y) {
+
+    int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
+    gotoxy(x, y);
+    wcout << D2_ROBOT_1;
+    gotoxy(x, y + 1);
+    wcout << D2_ROBOT_2;
+    gotoxy(x, y + 2);
+    wcout << D2_ROBOT_3;
+    gotoxy(x, y + 3);
+    wcout << D2_ROBOT_4;
+    gotoxy(x, y + 4);
+    wcout << D2_ROBOT_5;
+
+    int CurrentMode = _setmode(_fileno(stdout), OldMode);
+}
+
+
+void animal4(int x, int y) {
+
+    int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
+    gotoxy(x, y);
+    wcout << D2_TURTLE_1;
+    gotoxy(x, y + 1);
+    wcout << D2_TURTLE_2;
+    gotoxy(x, y + 2);
+    wcout << D2_TURTLE_3;
+    gotoxy(x, y + 3);
+    wcout << D2_TURTLE_4;
+    gotoxy(x, y + 4);
+    wcout << D2_TURTLE_5;
+
+    int CurrentMode = _setmode(_fileno(stdout), OldMode);
+}
+
+void animal5(int x, int y) {
+
+    int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
+    gotoxy(x, y);
+    wcout << D2_CRAB_1;
+    gotoxy(x, y + 1);
+    wcout << D2_CRAB_2;
+    gotoxy(x, y + 2);
+    wcout << D2_CRAB_3;
+    gotoxy(x, y + 3);
+    wcout << D2_CRAB_4;
+    gotoxy(x, y + 4);
+    wcout << D2_CRAB_5;
+
+    int CurrentMode = _setmode(_fileno(stdout), OldMode);
+}
+
+
 

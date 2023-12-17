@@ -22,7 +22,7 @@ using namespace std;
 
 //Game Data
 #define LEFT 10
-#define TOP 6
+#define TOP 7
 
 //Console size
 #define HEIGHT 720
