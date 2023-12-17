@@ -1,5 +1,4 @@
-#include "graphic.h"
-
+﻿#include "graphic.h"
 #include "d2data.h"
 #include "game.h"
 #include "data.h"
@@ -998,19 +997,17 @@ int Pause()
 }
 
 void DrawPvP() {
-    gotoxy(96 + 27, 17);
-    wstring pvp[6];
-    pvp[0] = L"  ██████╗     ██╗   ██╗███████╗     ██████╗ ";
-    pvp[1] = L"  ██╔══██╗    ██║   ██║██╔════╝     ██╔══██╗";
-    pvp[2] = L"  ██████╔╝    ██║   ██║███████╗     ██████╔╝";
-    pvp[3] = L"  ██╔═══╝     ╚██╗ ██╔╝╚════██║     ██╔═══╝ ";
-    pvp[4] = L"  ██║          ╚████╔╝ ███████║     ██║     ";
-    pvp[5] = L"  ╚═╝           ╚═══╝  ╚══════╝     ╚═╝     ";
+
+    int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
+    wstring pvp[3];
+    pvp[0] = L" ░▒█▀▀█░░░▄░░░▄░█▀▀░░░▒█▀▀█";
+    pvp[1] = L" ░▒█▄▄█░░░░█▄█░░▀▀▄░░░▒█▄▄█";
+    pvp[2] = L" ░▒█░░░░░░░░▀░░░▀▀▀░░░▒█░░░";
 
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++)
         {
-            gotoxy(23, j + 1);
+            gotoxy(25, j);
             wcout << pvp[j];
         }
     }
