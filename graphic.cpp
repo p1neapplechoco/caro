@@ -1000,6 +1000,7 @@ int Pause()
 
 void DrawPvP() {
 
+<<<<<<< HEAD
     gotoxy(96 + 27, 17);
     wcout << Line;
     wstring pvp[6];
@@ -1009,11 +1010,22 @@ void DrawPvP() {
     pvp[3] = L"  ██╔═══╝     ╚██╗ ██╔╝╚════██║     ██╔═══╝ ";
     pvp[4] = L"  ██║          ╚████╔╝ ███████║     ██║     ";
     pvp[5] = L"  ╚═╝           ╚═══╝  ╚══════╝     ╚═╝     ";
+=======
+    int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
+    wstring pvp[3];
+    pvp[0] = L" ░▒█▀▀█░░░▄░░░▄░█▀▀░░░▒█▀▀█";
+    pvp[1] = L" ░▒█▄▄█░░░░█▄█░░▀▀▄░░░▒█▄▄█";
+    pvp[2] = L" ░▒█░░░░░░░░▀░░░▀▀▀░░░▒█░░░";
+>>>>>>> parent of 163c0a9 (animal)
 
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++)
         {
+<<<<<<< HEAD
             gotoxy(23, j + 1);
+=======
+            gotoxy(25, j);
+>>>>>>> parent of 163c0a9 (animal)
             wcout << pvp[j];
         }
     }
@@ -1038,7 +1050,11 @@ void DrawPvC() {
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++)
         {
+<<<<<<< HEAD
             gotoxy(10, j + 1);
+=======
+            gotoxy(20, 3 + j);
+>>>>>>> parent of 163c0a9 (animal)
             wcout << pvc[j];
         }
     }
