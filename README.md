@@ -61,5 +61,5 @@ v3.0 final (18/12/23)
 - added load menu.
 
 <p align="center">
-  ## PROJECT DONE
+  PROJECT DONE
 </p>
