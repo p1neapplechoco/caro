@@ -59,10 +59,10 @@ int About() {
 	}
 
 	OldMode = _setmode(_fileno(stdout), _O_WTEXT);
-	gotoxy(D2_X_ABOUT + 26, D2_Y_ABOUT + 3);
+	gotoxy(D2_X_ABOUT + 28, D2_Y_ABOUT + 3);
 	wcout << L"INTRODUCTION TO PROGRAMMING";
 
-	gotoxy(D2_X_ABOUT + 32, D2_Y_ABOUT + 4);
+	gotoxy(D2_X_ABOUT + 35, D2_Y_ABOUT + 4);
 	wcout << L"CARO PROJECT";
 
 	gotoxy(D2_X_ABOUT + 5, D2_Y_ABOUT + 6);

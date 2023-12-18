@@ -86,8 +86,10 @@ void Save() { //saving
 
 		}
 
-		gotoxy(63, 27);
-		cout << "                             ";
+		gotoxy(61, 27);
+		cout << "                               ";
+		gotoxy(61, 28);
+		cout << "                               ";
 		gotoxy(63, 28);
 		cout << " PLEASE INPUT YOUR FILE NAME ";
 		while (true) {
@@ -123,6 +125,8 @@ void Save() { //saving
 		ofstream fileName;
 
 		if (isExist(filename)) {
+			gotoxy(63, 28);
+			cout << "                             ";
 			gotoxy(62, 28);
 			cout << "EXISTED FILE, OVERWRITE? (Y/N)";
 			switch (toupper(_getch())) {
@@ -135,9 +139,6 @@ void Save() { //saving
 					}
 				}
 				fileInput.close();
-				fileName.open("./save/list_of_names", ios::app);
-				fileName << filename << endl;
-				fileName.close();
 				isExit = true;
 				break;
 			case 'N':
@@ -146,7 +147,7 @@ void Save() { //saving
 		}
 		else {
 			fileInput.open("./save/" + filename + ".txt", ios::out);
-			fileInput << cpu_player << " " << _x << " " << _y << " " << turnx << " " << turno << " " << turnCheck(turn) << " " << turnCheck(turn + 1) << " " << xscore << " " << oscore << " ";
+			fileInput << cpu_player << " " << _x << " " << _y << " " << turnx << " " << turno << " " << turnCheck(turn) << " " << turnCheck(turn + 1) << " " << xscore << " " << oscore;
 			for (int j = 0; j < BOARD_SIZE; j++) {
 				for (int k = 0; k < BOARD_SIZE; k++) {
 					fileInput << board[k][j];
@@ -212,10 +213,11 @@ void Undo() {
 				turno--;
 			}
 			undo = true;
+			DrawTurn((int)(turnCheck(turn) == PLAYER1));
 		}
 	}
 	else {
-		if (turn > 2) {
+		if (turn > 1) {
 			board_states.pop_back();
 			board_states.pop_back();
 			turn -= 2;
