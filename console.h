@@ -1,7 +1,6 @@
 #include <Windows.h>
 #include <iostream>
 #include "data.h"
-#include "sfx.h"
 
 #ifndef _CONSOLE_H_
 void Exit();

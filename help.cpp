@@ -6,7 +6,8 @@
 //
 //  parts in Help
 void DrawArrow() {
-	int x = D3_Help_Box_Left + D3_Help_Max_i - D3_Help_Max_i / 4, y = D3_Help_Box_Top + 4;
+	int x = D3_Help_Box_Left + D3_Help_Max_i - D3_Help_Max_i / 4;
+	int y = D3_Help_Box_Top + 4;
 	gotoxy(x - 2, y - 1);
 	cout << LEFT_TOP;
 	cout << D3_Help_Double_Vertical_Line << D3_Help_Double_Vertical_Line << D3_Help_Double_Vertical_Line;
@@ -177,7 +178,7 @@ void DrawKey() {
 //In Help
 void DrawEnter()
 {
-	int x = (D3_Help_Box_Left + D3_Help_Max_i) / 2 + D3_Help_Max_i / 4 - 7, y = D3_Help_Max_j - 7;
+	int x = (D3_Help_Box_Left + D3_Help_Max_i) / 2 + D3_Help_Max_i / 4 - 10, y = D3_Help_Max_j - 7;
 	int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
 
 	gotoxy(x - 2, y - 1); wcout << L"╔═════════════════╗";
@@ -247,8 +248,8 @@ int Help()
 		Sleep(5);
 	
 	}
-	gotoxy(68, D3_Help_Max_j - 2);
-	cout << "Press Enter to return to Main Menu";
+	gotoxy(62, D3_Help_Max_j - 2);
+	cout << "Press ESC to return to Main Menu ";
 	DrawArrow();
 	DrawKey();
 	DrawEnter();

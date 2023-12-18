@@ -116,25 +116,6 @@ extern bool key;
 extern int _MENU;
 extern int _CURRENT_MENU;
 
-//ASCII ARTS
-const wstring D2_CAROCHESS_0 = L"  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄		";
-const wstring D2_CAROCHESS_1 = L"▄▄█•••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••█▄▄	";
-const wstring D2_CAROCHESS_2 = L"█•••██████╗•█████╗•██████╗••██████╗••••••██████╗██╗••██╗███████╗███████╗███████╗••█	";
-const wstring D2_CAROCHESS_3 = L"█••██╔════╝██╔══██╗██╔══██╗██╔═══██╗••••██╔════╝██║••██║██╔════╝██╔════╝██╔════╝••█	";
-const wstring D2_CAROCHESS_4 = L"█••██║•••••███████║██████╔╝██║•••██║••••██║•••••███████║█████╗••███████╗███████╗••█	";
-const wstring D2_CAROCHESS_5 = L"█••██║•••••██╔══██║██╔══██╗██║•••██║••••██║•••••██╔══██║██╔══╝••╚════██║╚════██║••█	";
-const wstring D2_CAROCHESS_6 = L"█••╚██████╗██║••██║██║••██║╚██████╔╝••••╚██████╗██║••██║███████╗███████║███████║••█	";
-const wstring D2_CAROCHESS_7 = L"█•••╚═════╝╚═╝••╚═╝╚═╝••╚═╝•╚═════╝••••••╚═════╝╚═╝••╚═╝╚══════╝╚══════╝╚══════╝••█	";
-const wstring D2_CAROCHESS_8 = L"▀▀█•••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••█▀▀	";
-const wstring D2_CAROCHESS_9 = L"  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀		";
-
-
- 
-    
-   
-   
-
-
 const wstring D2_HCMUS_1 = L" ██████╗ ██████╗  ██████╗ ██╗   ██╗██████╗      ██████╗  █████╗    ";
 const wstring D2_HCMUS_2 = L"██╔════╝ ██╔══██╗██╔═══██╗██║   ██║██╔══██╗    ██╔═████╗██╔══██╗   ";
 const wstring D2_HCMUS_3 = L"██║  ███╗██████╔╝██║   ██║██║   ██║██████╔╝    ██║██╔██║╚██████║ 	";
@@ -309,40 +290,6 @@ const wstring D1_MENULOGO_12 = L"█  ▄    █       █";
 const wstring D1_MENULOGO_13 = L"█ █ █   █       █";
 const wstring D1_MENULOGO_14 = L"█▄█  █▄▄█▄▄▄▄▄▄▄█";
 
-const wstring D2_RUNANDGO_LOGO_01 = L"               ▀▀▀▀▀▀▀▀▀▀▀▀▀▀███████████      ";
-const wstring D2_RUNANDGO_LOGO_02 = L"                             ███       █████  ";
-const wstring D2_RUNANDGO_LOGO_03 = L"                            ██   ██████     █ ";
-const wstring D2_RUNANDGO_LOGO_04 = L"           ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄██  ███    ███   ██";
-const wstring D2_RUNANDGO_LOGO_05 = L"                           █   █   ██   ███  █";
-const wstring D2_RUNANDGO_LOGO_06 = L"                           █   █    █     █  █";
-const wstring D2_RUNANDGO_LOGO_07 = L"                           █   ████    ███  ██";
-const wstring D2_RUNANDGO_LOGO_08 = L"       ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀██     █████    ██ ";
-const wstring D2_RUNANDGO_LOGO_09 = L"                            █████        ███  ";
-const wstring D2_RUNANDGO_LOGO_10 = L"             ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄████████████▀    ";
-
-const wstring D2_RUNANDGO_TEXT_01 = L" █████                 ▄█████    ████▄           ";
-const wstring D2_RUNANDGO_TEXT_02 = L"██  ███                █   ██   ██   █▄          ";
-const wstring D2_RUNANDGO_TEXT_03 = L"███▄█▀                 ██      ██                ";
-const wstring D2_RUNANDGO_TEXT_04 = L"██▀██   ▀██  █ ▀████    █████  ██  █████ ▄███    ";
-const wstring D2_RUNANDGO_TEXT_05 = L"██  ██    █ ██  █  ██  ██   ██  ██  ██   █  ██   ";
-const wstring D2_RUNANDGO_TEXT_06 = L"█    ▀█▄  ███▀  █   █▄  █████    ████▀   ████▀   ";
-
-const wstring D3_BYE_01 = L" _______  __      __ ________      __     __     __";
-const wstring D3_BYE_02 = L"|       \\|\\ \\    /\\ \\\\       \\    |\\ \\   |\\ \\   |\\ \\";
-const wstring D3_BYE_03 = L"| ▓▓▓▓▓▓▓\\\\▓▓\\  /  ▓▓ ▓▓▓▓▓▓▓▓    | ▓▓   | ▓▓   | ▓▓";
-const wstring D3_BYE_04 = L"| ▓▓__/ ▓▓ \\▓▓\\/  ▓▓| ▓▓__        | ▓▓   | ▓▓   | ▓▓";
-const wstring D3_BYE_05 = L"| ▓▓    ▓▓  \\▓▓  ▓▓ | ▓▓  \\       | ▓▓   | ▓▓   | ▓▓";
-const wstring D3_BYE_06 = L"| ▓▓▓▓▓▓▓\\   \\▓▓▓▓  | ▓▓▓▓▓        \\▓▓    \\▓▓    \\▓▓";
-const wstring D3_BYE_07 = L"| ▓▓__/ ▓▓   | ▓▓   | ▓▓_____      __     __     __";
-const wstring D3_BYE_08 = L"| ▓▓    ▓▓   | ▓▓   | ▓▓     \\    |\\ \\   |\\ \\   |\\ \\";
-const wstring D3_BYE_09 = L" \\▓▓▓▓▓▓▓     \\▓▓    \\▓▓▓▓▓▓▓▓     \\▓▓    \\▓▓    \\▓▓";
-
-const wstring D3_EXIT_01 = L"███████╗███████╗███████╗    ██╗   ██╗ ██████╗ ██╗   ██╗     █████╗  ██████╗  █████╗ ██╗███╗   ██╗";
-const wstring D3_EXIT_02 = L"██╔════╝██╔════╝██╔════╝    ╚██╗ ██╔╝██╔═══██╗██║   ██║    ██╔══██╗██╔════╝ ██╔══██╗██║████╗  ██║";
-const wstring D3_EXIT_03 = L"███████╗█████╗  █████╗       ╚████╔╝ ██║   ██║██║   ██║    ███████║██║  ███╗███████║██║██╔██╗ ██║";
-const wstring D3_EXIT_04 = L"╚════██║██╔══╝  ██╔══╝        ╚██╔╝  ██║   ██║██║   ██║    ██╔══██║██║   ██║██╔══██║██║██║╚██╗██║";
-const wstring D3_EXIT_05 = L"███████║███████╗███████╗       ██║   ╚██████╔╝╚██████╔╝    ██║  ██║╚██████╔╝██║  ██║██║██║ ╚████║";
-const wstring D3_EXIT_06 = L"╚══════╝╚══════╝╚══════╝       ╚═╝    ╚═════╝  ╚═════╝     ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝";
 
 const wstring D2_LOGO2_1 = L"  ▄▄█▀▀▀█▄█     ██     ▀███▀▀▀██▄   ▄▄█▀▀██▄     ";
 const wstring D2_LOGO2_2 = L"▄██▀     ▀█    ▄██▄      ██   ▀██▄▄██▀    ▀██▄   ";

@@ -39,7 +39,7 @@ extern int D2_INGAME_MUSIC;
 extern int D2_WHICH_SETTING;
 
 //ABOUT
-#define D2_X_ABOUT 46
+#define D2_X_ABOUT 38
 #define D2_Y_ABOUT 9
 
 

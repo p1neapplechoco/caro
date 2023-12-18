@@ -25,7 +25,7 @@ Menu:
 		select();
 		Help();
 		while (1) {
-			if (_getch() == 13) {
+			if (_getch() == 27) {
 				
 				goto Menu;
 			}
@@ -34,13 +34,14 @@ Menu:
 		select();
 		About();
 		while (1) {
-			if (_getch() == 13) {
+			if (_getch() == 27) {
 				
 				goto Menu;
 			}
 		}
 	case 5:
 		select();
+		Exit();
 		return 1;
 	default:
 		break;

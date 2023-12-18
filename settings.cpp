@@ -1,7 +1,6 @@
 #include "settings.h"
 #include "game.h"
 #include "menu.h"
-#include "sfx.h"
 #include "d2data.h"
 #include "graphic.h"
 
@@ -49,8 +48,8 @@ int Setting() {
 	
 
 	int CurrentMode = _setmode(_fileno(stdout), OldMode);
-	gotoxy(D2_X_SETTING + 24, D2_Y_SETTING + 17);
-	cout << "Press Esc to return Menu";
+	gotoxy(D2_X_SETTING + 29, D2_Y_SETTING + 17);
+	cout << "Press ESC to return Menu ";
 
 	for (int i = 0; i < 82; i += 2) {
 		gotoxy(D2_X_SETTING + i, D2_Y_SETTING);
@@ -160,28 +159,28 @@ int Setting() {
 		{
 
 			select1();
-			options[0] = "     >> ON  <<      ";
+			options[0] = "     >> ON  <<     ";
 
 		}
 		if (counter == 2)
 		{
 
 			select1();
-			options[1] = "    >>  OFF  <<     ";
+			options[1] = "    >>  OFF  <<    ";
 
 		}
 		if (counter == 3)
 		{
 
 			select1();
-			options[2] = "     >> ON  <<      ";
+			options[2] = "     >> ON  <<     ";
 
 		}
 		if (counter == 4)
 		{
 
 			select1();
-			options[3] = "    >>  OFF  <<     ";
+			options[3] = "    >>  OFF  <<    ";
 
 		}
 	}

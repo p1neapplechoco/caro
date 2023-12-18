@@ -733,17 +733,17 @@ int PlayMenu()
 
         key = _getch();
 
-        if (key == 72 && (counter >= 2 && counter <= 3))
+        if ((key == 72 || key == 'w' || key =='W') && (counter >= 2 && counter <= 3))
         {
             select();
             counter--;
         }
-        if (key == 80 && (counter >= 1 && counter <= 2))
+        if ((key == 80 || key == 's' || key == 'S') && (counter >= 1 && counter <= 2))
         {
             select();
             counter++;
         }
-        if (key == '\r')
+        if (key == '\r' || key == ' ')
         {
             select();
             return counter;

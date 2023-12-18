@@ -8,7 +8,7 @@
 
 
 // Help Data
-#define D3_Help_Box_Left 43
+#define D3_Help_Box_Left 38
 #define D3_Help_Box_Top 9
 #define D3_Help_Max_i 82
 #define D3_Help_Max_j 40

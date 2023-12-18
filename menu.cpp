@@ -38,17 +38,17 @@ int Menu()
 
             key = _getch();
 
-            if (key == 72 && (counter >= 2 && counter <= 5))
+            if ((key == 72 || key == 'w' || key == 'W') && (counter >= 2 && counter <= 5))
             {
                
                 counter--;
             }
-            if (key == 80 && (counter >= 1 && counter <= 4))
+            if ((key == 80 || key == 's' || key == 'S') && (counter >= 1 && counter <= 4))
             {
                
                 counter++;
             }
-            if (key == '\r')
+            if (key == '\r' || key == ' ')
             {
                
                 return counter;

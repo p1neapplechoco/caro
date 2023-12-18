@@ -72,17 +72,17 @@ int About() {
 	gotoxy(D2_X_ABOUT + 5, D2_Y_ABOUT + 10);
 	wcout << L"─────────────────────────────────────────────────────────────────────────";
 
-	gotoxy(D2_X_ABOUT + 13, D2_Y_ABOUT + 11);
+	gotoxy(D2_X_ABOUT + 10, D2_Y_ABOUT + 11);
 	wcout << D2_HCMUS_1;
-	gotoxy(D2_X_ABOUT + 13, D2_Y_ABOUT + 12);
+	gotoxy(D2_X_ABOUT + 10, D2_Y_ABOUT + 12);
 	wcout << D2_HCMUS_2;
-	gotoxy(D2_X_ABOUT + 13, D2_Y_ABOUT + 13);
+	gotoxy(D2_X_ABOUT + 10, D2_Y_ABOUT + 13);
 	wcout << D2_HCMUS_3;
-	gotoxy(D2_X_ABOUT + 13, D2_Y_ABOUT + 14);
+	gotoxy(D2_X_ABOUT + 10, D2_Y_ABOUT + 14);
 	wcout << D2_HCMUS_4;
-	gotoxy(D2_X_ABOUT + 13, D2_Y_ABOUT + 15);
+	gotoxy(D2_X_ABOUT + 10, D2_Y_ABOUT + 15);
 	wcout << D2_HCMUS_5;
-	gotoxy(D2_X_ABOUT + 13, D2_Y_ABOUT + 16);
+	gotoxy(D2_X_ABOUT + 10, D2_Y_ABOUT + 16);
 	wcout << D2_HCMUS_6;
 
 	gotoxy(D2_X_ABOUT + 5, D2_Y_ABOUT + 18);
@@ -117,8 +117,8 @@ int About() {
 	CurrentMode = _setmode(_fileno(stdout), OldMode);
 	
 
-	gotoxy(D2_X_ABOUT + 24, D2_Y_ABOUT + 29);
-	cout << "Press Enter to return to Main Menu";
+	gotoxy(D2_X_ABOUT + 25, D2_Y_ABOUT + 29);
+	cout << "Press ESC to return to Main Menu";
 
 	return 0x0000;
 }
