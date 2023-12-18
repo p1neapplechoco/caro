@@ -2,4 +2,4 @@
 - ADD OPTION, CREDIT, HELP.
 - MAKE THE AI.
 - REVAMP THE GRAPHIC.
-- SAVING AND LOADING FEATURE --> 75% (overwriting and non-existing files problems)
+- SAVING AND LOADING FEATURE --> 100% (overwriting and non-existing files problems)

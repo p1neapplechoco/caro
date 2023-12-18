@@ -893,8 +893,8 @@ void DrawSelection(int counter,string loadName[]) {
 
 string getLoadName(string loadName[], bool &isLoad) {
     current_num_files = getcurrent();
-    gotoxy(1, 1);
-    cout << current_num_files;
+    gotoxy((158 - 5)/2, 38);
+    cout << current_num_files << " /10";
     int counter = 0;
     isLoad = false;
     for (int i = 0;;) {
