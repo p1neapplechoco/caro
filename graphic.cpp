@@ -444,33 +444,6 @@ void drawmenu() {
     }
 }
 
-void Loading() {
-    system("cls");
-    int OldMode = _setmode(_fileno(stdout), _O_WTEXT);
-    wstring loading[8];
-    loading[0] = L"██╗      ██████╗  █████╗ ██████╗ ██╗███╗   ██╗ ██████╗  ";
-    loading[1] = L"██║     ██╔═══██╗██╔══██╗██╔══██╗██║████╗  ██║██╔════╝  ";
-    loading[2] = L"██║     ██║   ██║███████║██║  ██║██║██╔██╗ ██║██║  ███╗ ";
-    loading[3] = L"██║     ██║   ██║██╔══██║██║  ██║██║██║╚██╗██║██║   ██║ ";
-    loading[4] = L"███████╗╚██████╔╝██║  ██║██████╔╝██║██║ ╚████║╚██████╔╝ ";
-    loading[5] = L"╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚═════╝ ╚═╝╚═╝  ╚═══╝ ╚═════╝  ";
-    loading[6] = L" ██ ";
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 6; j++)
-        {
-            gotoxy(30 + 25, 15 + j);
-            wcout << loading[j];
-        }
-
-    }
-    for (int i = 0; i < 3; i++) {
-        wcout << loading[6]; Sleep(300);
-    }
-    int CurrentMode = _setmode(_fileno(stdout), OldMode);
-    system("cls");
-}
-
-
 void DrawScore(int i, int x, int y)
 {
        

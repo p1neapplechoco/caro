@@ -14,7 +14,6 @@ Menu:
 	{
 	case 1:
 		select();
-		Loading();
 		gomoku();
 		goto Menu;
 	case 2:

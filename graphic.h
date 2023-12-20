@@ -24,7 +24,6 @@ void DrawScore(int i, int x, int y);
 void EraseScore(int x, int y);
 int Pause();
 void drawGame(char, int);
-void Loading();
 int PlayMenu();
 void SetColor(int backgound_color, int text_color);
 void HighLight(int x, int y, int w, int h, int Color);
